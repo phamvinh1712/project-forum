@@ -1,0 +1,23 @@
+#Graph {
+  font-size: 0.8125em;
+}
+#Graph path, #Graph line {
+  fill: none;
+}
+#Graph .marker {
+  fill: CornflowerBlue;
+}
+#Graph .tick line {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+#visualisation-line {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+  stroke: CornflowerBlue;
+}
