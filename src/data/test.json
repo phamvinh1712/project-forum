@@ -1,0 +1,26 @@
+ {
+    "PageAmount": 3,
+    "NextPage": 2,
+    "Topics": [
+      {
+        "Id" : 1,
+        "Title": "Topic 1",
+        "View": 100,
+        "DateStart": "10/8/2019"
+      },
+      {
+        "Id" : 2,
+        "Title": "Topic 2",
+        "View": 200,
+        "DateStart": "11/8/2019"
+      },
+      {
+        "Id" : 3,
+        "Title": "Topic 3",
+        "View": 300,
+        "DateStart": "12/8/2019"
+      }
+
+    ]
+
+  }
