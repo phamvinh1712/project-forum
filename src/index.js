@@ -11,7 +11,7 @@ import Test from './components/Test';
 import * as serviceWorker from './serviceWorker';
 import Login from "./components/Login";
 import Register from "./components/Register";
-
+import Admin from "./components/Admin_page";    
 
 ReactDOM.render(
     <BrowserRouter>
@@ -20,6 +20,7 @@ ReactDOM.render(
             <Route path="/test" component={Test}/>
             <Route path="/register"  component={Register} />
             <Route path="/login"  component={Login} />
+            <Route path="/admin" component={Admin} />
         </div>
     </BrowserRouter>, document.getElementById('root'));
 
