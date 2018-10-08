@@ -10,8 +10,8 @@ import "./Register.css";
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
+ // register page
 
-// register page
 export default class Register extends Component {
   constructor(props) {
     super(props);
@@ -53,21 +53,15 @@ export default class Register extends Component {
       bd: date
     });
   }
-
-  handleSubmit = async event => {
+   handleSubmit = async event => {
     event.preventDefault();
-
-    this.setState({ isLoading: true });
-
-    this.setState({ newUser: "test" });
-
-    this.setState({ isLoading: false });
+     this.setState({ isLoading: true });
+     this.setState({ newUser: "test" });
+     this.setState({ isLoading: false });
   }
-
-  handleConfirmationSubmit = async event => {
+   handleConfirmationSubmit = async event => {
     event.preventDefault();
-
-    this.setState({ isLoading: true });
+     this.setState({ isLoading: true });
   }
 // screen after user input data
   renderConfirmationForm() {
@@ -140,17 +134,14 @@ export default class Register extends Component {
             type="password"
           />
         </FormGroup>
-
-        <div className="container" id="red">
+         <div className="container" id="red">
             <ControlLabel> Date of Birth </ControlLabel>
           <DatePicker
-
-                 selected={this.state.bd}
+                  selected={this.state.bd}
                  onChange={this.handleChangeD}
           />
         </div>
-
-          <FormGroup/>
+           <FormGroup/>
         <LoaderButton
           block
           bsSize="large"
