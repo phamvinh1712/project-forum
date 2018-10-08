@@ -12,6 +12,10 @@ import * as serviceWorker from './serviceWorker';
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Post from "./components/Post";
+import Admin from "./components/Admin_page";
+import ThreadEdit from "./components/ThreadEdit";
+import ThreadEditList from "./components/ThreadEditList";
+
 
 import CreatePost from "./components/CreatePost";
 ReactDOM.render(
@@ -22,8 +26,9 @@ ReactDOM.render(
             <Route path="/register"  component={Register} />
             <Route path="/login"  component={Login} />
             <Route path="/post"  component={Post} />
-
             <Route path="/createpost"  component={CreatePost} />
+            <Route path="/admin" component={Admin} />
+            <Route path="/thread-edit"  component={ThreadEditList} />
         </div>
     </BrowserRouter>, document.getElementById('root'));
 
