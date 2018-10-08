@@ -86,7 +86,6 @@ fabric.properties
 /frontend/node_modules
 /frontend/coverage
 /frontend/build
-/frontend/package-lock.json
 .env
 .venv
 env/
