@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import './components/statistic.css';
+import './statistic.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.min.css';
-import ReportList from './components/ReportList';
-import SidebarMenu from './components/sidebarMenu';
+import ReportList from './ReportList';
+import SidebarMenu from './sidebarMenu';
 import {Col, Row ,Grid , Glyphicon, Button} from 'react-bootstrap';
 export default class App extends Component {
     render() {
