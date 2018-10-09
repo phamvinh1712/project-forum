@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import './statistic.css';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'font-awesome/css/font-awesome.min.css';
 import ReportList from './ReportList';
 import SidebarMenu from './sidebarMenu';
 import {Col, Row ,Grid , Glyphicon, Button} from 'react-bootstrap';

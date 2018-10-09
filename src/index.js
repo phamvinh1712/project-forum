@@ -15,6 +15,8 @@ import Post from "./components/Post";
 import Admin from "./components/Admin_page";
 import ThreadEdit from "./components/ThreadEdit";
 import ThreadEditList from "./components/ThreadEditList";
+import Content from './components/Content'
+import Profile from './components/Profile'
 
 
 import CreatePost from "./components/CreatePost";
@@ -29,6 +31,8 @@ ReactDOM.render(
             <Route path="/createpost"  component={CreatePost} />
             <Route path="/admin" component={Admin} />
             <Route path="/thread-edit"  component={ThreadEditList} />
+            <Route path="/content"  component={Content} />
+            <Route path="/profile"  component={Profile} />
         </div>
     </BrowserRouter>, document.getElementById('root'));
 
