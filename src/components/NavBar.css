@@ -3,7 +3,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    background: #521751;
+    background: rgb(85, 145, 146);
     height: 56px;
 }
 
@@ -13,7 +13,7 @@
     align-items: center;
     padding: 0 1rem;
 }
-.navbar_logo a {
+.navbar_logo span {
     color: white;
     text-decoration: none;
     font-size: 2rem;

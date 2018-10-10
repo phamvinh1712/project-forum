@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const navbar = props => (
   <header className="navbar">
     <nav className="navbar_navigation">
-        <div className="navbar_logo"><a href="/">THE LOGO</a></div>
+        <div className="navbar_logo"><span href="/">THE LOGO</span></div>
         <SearchBar
             className={"search_bar"}
             onChange={() => console.log('onChange')}

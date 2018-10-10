@@ -17,7 +17,9 @@ import ThreadEdit from "./components/ThreadEdit";
 import ThreadEditList from "./components/ThreadEditList";
 import Content from './components/Content'
 import Profile from './components/Profile'
+import NavBar from './components/NavBar'
 
+import SubThreadDisplay from './components/SubThreadDisplay'
 
 import CreatePost from "./components/CreatePost";
 ReactDOM.render(
@@ -33,6 +35,9 @@ ReactDOM.render(
             <Route path="/thread-edit"  component={ThreadEditList} />
             <Route path="/content"  component={Content} />
             <Route path="/profile"  component={Profile} />
+            <Route path="/navbar"  component={NavBar} />
+
+            <Route path="/subthread"  component={SubThreadDisplay} />
         </div>
     </BrowserRouter>, document.getElementById('root'));
 
