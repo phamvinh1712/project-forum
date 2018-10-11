@@ -1,16 +1,12 @@
 from django.db import models
+from user.py import *
+from post.py import *
 
 class Comment(models.Model):
-	creator = models.ForeignKey(
-		'user',
-		on_delete=models.CASCADE
-	)
+	user = models.ForeignKey(Profile, on_delete=CASCADE)
 	create_time = models.DateField()
-	content = models.CharField(max_length=500)
+	content = models.TextField()
 	upvote = models.IntgerField()
 	downvote = models.IntgerField()
-	post_id = models.ForeignKey(
-		'post',
-		on_delete=models.CASCADE
-	)
+	post = models.ForeignKey(Post, on_delete=CASCADE)
 	user_display_name = models.CharField(50)

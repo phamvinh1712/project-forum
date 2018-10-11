@@ -1,12 +1,9 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-class Person(models.Model):
-	email = models.EmailField(max_length=50)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    password = models.CharField(max_length=50)
-    birthday = models.DateField()
-    bio = models.CharField(max_length=250)
-    phone_number = models.CharField(max_length=50)
-    username = models.CharField(max_length=50)
-    avatar_url_path = models.CharField(max_length=50)
+class Profile(models.Model):
+	user = models.OneToOneField(User, on_delete=models.CASCADE)
+	birdthday = models.DateField(null=True, blank=True)
+	bio = models.CharField(max_length=250, blank=True)
+	phone_number = models.CharField(max_length=20, blank=True)
+	avatar_url_path = models.URLField(max_length=200, blank=True)
