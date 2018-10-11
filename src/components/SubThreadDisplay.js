@@ -6,6 +6,7 @@ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
+import TableFooter from "@material-ui/core/TableFooter";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
@@ -17,6 +18,8 @@ import {lighten} from "@material-ui/core/styles/colorManipulator";
 import test from '../data/test.json'
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import "./std.css"
+import Pagination from "material-ui-flat-pagination";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 
 function desc(a, b, orderBy) {
@@ -47,9 +50,15 @@ function getSorting(order, orderBy) {
 
 const rows = [
   {
-    id: "title",
+    id: "picture",
     numeric: false,
     disablePadding: true,
+    label: ""
+  },
+  {
+    id: "title",
+    numeric: true,
+    disablePadding: false,
     label: "Topic Title"
   },
   {id: "view", numeric: true, disablePadding: false, label: "View"},
@@ -75,7 +84,6 @@ class EnhancedTableHead extends React.Component {
               <MuiThemeProvider theme={MultiCelltheme}>
 
                 <TableCell key={row.id}
-                           head
                            sortDirection={orderBy === row.id ? order : false}
                 >
                   <Tooltip
@@ -109,6 +117,21 @@ EnhancedTableHead.propTypes = {
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired
 };
+
+const PaginationTheme = createMuiTheme({
+  overrides: {
+    MuiFlatPagination: {
+      root: {
+        fontSize: "2rem",
+      },
+      text: {
+        fontSize: "2rem"
+      }
+    }
+  }
+});
+
+
 const MultiCelltheme = createMuiTheme({
   overrides: {
     // Name of the component ️ / style sheet
@@ -124,6 +147,9 @@ const MultiCelltheme = createMuiTheme({
         height: 100,
         fontSize: "2rem",
         textAlign: "left",
+      },
+      footer: {
+        fontSize:"5rem",
       }
     },
   },
@@ -200,13 +226,16 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 4,
   },
   table: {
-    minWidth: 1200,
+    minWidth: 1500,
     padding: "1000px",
   },
   tableWrapper: {
     overflowX: "auto",
   }
 });
+
+
+
 
 class EnhancedTable extends React.Component {
   state = {
@@ -257,7 +286,7 @@ class EnhancedTable extends React.Component {
       <Paper className={classes.root}>
         <EnhancedTableToolbar/>
         <div style={{
-          width: 1200,
+          width: 1500,
           margin: '0 auto',
           height: 1200
         }} className={classes.tableWrapper}>
@@ -293,7 +322,22 @@ class EnhancedTable extends React.Component {
                   )
                     ;
                 })}
+              <TableFooter>
+                <TableRow >
+                           <MuiThemeProvider theme={PaginationTheme}>
 
+        <CssBaseline />
+        <Pagination
+          limit={10}
+          offset={this.state.offset}
+          total={100}
+          onClick={(e, offset) => this.handleClick(offset)}
+          size={'large'}
+        />
+                                                      </MuiThemeProvider>
+                </TableRow>
+
+              </TableFooter>
             </TableBody>
           </Table>
 
