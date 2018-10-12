@@ -5,8 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {
     BrowserRouter,
-    Route,
-    Link
+    Route
 } from 'react-router-dom';
 import Login from "./components/Login";
 
