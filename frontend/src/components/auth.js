@@ -27,7 +27,7 @@ class auth  {
   static getToken(username, pass, cb) {
     jQuery.ajax({
       type: 'POST',
-      url: 'http://localhost:8000/api/rest-auth/login/',
+      url: 'api/rest-auth/login/',
       data: {
         username: username,
         password: pass

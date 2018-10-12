@@ -1,14 +1,12 @@
 import React, {Component} from "react";
-import {connect} from "react-redux";
-import {auth} from "../actions";
 import {Button, FormGroup, FormControl, ControlLabel} from "react-bootstrap";
-
 import "./Login.css";
-// login page
+import auth from "./auth"//
+// gin page
 export default class Login extends Component {
   constructor(props) {
     super(props);
-// value of data
+// valu loe of data
     this.state = {
       email: "",
       password: ""
@@ -31,8 +29,18 @@ export default class Login extends Component {
     event.preventDefault();
     const em = this.state.email;
     const ps = this.state.password;
-    this.props.login(em, ps);
-
+    fetch('/api/rest-auth/login/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({em,ps})
+    })
+      .then(res => res.json())
+      .then(json => {
+        localStorage.setItem('token', json.token);
+        console.log(json.token);
+      });
   }
 
 // main screen
