@@ -29,17 +29,17 @@ export default class Login extends Component {
     event.preventDefault();
     const em = this.state.email;
     const ps = this.state.password;
-    fetch('/api/rest-auth/login/', {
+    fetch('http://localhost:8000/api/rest-auth/login/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({em,ps})
+      body: JSON.stringify({"email":em,"password":ps})
     })
       .then(res => res.json())
       .then(json => {
-        localStorage.setItem('token', json.token);
-        console.log(json.token);
+        localStorage.setItem('token', json.key);
+        console.log(json.key);
       });
   }
 
