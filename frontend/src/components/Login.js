@@ -1,12 +1,14 @@
 import React, {Component} from "react";
+import {connect} from "react-redux";
+import {auth} from "../actions";
 import {Button, FormGroup, FormControl, ControlLabel} from "react-bootstrap";
+
 import "./Login.css";
-import auth from "./auth"//
-// gin page
+// login page
 export default class Login extends Component {
   constructor(props) {
     super(props);
-// valu loe of data
+// value of data
     this.state = {
       email: "",
       password: ""
@@ -29,13 +31,8 @@ export default class Login extends Component {
     event.preventDefault();
     const em = this.state.email;
     const ps = this.state.password;
-    auth.login(em, ps, (loggedIn) => {
-      if (loggedIn) {
-        console.log("success")
-      } else {
-        console.log("Failed")
-      }
-    })
+    this.props.login(em, ps);
+
   }
 
 // main screen
