@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {Button, FormGroup, FormControl, ControlLabel} from "react-bootstrap";
 import "./Login.css";
-import auth from "./auth"
 // login page
 export default class Login extends Component {
   constructor(props) {
@@ -29,13 +28,7 @@ export default class Login extends Component {
     event.preventDefault();
     let us = this.state.email;
     let ps = this.state.password;
-    auth.login(us, ps, (loggedIn) => {
-      if (loggedIn) {
-        console.log("success")
-      } else {
-        console.log("failed")
-      }
-    })
+
 
   }
 

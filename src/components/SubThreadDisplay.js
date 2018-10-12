@@ -7,7 +7,6 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableFooter from "@material-ui/core/TableFooter";
-import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -17,7 +16,6 @@ import Tooltip from "@material-ui/core/Tooltip";
 import {lighten} from "@material-ui/core/styles/colorManipulator";
 import test from '../data/test.json'
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
-import "./std.css"
 import Pagination from "material-ui-flat-pagination";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
@@ -149,7 +147,7 @@ const MultiCelltheme = createMuiTheme({
         textAlign: "left",
       },
       footer: {
-        fontSize:"5rem",
+        fontSize: "5rem",
       }
     },
   },
@@ -235,8 +233,6 @@ const styles = theme => ({
 });
 
 
-
-
 class EnhancedTable extends React.Component {
   state = {
     order: "asc",
@@ -291,6 +287,12 @@ class EnhancedTable extends React.Component {
           height: 1200
         }} className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
+            <colgroup>
+              <col style={{width: '1%'}}/>
+              <col style={{width: '50%'}}/>
+              <col style={{width: '20%'}}/>
+              <col style={{width: '20%'}}/>
+            </colgroup>
             <EnhancedTableHead
               order={order}
               orderBy={orderBy}
@@ -308,7 +310,9 @@ class EnhancedTable extends React.Component {
                       key={n.id}
                     >
                       <MuiThemeProvider theme={MultiCelltheme}>
-
+                        <TableCell numeric>
+                          <div><img src={require('./images/cross.png')}/></div>
+                        </TableCell>
                         <TableCell numeric component="th" scope="row">
                           <div> {n.title} <br/></div>
                           <div style={{
@@ -323,24 +327,24 @@ class EnhancedTable extends React.Component {
                     ;
                 })}
               <TableFooter>
-                <TableRow >
-                           <MuiThemeProvider theme={PaginationTheme}>
+                <TableRow>
 
-        <CssBaseline />
-        <Pagination
-          limit={10}
-          offset={this.state.offset}
-          total={100}
-          onClick={(e, offset) => this.handleClick(offset)}
-          size={'large'}
-        />
-                                                      </MuiThemeProvider>
                 </TableRow>
 
               </TableFooter>
             </TableBody>
           </Table>
+          <MuiThemeProvider theme={PaginationTheme}>
 
+            <CssBaseline/>
+            <Pagination
+              limit={10}
+              offset={this.state.offset}
+              total={100}
+              onClick={(e, offset) => this.handleClick(offset)}
+              size={'large'}
+            />
+          </MuiThemeProvider>
         </div>
 
       </Paper>

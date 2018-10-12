@@ -13,6 +13,7 @@
     align-items: center;
     padding: 0 1rem;
 }
+
 .navbar_logo span {
     color: white;
     text-decoration: none;
@@ -21,15 +22,36 @@
 }
 
 .search_bar {
-    align-items: center;
-    left: 0;
+    position: relative;
+    left: 30rem;
+    width: 45%;
+
 }
 
-.navbar_button a {
-    display: flex;
-    height: 100%;
-    align-items: center;
-    padding: 0;
-    margin: 0;
-    color: White;
+.navbar_button {
+    position: relative;
+    left: 40rem;
 }
+
+.SignUp {
+    position: relative;
+    left: 1rem;
+}
+
+.btn {
+    outline: none !important;
+   box-shadow: none;
+    background: rgb(85, 145, 146);
+    border-color: rgb(85, 145, 146);
+}
+.btn:focus {
+    outline: none !important;
+   box-shadow: none;
+
+}
+.btn:active {
+    outline: none !important;
+   box-shadow: none;
+
+}
+
