@@ -1,11 +1,11 @@
 from django.db import models
-from post.py import *
-from comment.py import *
-from reply.py import *
+from .post import Post
+from .comment import Comment
+from .reply import Reply
+
 
 class Image(models.Model):
-	url = models.URLField(max_length=200, blank=True)
-	image = models.ImageField(height_field=100, width_field=100) #Change value of HEIGHT and WIDTH
-	post = models.ForeignKey(Post, on_delete=CASCADE)
-	comment = models.ManyToManyField(Comment, on_delete=CASCADE)
-	reply = models.ManyToManyField(Reply, on_delete=CASCADE)
+    image = models.ImageField()
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    reply = models.ForeignKey(Reply, on_delete=models.CASCADE)

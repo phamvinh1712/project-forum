@@ -1,12 +1,15 @@
 from django.db import models
-from user.py import *
-from sub_thread import *
+from .user import Profile
+from .sub_thread import SubThread
+from datetime import datetime
+
 
 class Post(models.Model):
-	title = models.CharField(max_length=50)
-	content = models.TextField()
-	user = models.ForeignKey(Profile, on_delete=CASCADE)
-	sub_thread = models.ForeignKey(Sub_thread, on_delete=CASCADE)
-	upvote = models.IntgerField()
-	downvote = models.IntgerField()
-	view_count = models.IntgerField()
+    title = models.CharField(max_length=50)
+    content = models.TextField()
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    sub_thread = models.ForeignKey(SubThread, on_delete=models.CASCADE)
+    upvote = models.IntegerField()
+    downvote = models.IntegerField()
+    view_count = models.IntegerField()
+    create_time = models.DateTimeField()
