@@ -1,8 +1,7 @@
 import React, {Component} from "react";
 import {Button, FormGroup, FormControl, ControlLabel} from "react-bootstrap";
 import "./Login.css";
-import {createStore} from 'redux'
-import {connect} from "react-redux";
+import auth from "./auth"
 // login page
 export default class Login extends Component {
   constructor(props) {
@@ -30,32 +29,13 @@ export default class Login extends Component {
     event.preventDefault();
     let us = this.state.email;
     let ps = this.state.password;
-    let headers = {"Content-Type": "application/json"};
-    let body = JSON.stringify({us, ps,});
-
-    return fetch("/api/rest-auth/login/", {headers, body, method: "POST"})
-      .then(res => {
-        if (res.status < 500) {
-          return res.json().then(data => {
-            return {status: res.status, data};
-          })
-        } else {
-          console.log("Server Error!");
-          throw res;
-        }
-      })
-      .then(res => {
-        if (res.status === 200) {
-          dispatch({type: 'LOGIN_SUCCESSFUL', data: res.data});
-          return res.data;
-        } else if (res.status === 403 || res.status === 401) {
-          dispatch({type: "AUTHENTICATION_ERROR", data: res.data});
-          throw res.data;
-        } else {
-          dispatch({type: "LOGIN_FAILED", data: res.data});
-          throw res.data;
-        }
-      })
+    auth.login(us, ps, (loggedIn) => {
+      if (loggedIn) {
+        console.log("success")
+      } else {
+        console.log("failed")
+      }
+    })
 
   }
 

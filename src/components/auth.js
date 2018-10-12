@@ -1,30 +1,47 @@
-export const login = (username, password) => {
-  return (dispatch, getState) => {
-    let headers = {"Content-Type": "application/json"};
-    let body = JSON.stringify({username, password});
+const $ = window.$;
+module.exports = {
+    login: function(username, pass, cb) {
+        if (localStorage.token) {
+            if (cb) cb(true)
+            return
+        }
+        this.getToken(username, pass, (res) => {
+            if (res.authenticated) {
+                localStorage.token = res.token
+                if (cb) cb(true)
+            } else {
+                if (cb) cb(false)
+            }
+        })
+    },
 
-    return fetch("/api/rest-auth/login/", {headers, body, method: "POST"})
-      .then(res => {
-        if (res.status < 500) {
-          return res.json().then(data => {
-            return {status: res.status, data};
-          })
-        } else {
-          console.log("Server Error!");
-          throw res;
-        }
-      })
-      .then(res => {
-        if (res.status === 200) {
-          dispatch({type: 'LOGIN_SUCCESSFUL', data: res.data });
-          return res.data;
-        } else if (res.status === 403 || res.status === 401) {
-          dispatch({type: "AUTHENTICATION_ERROR", data: res.data});
-          throw res.data;
-        } else {
-          dispatch({type: "LOGIN_FAILED", data: res.data});
-          throw res.data;
-        }
-      })
-  }
+    logout: function() {
+        delete localStorage.token
+    },
+
+    loggedIn: function() {
+        return !!localStorage.token
+    },
+
+    getToken: function(username, pass, cb) {
+        $.ajax({
+            type: 'POST',
+            url: '/api/rest-auth/login',
+            data: {
+                username: username,
+                password: pass
+            },
+            success: function(res){
+                cb({
+                    authenticated: true,
+                    token: res.token
+                })
+            },
+            error: (xhr, status, err) => {
+                cb({
+                    authenticated: false
+                })
+            }
+        })
+    },
 }
