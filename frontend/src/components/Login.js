@@ -39,8 +39,10 @@ export default class Login extends Component {
       .then(res => res.json())
       .then(json => {
         localStorage.setItem('token', json.key);
-        console.log(json.key);
       });
+    if(localStorage.getItem('token')==='undefined') {
+            console.log("failed");
+        } else console.log("success");
   }
 
 // main screen
