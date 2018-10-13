@@ -147,5 +147,10 @@ DEFAULT_FILE_STORAGE = 'project_forum.storage_backend.MediaStorage'
 
 ALLOWED_HOSTS = ['project-forum.herokuapp.com', '127.0.0.1', 'localhost']
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
 django_heroku.settings(locals())
 

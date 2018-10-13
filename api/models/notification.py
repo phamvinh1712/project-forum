@@ -4,7 +4,7 @@ from datetime import datetime
 
 
 class Notification(models.Model):
-    content = models.CharField(max_length=50)
+    content = models.CharField(max_length=200)
     type = models.CharField(max_length=10)
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     send_time = models.DateTimeField(null=False, default=datetime.now)
