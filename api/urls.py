@@ -1,5 +1,5 @@
 from django.urls import include, path, re_path
-from .views import test, NameRegistrationView, null_view
+from .views import test, NameRegistrationView, null_view,HashtagListView,UserDetailView
 from rest_auth.registration.views import VerifyEmailView
 from allauth.account.views import confirm_email
 
