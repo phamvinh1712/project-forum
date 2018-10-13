@@ -7,5 +7,8 @@ class Thread(models.Model):
     description = models.CharField(max_length=250, blank=True)
     creator = models.ForeignKey(Profile, on_delete=models.CASCADE)
     create_time = models.DateField()
-    display_order = models.SmallIntegerField()
-    display_flag = models.CharField(max_length=1)
+    display_order = models.SmallIntegerField(null=False, unique=True)
+    display_flag = models.BooleanField()
+
+    class Meta:
+        ordering = ['display_order', ]
