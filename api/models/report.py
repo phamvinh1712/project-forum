@@ -16,12 +16,12 @@ class Report(models.Model):
         ('SOLVED', 'Report solved'),
         ('WAITING', 'Waiting')
     }
-    user = models.ForeignKey(Profile)
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     type = models.CharField(max_length=4, choices=REPORT_TYPE)
-    post = models.ForeignKey(Post)
-    comment = models.ForeignKey(Comment)
-    reply = models.ForeignKey(Reply)
-    hashtag = models.ForeignKey(Hashtag)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    reply = models.ForeignKey(Reply, on_delete=models.CASCADE)
+    hashtag = models.ForeignKey(Hashtag, on_delete=models.CASCADE)
     status = models.CharField(max_length=7, choices=STATUS)
     create_time = models.DateTimeField(default=datetime.now)
 
