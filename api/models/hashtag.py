@@ -1,10 +1,9 @@
 from django.db import models
 from .user import Profile
-from .post import Post
+from datetime import datetime
 
 
 class Hashtag(models.Model):
-    name = models.CharField(max_length=20)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    create_time = models.DateTimeField()
+    name = models.CharField(max_length=20, unique=True, )
+    create_time = models.DateTimeField(default=datetime.now)
     create_user = models.ForeignKey(Profile, on_delete=models.CASCADE)

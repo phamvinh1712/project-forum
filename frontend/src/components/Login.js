@@ -1,15 +1,19 @@
 import React, {Component} from "react";
 import {Button, FormGroup, FormControl, ControlLabel} from "react-bootstrap";
 import "./Login.css";
+import auth from "./auth"//
+// gin page
 export default class Login extends Component {
   constructor(props) {
     super(props);
+// valu loe of data
     this.state = {
       email: "",
       password: ""
     };
   }
 
+// check if the user input correct form
   validateForm() {
     return this.state.email.length > 0 && this.state.password.length > 0;
   }

@@ -3,6 +3,8 @@ from .user import Profile
 from .post import Post
 from .comment import Comment
 from .reply import Reply
+from .hashtag import Hashtag
+from datetime import datetime
 
 
 class Report(models.Model):
@@ -19,5 +21,9 @@ class Report(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
     reply = models.ForeignKey(Reply, on_delete=models.CASCADE)
+    hashtag = models.ForeignKey(Hashtag, on_delete=models.CASCADE)
     status = models.CharField(max_length=7, choices=STATUS)
-    create_time = models.DateField()
+    create_time = models.DateTimeField(default=datetime.now)
+
+    class Meta:
+        ordering = ['create_time', ]

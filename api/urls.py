@@ -13,4 +13,6 @@ urlpatterns = [
 
     re_path(r'^rest-auth/registration/$', NameRegistrationView.as_view(), name="rest_name_register"),
     path('accounts/', include('allauth.urls')),
+    path('hashtags/', HashtagListView.as_view()),
+    path('user-detail/', UserDetailView.as_view())
 ]
