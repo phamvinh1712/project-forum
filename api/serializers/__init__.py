@@ -1,2 +1,3 @@
 from .hashtag import HashtagListSerializer
-from .user import ProfileSerializer,UserDetailSerializer
+from .user import ProfileSerializer, UserDetailSerializer
+from .notification import NotificationSerializer

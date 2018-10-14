@@ -11,11 +11,9 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 class UserDetailSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer()
-    full_name = serializers.SerializerMethodField()
+    full_name = serializers.CharField(source='get_full_name', read_only=True)
 
     class Meta:
         model = User
         fields = ('username', 'email', 'profile', 'full_name', 'first_name', 'last_name', 'is_staff', 'is_active')
 
-    def get_full_name(self, obj):
-        return obj.get_full_name()
