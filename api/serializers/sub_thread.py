@@ -17,4 +17,4 @@ class SubThreadSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SubThread
-        fields = ('description', 'sub_thread_title', 'post')
+        fields = "__all__"

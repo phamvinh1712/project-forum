@@ -16,4 +16,5 @@ urlpatterns = [
     path('notifications/', NotificationListView.as_view()),
     path('create-post/', CreatePostView.as_view()),
     re_path(r'^posts/(?P<pk>[0-9]+)/$', PostView.as_view()),
+    path('thread/', ThreadListView.as_view()),
 ]
