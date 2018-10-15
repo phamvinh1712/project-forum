@@ -1,6 +1,5 @@
 from django.urls import include, path, re_path
-from .views import test, NameRegistrationView, null_view,HashtagListView,UserDetailView
-from rest_auth.registration.views import VerifyEmailView
+from .views import test, NameRegistrationView,HashtagListView,UserDetailView,SubThreadDetailView
 from allauth.account.views import confirm_email
 
 urlpatterns = [
@@ -14,5 +13,7 @@ urlpatterns = [
     re_path(r'^rest-auth/registration/$', NameRegistrationView.as_view(), name="rest_name_register"),
     path('accounts/', include('allauth.urls')),
     path('hashtags/', HashtagListView.as_view()),
-    path('user-detail/', UserDetailView.as_view())
+    path('user-detail/', UserDetailView.as_view()),
+    re_path(r'^thread/(?P<pk>[0-9]+)/$', SubThreadDetailView.as_view(), name="subthread-detail"),
+
 ]

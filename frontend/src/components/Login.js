@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Button, FormGroup, FormControl, ControlLabel} from "react-bootstrap";
+import { Redirect } from "react-router-dom";
 import "./Login.css";
-import auth from "./auth"//
 // gin page
 export default class Login extends Component {
   constructor(props) {
@@ -27,22 +27,24 @@ export default class Login extends Component {
 // function handle submit onclick event
   handleSubmit = event => {
     event.preventDefault();
-    const em = this.state.email;
-    const ps = this.state.password;
+    const email = this.state.email;
+    const pass = this.state.password;
     fetch('http://localhost:8000/api/rest-auth/login/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({"email":em,"password":ps})
+      body: JSON.stringify({"email":email,"password":pass})
     })
       .then(res => res.json())
       .then(json => {
         localStorage.setItem('token', json.key);
       });
-    if(localStorage.getItem('token')==='undefined') {
+    if(localStorage.getItem('token')===null) {
             console.log("failed");
-        } else console.log("success");
+        } else {
+          window.location.replace('http://localhost:3000/NavBar');
+    };
   }
 
 // main screen

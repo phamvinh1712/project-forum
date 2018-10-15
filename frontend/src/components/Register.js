@@ -17,10 +17,9 @@ export default class Register extends Component {
     this.state = {
       isLoading: false,
       email: "",
-      un: "",
-      fn: "",
-      ln: "",
-      bd: moment(),
+      username: "",
+      firstname: "",
+      lastname: "",
       password: "",
       confirmPassword: "",
       confirmationCode: "",
@@ -52,17 +51,17 @@ export default class Register extends Component {
     this.setState({isLoading: true});
     this.setState({newUser: "test"});
     this.setState({isLoading: false});
-    const em = this.state.email;
-    const ps = this.state.password;
-    const un = this.state.un;
-    const fn = this.state.fn;
-    const ln = this.state.ln;
+    const email = this.state.email;
+    const pass = this.state.password;
+    const username = this.state.username;
+    const firstname = this.state.firstname;
+    const lastname = this.state.lastname;
     fetch('http://localhost:8000/api/rest-auth/registration/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({"username":un,"email":em,"password1":ps,"password2":ps,"first_name":fn,"last_name":ln})
+      body: JSON.stringify({"username":username,"email":email,"password1":pass,"password2":pass,"first_name":firstname,"last_name":lastname})
     })
       .then(res => res.json())
       .then(json => {
