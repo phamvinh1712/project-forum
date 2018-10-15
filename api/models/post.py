@@ -1,12 +1,17 @@
 from django.db import models
-from user.py import *
-from sub_thread import *
+from django.contrib.auth.models import User
+from .sub_thread import SubThread
+from .hashtag import Hashtag
+
 
 class Post(models.Model):
-	title = models.CharField(max_length=50)
-	content = models.TextField()
-	user = models.ForeignKey(Profile, on_delete=CASCADE)
-	sub_thread = models.ForeignKey(Sub_thread, on_delete=CASCADE)
-	upvote = models.IntgerField()
-	downvote = models.IntgerField()
-	view_count = models.IntgerField()
+    title = models.CharField(max_length=50)
+    content = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    sub_thread = models.ForeignKey(SubThread, on_delete=models.CASCADE)
+    view_count = models.IntegerField()
+    create_time = models.DateTimeField()
+    hashtags = models.ManyToManyField(Hashtag)
+
+    class Meta:
+        ordering = ['-create_time', ]

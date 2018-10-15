@@ -1,13 +1,18 @@
 from django.db import models
-from user.py import *
-from post.py import *
-from comment.py import *
-from reply.py import *
+from django.contrib.auth.models import User
+from .post import Post
+from .comment import Comment
+from .reply import Reply
+
 
 class Vote(models.Model):
-	user = models.ForeignKey(Profile, on_delete=CASCADE)
-	type = models.CharField(max_length=10)
-	post = models.ForeignKey(Post, on_delete=CASCADE)
-	comment = models.ForeignKey(Comment, on_delete=CASCADE)
-	reply = models.ForeignKey(Reply, on_delete=CASCADE)
-	create_time = models.DateField()
+    VOTE_TYPE = (
+        ('UP', 'Up vote'),
+        ('DOWN', 'Down vote')
+    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    type = models.CharField(max_length=2, choices=VOTE_TYPE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    reply = models.ForeignKey(Reply, on_delete=models.CASCADE)
+    create_time = models.DateField()

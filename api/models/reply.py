@@ -1,12 +1,11 @@
 from django.db import models
-from user.py import *
-from comment.py import *
+from django.contrib.auth.models import User
+from .comment import Comment
+from datetime import datetime
+
 
 class Reply(models.Model):
-	comment = models.ForeignKey(Comment, on_delete=CASCADE)
-	user = models.ForeignKey(Profile, on_delete=CASCADE)
-	create_time = models.DateField()
-	content = models.TextField()
-	upvote = models.IntgerField()
-	downvote = models.IntgerField()
-	user_display_name = models.CharField(50)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    create_time = models.DateField(default=datetime.now)
+    content = models.TextField()
