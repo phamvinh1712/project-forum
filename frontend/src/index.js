@@ -10,7 +10,7 @@ import {
 import Login from "./components/Login";
 import Register from "./components/Register";
 import NavBar from "./components/NavBar";
-
+import SubThreadDisplay from "./components/SubThread"
 ReactDOM.render(
   <BrowserRouter>
     <div>
@@ -18,6 +18,7 @@ ReactDOM.render(
       <Route path="/login" component={Login}/>
       <Route path="/register" component={Register}/>
       <Route path="/navbar" component={NavBar}/>
+      <Route path="/subthread/:handle" component={SubThreadDisplay}/>
 
     </div>
   </BrowserRouter>, document.getElementById('root'));

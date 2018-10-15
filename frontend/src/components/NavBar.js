@@ -12,7 +12,6 @@ export default class navbar extends Component {
   };
 
   renderUser() {
-    const user_name= "";
     fetch('http://localhost:8000/api/user-detail/', {
       method: 'GET',
       headers: {
@@ -22,14 +21,14 @@ export default class navbar extends Component {
     .then(res => {
       return res.json();
     }).then(json => {
-      localStorage.setItem('un', json.username);
+      localStorage.setItem('user_name', json.username);
       })
 
     return (
 
       <div className="navbar_button">
 
-        <a href="/"> WELCOME {localStorage.getItem('un')} </a>
+        <a href="/"> WELCOME {localStorage.getItem('user_name')} </a>
       </div>
   )
   ;
