@@ -29,7 +29,7 @@ export default class Login extends Component {
     event.preventDefault();
     const email = this.state.email;
     const pass = this.state.password;
-    fetch('http://localhost:8000/api/rest-auth/login/', {
+    fetch('/api/rest-auth/login/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -43,8 +43,9 @@ export default class Login extends Component {
     if(localStorage.getItem('token')===null) {
             console.log("failed");
         } else {
-          window.location.replace('http://localhost:3000/NavBar');
-    };
+  this.props.history.push('/navbar');
+
+      };
   }
 
 // main screen
