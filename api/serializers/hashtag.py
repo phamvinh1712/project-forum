@@ -4,7 +4,7 @@ from ..models import Hashtag
 
 class HashtagListSerializer(serializers.ModelSerializer):
     post_count = serializers.SerializerMethodField()
-    create_user = serializers.ReadOnlyField(source='create_user.user.username')
+    create_user = serializers.ReadOnlyField(source='create_user.username')
 
     class Meta:
         model = Hashtag

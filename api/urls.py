@@ -15,4 +15,5 @@ urlpatterns = [
     path('user-detail/', UserDetailView.as_view()),
     re_path(r'^subthread/(?P<pk>[0-9]+)/$', SubThreadDetailView.as_view(), name="subthread-detail"),
     path('notifications/', NotificationListView.as_view()),
+    path('create-post/', CreatePostView.as_view()),
 ]
