@@ -1,11 +1,11 @@
-import React from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'font-awesome/css/font-awesome.min.css';
+import Button from "@material-ui/core/Button/Button";
 import Dialog from "@material-ui/core/Dialog/Dialog";
+import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText/DialogContentText";
-import DialogActions from "@material-ui/core/DialogActions/DialogActions";
-import Button from "@material-ui/core/Button/Button";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'font-awesome/css/font-awesome.min.css';
+import React from "react";
 const API = 'api/report/';
 class ReportTable extends React.Component {
   constructor(props) {
@@ -14,6 +14,7 @@ class ReportTable extends React.Component {
       list: [],
       open: false,
       open2: false,
+      open3: false,
     };
   
   }
@@ -36,10 +37,18 @@ class ReportTable extends React.Component {
   handleClickOpen2 = () => {
     this.setState({ open2: true });
   };
-
+  
   handleClose2 = () => {
     this.setState({ open2: false });
   };
+
+  handleClose3 = () => {
+    this.setState({ open3: false });
+  };
+  handleClickOpen3 = () => {
+    this.setState({ open3: true });
+  };
+
 
   render() {
     return (
@@ -78,7 +87,30 @@ class ReportTable extends React.Component {
                 <td>{value.status}</td>
                 <td>{value.create_time}</td>
                 <td>{value.user.username}</td>
-                <td>{behaviour}</td>
+                <td>
+                <p>
+                  <span
+                    className="btn btn-primary btn-sm" style={{background:'WhiteSmoke ',border:'none',color:'black'}}
+                   className="btn btn-primary btn-sm" onClick={this.handleClickOpen3}>{behaviour}
+                  </span>
+                </p>
+          <Dialog
+          open={this.state.open3}
+          onClose={this.handleClose3}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          >
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              <p>{value.hashtag.id}</p>
+              <p>{value.hashtag.name}</p>
+              <p>{value.hashtag.post_count}</p>
+              <p>{value.hashtag.create_time}</p>
+            </DialogContentText>
+          </DialogContent>
+          </Dialog>
+
+                </td>
                 <td>
                 <p>
                   <span
@@ -99,10 +131,10 @@ class ReportTable extends React.Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
-              No
+              Yes
             </Button>
             <Button onClick={this.handleClose} color="primary" autoFocus>
-              Yes
+              No
             </Button>
           </DialogActions>
         </Dialog>
@@ -128,10 +160,10 @@ class ReportTable extends React.Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose2} color="primary">
-              No
+              Yes
             </Button>
             <Button onClick={this.handleClose2} color="primary" autoFocus>
-              Yes
+              No
             </Button>
           </DialogActions>
         </Dialog>
@@ -145,7 +177,7 @@ class ReportTable extends React.Component {
           </tbody>
         </table>
       </div>
-  }
+    )  
+  } 
 }
-
 export default ReportTable;
