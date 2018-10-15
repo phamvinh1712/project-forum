@@ -1,6 +1,8 @@
 from django.urls import include, path, re_path
 from .views import test, NameRegistrationView,HashtagListView,UserDetailView,SubThreadDetailView
 from allauth.account.views import confirm_email
+from django.urls import include, path
+from .views import HashtagListView, UserDetailView, NotificationListView
 
 urlpatterns = [
     path('testMail', test.test_send_mail),
@@ -15,5 +17,5 @@ urlpatterns = [
     path('hashtags/', HashtagListView.as_view()),
     path('user-detail/', UserDetailView.as_view()),
     re_path(r'^thread/(?P<pk>[0-9]+)/$', SubThreadDetailView.as_view(), name="subthread-detail"),
-
+    path('notifications/', NotificationListView.as_view())
 ]

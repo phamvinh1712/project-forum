@@ -1,5 +1,5 @@
 from django.db import models
-from .user import Profile
+from django.contrib.auth.models import User
 from .post import Post
 from .comment import Comment
 from .reply import Reply
@@ -10,7 +10,7 @@ class Vote(models.Model):
         ('UP', 'Up vote'),
         ('DOWN', 'Down vote')
     )
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     type = models.CharField(max_length=2, choices=VOTE_TYPE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
