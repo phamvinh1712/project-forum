@@ -1,7 +1,6 @@
 from django.urls import include, path, re_path
 from .views import *
 from rest_auth.registration.views import VerifyEmailView
-from django.urls import include, path
 
 urlpatterns = [
     re_path(r'^rest-auth/registration/account-confirm-email/(?P<key>[-:\w]+)/$', EmailConfirmView.as_view(),
@@ -16,4 +15,5 @@ urlpatterns = [
     re_path(r'^subthread/(?P<pk>[0-9]+)/$', SubThreadDetailView.as_view(), name="subthread-detail"),
     path('notifications/', NotificationListView.as_view()),
     path('create-post/', CreatePostView.as_view()),
+    re_path(r'^posts/(?P<pk>[0-9]+)/$', PostView.as_view()),
 ]

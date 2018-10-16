@@ -56,7 +56,7 @@ export default class Register extends Component {
     const username = this.state.username;
     const firstname = this.state.firstname;
     const lastname = this.state.lastname;
-    fetch('http://localhost:8000/api/rest-auth/registration/', {
+    fetch('/api/rest-auth/registration/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -91,7 +91,7 @@ export default class Register extends Component {
           <ControlLabel>Username</ControlLabel>
           <FormControl
             type="un"
-            value={this.state.un}
+            value={this.state.username}
             onChange={this.handleChange}
           />
         </FormGroup>
@@ -99,7 +99,7 @@ export default class Register extends Component {
           <ControlLabel>First Name</ControlLabel>
           <FormControl
             type="fn"
-            value={this.state.fn}
+            value={this.state.firstname}
             onChange={this.handleChange}
           />
         </FormGroup>
@@ -107,7 +107,7 @@ export default class Register extends Component {
           <ControlLabel>Last Name</ControlLabel>
           <FormControl
             type="ln"
-            value={this.state.ln}
+            value={this.state.lastname}
             onChange={this.handleChange}
           />
         </FormGroup>

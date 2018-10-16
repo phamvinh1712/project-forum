@@ -1,6 +1,6 @@
 from rest_framework import generics
 from ..models import Post
-from ..serializers import PostSerializer
+from ..serializers import PostSerializer, PostDetailSerializer
 from rest_framework.permissions import IsAuthenticated
 
 
@@ -11,3 +11,9 @@ class CreatePostView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+class PostView(generics.RetrieveAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostDetailSerializer
+

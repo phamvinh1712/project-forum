@@ -5,14 +5,15 @@ import {BrowserRouter, Route} from "react-router-dom";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import SubThreadDisplay from "./components/SubThread";
+import CreatePost from "./components/CreatePost";
 
 
 class App extends Component {
   constructor(props) {
     super(props)
-    this.state ={
-      user : {},
-      isLoggedIn : false
+    this.state = {
+      user: {},
+      isLoggedIn: false
     }
     this.handleToken = this.handleToken.bind(this)
   }
@@ -28,7 +29,7 @@ class App extends Component {
       .then(res => {
         return res.json();
       }).then(json => {
-      this.setState({user: json,isLoggedIn:true});
+      this.setState({user: json, isLoggedIn: true});
     })
   }
 
@@ -37,9 +38,12 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <NavBar user={this.state.user}/>
-          <Route path="/" render={() => <Login handleToken={this.handleToken}/>}/>
+          <Route exact path="/" render={() => <Login handleToken={this.handleToken}/>}/>
+          <Route exact path="/login" render={() => <Login handleToken={this.handleToken}/>}/>
           <Route path="/register" component={Register}/>
           <Route path="/subthread/:handle" component={SubThreadDisplay}/>
+          <Route path="/createpost" component={CreatePost}/>
+
         </div>
       </BrowserRouter>
     );
