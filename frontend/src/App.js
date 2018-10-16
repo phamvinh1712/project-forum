@@ -6,6 +6,8 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import SubThreadDisplay from "./components/SubThread";
 import CreatePost from "./components/CreatePost";
+import Post from "./components/Post";
+
 
 
 class App extends Component {
@@ -38,11 +40,14 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <NavBar user={this.state.user}/>
+          <div className="root-content">
           <Route exact path="/" render={() => <Login handleToken={this.handleToken}/>}/>
           <Route exact path="/login" render={() => <Login handleToken={this.handleToken}/>}/>
           <Route path="/register" component={Register}/>
           <Route path="/subthread/:handle" component={SubThreadDisplay}/>
           <Route path="/createpost" component={CreatePost}/>
+          <Route path="/posts/:id" component={Post}/>
+          </div>
 
         </div>
       </BrowserRouter>
