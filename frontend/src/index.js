@@ -1,12 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import ReportTable from './components/ReportTable'
+import sidebar from './components/sidebarMenu'
+import Admin from './components/Admin_page'
+import {
+  BrowserRouter,
+  Route
+} from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<ReportTable />, document.getElementById('root'));
+ReactDOM.render(
+  <BrowserRouter>
+    <div>
+      <Route exact path="/admin" component={Admin}/>
+      <Route exact path="/sidebar" component={sidebar}/>
+    </div>
+    </BrowserRouter>, document.getElementById('root')
+    );
+    serviceWorker.unregister();
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
