@@ -1,0 +1,34 @@
+@media all and (min-width: 480px) {
+  .Signup {
+    padding: 60px 0;
+  }
+
+  .Signup form {
+    margin: 0 auto;
+    max-width: 320px;
+  }
+}
+
+.Signup form span.help-block {
+  font-size: 14px;
+  padding-bottom: 10px;
+  color: #999;
+}
+.container a {
+    font-size: 14px;
+}
+
+#red {
+    position: relative;
+    left: -15px;
+    margin: auto auto;
+}
+
+.container .react-datepicker-manager,
+.container .react-datepicker-wrapper,
+.container .react-datepicker__input-container,
+.container .react-datepicker__input-container input {
+    height: 5rem;
+    width: 32rem;
+    font-size: 30px;
+}

@@ -1,0 +1,11 @@
+
+@media all and (min-width: 480px) {
+  .Post {
+    padding: 70px ;
+  }
+
+  .Post {
+    margin: 70px;
+    max-width: 320px;
+  }
+}
