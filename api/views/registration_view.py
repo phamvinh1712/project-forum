@@ -1,14 +1,22 @@
-from rest_auth.registration.serializers import RegisterSerializer
-from rest_auth.registration.views import RegisterView
+from rest_auth.registration.serializers import RegisterSerializer, VerifyEmailSerializer
+from rest_auth.registration.views import RegisterView, APIView
 from rest_framework import serializers
 from rest_framework import status
-from rest_framework.decorators import api_view
+from allauth.account.views import ConfirmEmailView
 from rest_framework.response import Response
 
 
-@api_view()
-def null_view(request):
-    return Response(status=status.HTTP_400_BAD_REQUEST)
+class EmailConfirmView(APIView, ConfirmEmailView):
+    def get_serializer(self, *args, **kwargs):
+        return VerifyEmailSerializer(*args, **kwargs)
+
+    def get(self, request,key, *args, **kwargs):
+        serializer = self.get_serializer(data={'key': key})
+        serializer.is_valid(raise_exception=True)
+        self.kwargs['key'] = serializer.validated_data['key']
+        confirmation = self.get_object()
+        confirmation.confirm(self.request)
+        return Response({'detail': ('ok')}, status=status.HTTP_200_OK)
 
 
 class NameRegistrationSerializer(RegisterSerializer):

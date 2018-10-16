@@ -1,26 +1,47 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+import NavBar from "./components/NavBar";
+import {BrowserRouter, Route} from "react-router-dom";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import SubThreadDisplay from "./components/SubThread";
+
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state ={
+      user : {},
+      isLoggedIn : false
+    }
+    this.handleToken = this.handleToken.bind(this)
+  }
+
+  handleToken() {
+    if (!localStorage.getItem('token')) return
+    fetch('/api/user-detail/', {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Token ' + localStorage.getItem('token').toString()
+      }
+    })
+      .then(res => {
+        return res.json();
+      }).then(json => {
+      this.setState({user: json,isLoggedIn:true});
+    })
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React TEST
-          </a>
-        </header>
-      </div>
+      <BrowserRouter>
+        <div>
+          <NavBar user={this.state.user}/>
+          <Route path="/" render={() => <Login handleToken={this.handleToken}/>}/>
+          <Route path="/register" component={Register}/>
+          <Route path="/subthread/:handle" component={SubThreadDisplay}/>
+        </div>
+      </BrowserRouter>
     );
   }
 }
