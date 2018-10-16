@@ -1,0 +1,10 @@
+@media all and (min-width: 480px) {
+  .CreatePost {
+    padding: 40px 0;
+  }
+
+  .CreatePost {
+    margin: 30px;
+    max-width: 320px;
+  }
+}

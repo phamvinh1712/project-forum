@@ -13,7 +13,6 @@ ReactDOM.render(
   <BrowserRouter>
     <div>
       <Route exact path="/admin" component={Admin}/>
-      <Route exact path="/sidebar" component={sidebar}/>
     </div>
     </BrowserRouter>, document.getElementById('root')
     );

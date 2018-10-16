@@ -6,7 +6,7 @@ import DialogContentText from "@material-ui/core/DialogContentText/DialogContent
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import React from "react";
-const API = 'api/report/';
+const API = '/api/report/';
 class ReportTable extends React.Component {
   constructor(props) {
     super(props);
