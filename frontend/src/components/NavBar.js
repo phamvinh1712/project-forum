@@ -11,8 +11,12 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import Menu from '@material-ui/core/Menu';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Grow from '@material-ui/core/Grow';
+import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
+import Popper from '@material-ui/core/Popper';
+import Paper from '@material-ui/core/Paper';
 
 // navigation bar with search bar UI and 2 button link to login page and register page
 const styles = theme => ({
@@ -76,7 +80,6 @@ class navbar extends Component {
 
   };
 
-
   handleProfileMenuOpen = event => {
     this.setState({anchorEl: event.currentTarget});
   };
@@ -85,10 +88,46 @@ class navbar extends Component {
     this.setState({anchorEl: null});
   };
 
-
   render() {
     const {classes} = this.props;
     const isMenuOpen = Boolean(this.state.anchorEl);
+
+    const renderForm = (
+      <div>
+        <Link to="/Login">
+          <Button variant="contained" className={'Login'}>
+            Login
+          </Button>
+        </Link>
+        <Link to="/Register">
+          <Button variant="contained" color="secondary" className={'SignUp'}>
+            Sign Up
+          </Button>
+        </Link>
+      </div>);
+
+    const renderUserMenu = (
+      <Popper open={isMenuOpen} anchorEl={this.anchorEl} transition disablePortal>
+        {({TransitionProps, placement}) => (
+          <Grow
+            {...TransitionProps}
+            id="menu-list-grow"
+            style={{transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'}}
+          >
+            <Paper>
+              <ClickAwayListener onClickAway={this.handleMenuClose}>
+                <MenuList>
+                  <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
+                  <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
+                  <MenuItem onClick={this.handleMenuClose}>Logout</MenuItem>
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
+    );
+
     const renderUser = (
       <div>
         <IconButton color="inherit">
@@ -104,40 +143,14 @@ class navbar extends Component {
         >
           <AccountCircle/>
         </IconButton>
+        {renderUserMenu}
       </div>
-    )
-
-    const renderForm = (
-      <div>
-        <Link to="/Login">
-          <Button variant="contained" className={'Login'}>
-            Login
-          </Button>
-        </Link>
-        <Link to="/Register">
-          <Button variant="contained" color="secondary" className={'SignUp'}>
-            Sign Up
-          </Button>
-        </Link>
-      </div>)
-
-    const renderUserMenu = (
-      <Menu
-        anchorEl={this.state.anchorEl}
-        anchorOrigin={{vertical: 'top', horizontal: 'right'}}
-        transformOrigin={{vertical: 'top', horizontal: 'right'}}
-        open={isMenuOpen}
-        onClose={this.handleMenuClose}
-      >
-        <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-        <MenuItem onClick={this.handleClose}>My account</MenuItem>
-      </Menu>
     );
 
     return (
       <header className="navbar">
         <nav className="navbar_navigation">
-          <div className="navbar_logo"><span href="/">THE LOGO</span></div>
+          <div className="navbar_logo"><span>THE LOGO</span></div>
           <div className={"dropdownb"}>
             <DropdownButton className={"Button1"}
                             title={"Ducati"}
@@ -171,13 +184,9 @@ class navbar extends Component {
               (localStorage.getItem('token') === null)
                 ? renderForm
                 : renderUser
-
             }
           </div>
-
-
         </nav>
-        {renderUserMenu}
       </header>
     );
   }

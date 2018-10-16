@@ -7,7 +7,7 @@ import Register from "./components/Register";
 import SubThreadDisplay from "./components/SubThread";
 import CreatePost from "./components/CreatePost";
 import Post from "./components/Post";
-
+import Content from "./components/Content";
 
 
 class App extends Component {
@@ -41,8 +41,8 @@ class App extends Component {
         <div>
           <NavBar user={this.state.user}/>
           <div className="root-content">
-          <Route exact path="/" render={() => <Login handleToken={this.handleToken}/>}/>
-          <Route exact path="/login" render={() => <Login handleToken={this.handleToken}/>}/>
+          <Route exact path="/" component={Content}/>
+          <Route path="/login" render={() => <Login handleToken={this.handleToken}/>}/>
           <Route path="/register" component={Register}/>
           <Route path="/subthread/:handle" component={SubThreadDisplay}/>
           <Route path="/createpost" component={CreatePost}/>

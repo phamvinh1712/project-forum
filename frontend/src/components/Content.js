@@ -1,155 +1,44 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import './screen.css';
-import React from "react";
+const API = 'api/thread/';
 
-const API = 'api/Thread/';
+export default class Content extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      list: [],
+    };
+  }
 
-class ContentTable extends React.Component {
-	constructor(props) {
-	    super(props);
-	    this.state = {
-			list: [],
-	    };
-	}
+  componentDidMount() {
+    fetch(API)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.setState({list: data});
+      })
+  }
 
-	componentDidMount() {
-		fetch(API)
-		.then(response => response.json())
-		.then(data => {
-			console.log(data);
-			this.setState({ list: data });
-		})
-	}
-
-	render() {
-		return(
-			<div id="content">
-				<h4>Thread 1</h4>
-				<dl>
-					<dt>Subthread 1</dt>
-					<dd>
-						Definition of subthread 1
-					</dd>
-
-					<dt>Subthread 2</dt>
-					<dd>
-						Definition of subthread 2
-					</dd>
-
-					<dt>Subthread 3</dt>
-					<dd>
-						Definition of subthread 3
-					</dd>
-
-					<dt>Subthread 4</dt>
-					<dd>
-						Definition of subthread 4
-					</dd>
-
-					<dt>Subthread 5</dt>
-					<dd>
-						Definition of subthread 5
-					</dd>
-				</dl> {/* END OF THREAD 1 */}
-				
-				<h4>Thread 2</h4>
-				<dl>
-					<dt>Subthread 1</dt>
-					<dd>
-						Definition of subthread 1
-					</dd>
-
-					<dt>Subthread 2</dt>
-					<dd>
-						Definition of subthread 2
-					</dd>
-
-					<dt>Subthread 3</dt>
-					<dd>
-						Definition of subthread 3
-					</dd>
-
-					<dt>Subthread 4</dt>
-					<dd>
-						Definition of subthread 4
-					</dd>
-
-					<dt>Subthread 5</dt>
-					<dd>
-						Definition of subthread 5
-					</dd>
-				</dl> {/* END OF THREAD 2 */}
-				
-			</div>
-		)
-	}
+  render() {
+    return (
+      <div id="content">
+        {this.state.list.map(value => (
+          <div>
+            <h4>{value.title}</h4>
+            <dl>
+              {value.sub_thread.map(value1 => (
+                <div>
+                  <dt>{value1.sub_thread_title}</dt>
+                  <dd>
+                    {value1.description}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>))}
+      </div>
+    )
+  }
 }
 
 
-const content = props => (
-	{this.state.list.map(function (value){
-		<div id="content">
-			<h4>{value[0].title}</h4>
-			<dl>
-				<dt>Subthread 1</dt>
-				<dd>
-					Definition of subthread 1
-				</dd>
-
-				<dt>Subthread 2</dt>
-				<dd>
-					Definition of subthread 2
-				</dd>
-
-				<dt>Subthread 3</dt>
-				<dd>
-					Definition of subthread 3
-				</dd>
-
-				<dt>Subthread 4</dt>
-				<dd>
-					Definition of subthread 4
-				</dd>
-
-				<dt>Subthread 5</dt>
-				<dd>
-					Definition of subthread 5
-				</dd>
-			</dl> {/* END OF THREAD 1 */}
-			
-			<h4>{value[1].title}</h4>
-			<dl>
-				<dt>Subthread 1</dt>
-				<dd>
-					Definition of subthread 1
-				</dd>
-
-				<dt>Subthread 2</dt>
-				<dd>
-					Definition of subthread 2
-				</dd>
-
-				<dt>Subthread 3</dt>
-				<dd>
-					Definition of subthread 3
-				</dd>
-
-				<dt>Subthread 4</dt>
-				<dd>
-					Definition of subthread 4
-				</dd>
-
-				<dt>Subthread 5</dt>
-				<dd>
-					Definition of subthread 5
-				</dd>
-			</dl> {/* END OF THREAD 2 */}
-			
-		</div>
-
-
-	}
-	
-)
-
-export default content;
