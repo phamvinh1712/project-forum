@@ -6,7 +6,7 @@ from datetime import datetime
 
 
 class Post(models.Model):
-    tittle = models.CharField(max_length=50)
+    title = models.CharField(max_length=50)
     content = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     sub_thread = models.ForeignKey(SubThread, on_delete=models.CASCADE,related_name="post")
