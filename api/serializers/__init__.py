@@ -5,3 +5,4 @@ from .notification import NotificationSerializer
 from .report import ReportListSerializer
 from .post import PostSerializer, PostDetailSerializer
 from .comment import CommentSerializer
+from .thread import ThreadSerializer
