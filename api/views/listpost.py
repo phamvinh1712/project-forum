@@ -5,7 +5,7 @@ from rest_framework import pagination
 
 
 class ListPostDetailView(generics.ListAPIView):
-    serializer_class = PostSerializer
+    serializer_class = ListPostSerializer
     pagination_class = pagination.LimitOffsetPagination
 
     def get_queryset(self):
