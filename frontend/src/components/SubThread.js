@@ -17,8 +17,13 @@ import {lighten} from "@material-ui/core/styles/colorManipulator";
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import Pagination from "material-ui-flat-pagination";
 import CssBaseline from "@material-ui/core/CssBaseline";
+<<<<<<< HEAD
 import Button from '@material-ui/core/Button';
 import './SubThread.css';
+=======
+
+
+>>>>>>> Khoa
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -243,6 +248,7 @@ class EnhancedTable extends React.Component {
     page: 0,
     rowsPerPage: 10,
     title: "",
+<<<<<<< HEAD
     nextpage: '/api/subthread/' + this.props.match.params.handle.toString() + '/posts/?limit=1',
     offset: 0,
     total: 0,
@@ -250,6 +256,12 @@ class EnhancedTable extends React.Component {
 
   componentDidMount() {
     let url = '/api/subthread/' + this.props.match.params.handle.toString() + '/'
+=======
+  };
+
+  componentDidMount() {
+    let url = 'http://localhost:8000/api/subthread/' + this.props.match.params.handle.toString() + '/'
+>>>>>>> Khoa
     fetch(url, {
       method: 'GET',
     })
@@ -257,6 +269,7 @@ class EnhancedTable extends React.Component {
         return res.json();
       }).then(json => {
       this.setState({title: json.sub_thread_title})
+<<<<<<< HEAD
     })
     url = this.state.nextpage;
     fetch(url, {
@@ -268,6 +281,11 @@ class EnhancedTable extends React.Component {
       this.setState({Posts: json.results,nextpage: json.next,total: json.count})
 
     })
+=======
+      this.setState({Posts: json.post})
+    })
+
+>>>>>>> Khoa
 
   }
 
@@ -283,6 +301,7 @@ class EnhancedTable extends React.Component {
   };
 
   handleClick = (event, id) => {
+<<<<<<< HEAD
     // let temp =this.props.params.
     // this.props.history.push(/temp);
   };
@@ -300,6 +319,14 @@ class EnhancedTable extends React.Component {
       this.setState({offset});
     });
   }
+=======
+    console.log(id)
+  };
+
+  handleChangePage = (event, page) => {
+    this.setState({page});
+  };
+>>>>>>> Khoa
 
 
   render() {
@@ -336,7 +363,10 @@ class EnhancedTable extends React.Component {
                 .map(n => {
                   return (
                     <TableRow
+<<<<<<< HEAD
 
+=======
+>>>>>>> Khoa
                       onClick={event => this.handleClick(event, n.id)}
                       tabIndex={-1}
                       key={n.id}
@@ -349,7 +379,11 @@ class EnhancedTable extends React.Component {
                           <div> {n.title} <br/></div>
                           <div style={{
                             fontSize: "1rem",
+<<<<<<< HEAD
                           }}>  {n.user.username} </div>
+=======
+                          }}>  {n.ds} </div>
+>>>>>>> Khoa
                         </TableCell>
                         <TableCell numeric>{n.view_count}</TableCell>
                         <TableCell numeric>{n.create_time}</TableCell>
@@ -366,6 +400,7 @@ class EnhancedTable extends React.Component {
               </TableFooter>
             </TableBody>
           </Table>
+<<<<<<< HEAD
           <div className={"pagination"}>
             <MuiThemeProvider theme={PaginationTheme}>
 
@@ -382,6 +417,19 @@ class EnhancedTable extends React.Component {
           <Button variant="contained" color="secondary" className={'createpost'}>
             Create post
           </Button>
+=======
+          <MuiThemeProvider theme={PaginationTheme}>
+
+            <CssBaseline/>
+            <Pagination
+              limit={10}
+              offset={this.state.offset}
+              total={100}
+              onClick={(e, offset) => this.handleClick(offset)}
+              size={'large'}
+            />
+          </MuiThemeProvider>
+>>>>>>> Khoa
         </div>
 
       </Paper>

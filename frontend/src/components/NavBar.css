@@ -1,7 +1,15 @@
 .navbar {
     position: fixed;
+<<<<<<< HEAD
     width: 100%;
     background: rgb(85, 145, 146);
+=======
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgb(85, 145, 146);
+    height: 56px;
+>>>>>>> Khoa
 }
 
 .navbar_navigation {
@@ -21,18 +29,33 @@
 .search_bar {
     position: relative;
     left: 30rem;
+<<<<<<< HEAD
     width: 40%;
+=======
+    width: 45%;
+>>>>>>> Khoa
     font-size: 10px;
 
 }
 
 .navbar_button {
     position: relative;
+<<<<<<< HEAD
     left: 30rem;
     width: 40rem;
 }
 
 
+=======
+    left: 40rem;
+    color: white;
+}
+
+.navbar_button a {
+
+    color: white;
+}
+>>>>>>> Khoa
 
 .SignUp {
     position: relative;
@@ -42,7 +65,12 @@
 .btn {
     outline: none !important;
    box-shadow: none;
+<<<<<<< HEAD
 
+=======
+    background: rgb(85, 145, 146);
+    border-color: rgb(85, 145, 146);
+>>>>>>> Khoa
 }
 .btn:focus {
     outline: none !important;
@@ -53,9 +81,13 @@
     outline: none !important;
    box-shadow: none;
 
+<<<<<<< HEAD
 }
 
 .user_session {
     width: 70rem;
 }
 
+=======
+}
+>>>>>>> Khoa
