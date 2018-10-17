@@ -7,4 +7,4 @@ from ..serializers import UserDetailSerializer
 class SubThreadSerializer(serializers.ModelSerializer):
     class Meta:
         model = SubThread
-        fields = ('description', 'sub_thread_title')
+        fields = "__all__"

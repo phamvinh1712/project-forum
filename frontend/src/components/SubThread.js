@@ -265,9 +265,7 @@ class EnhancedTable extends React.Component {
       .then(res => {
         return res.json();
       }).then(json => {
-      this.setState({Posts: json.results})
-      this.setState({nextpage: json.next})
-      this.setState({total: json.count});
+      this.setState({Posts: json.results,nextpage: json.next,total: json.count})
 
     })
 
