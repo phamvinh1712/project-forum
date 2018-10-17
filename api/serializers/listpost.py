@@ -3,7 +3,7 @@ from ..models import Post
 from ..serializers import UserDetailSerializer
 
 
-class PostSerializer(serializers.ModelSerializer):
+class ListPostSerializer(serializers.ModelSerializer):
     user = UserDetailSerializer()
 
     class Meta:

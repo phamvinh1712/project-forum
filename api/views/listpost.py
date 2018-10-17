@@ -1,10 +1,10 @@
 from rest_framework import generics
 from ..models import Post
-from ..serializers import PostSerializer
+from ..serializers import ListPostSerializer
 from rest_framework import pagination
 
 
-class PostDetailView(generics.ListAPIView):
+class ListPostDetailView(generics.ListAPIView):
     serializer_class = PostSerializer
     pagination_class = pagination.LimitOffsetPagination
 
