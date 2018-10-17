@@ -19,6 +19,7 @@ import Pagination from "material-ui-flat-pagination";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Button from '@material-ui/core/Button';
 import './SubThread.css';
+import {Link} from "react-router-dom";
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -242,7 +243,7 @@ class EnhancedTable extends React.Component {
     Posts: [],
     page: 0,
     rowsPerPage: 10,
-    title: "",
+    thread: [],
     nextpage: '/api/subthread/' + this.props.match.params.handle.toString() + '/posts/',
     offset: 0,
     total: 0,
@@ -256,7 +257,7 @@ class EnhancedTable extends React.Component {
       .then(res => {
         return res.json();
       }).then(json => {
-      this.setState({title: json.sub_thread_title})
+      this.setState({thread: json})
     })
     url = this.state.nextpage;
     fetch(url, {
@@ -283,8 +284,8 @@ class EnhancedTable extends React.Component {
   };
 
   handleClick = (event, id) => {
-    // let temp =this.props.params.
-    // this.props.history.push(/temp);
+    let temp = "/posts/" + id;
+    this.props.history.push(temp);
   };
 
   handleChangePage(offset) {
@@ -295,9 +296,7 @@ class EnhancedTable extends React.Component {
       .then(res => {
         return res.json();
       }).then(json => {
-      this.setState({Posts: json.results})
-      this.setState({nextpage: json.next})
-      this.setState({offset});
+      this.setState({Posts: json.results,nextpage: json.next,offset})
     });
   }
 
@@ -311,7 +310,7 @@ class EnhancedTable extends React.Component {
     return (
 
       <Paper className={classes.root}>
-        <EnhancedTableToolbar title={this.state.title}/>
+        <EnhancedTableToolbar title={this.state.thread.sub_thread_title}/>
         <div style={{
           width: 1500,
           margin: '0 auto',
@@ -379,9 +378,12 @@ class EnhancedTable extends React.Component {
               />
             </MuiThemeProvider>
           </div>
-          <Button variant="contained" color="secondary" className={'createpost'}>
+          
+          <Link to="/createpost">
+          <Button variant="contained" color="secondary" >
             Create post
           </Button>
+          </Link>
         </div>
 
       </Paper>
