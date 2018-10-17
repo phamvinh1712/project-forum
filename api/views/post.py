@@ -17,3 +17,10 @@ class PostView(generics.RetrieveAPIView):
     queryset = Post.objects.all()
     serializer_class = PostDetailSerializer
 
+    def delete_post(id, req):
+    	try:
+    		req.method == 'POST':
+    		Post(req.POST, id=id).delete()
+    		console.log("Successful")
+    	except Exception as e 
+    		console.log(e)
