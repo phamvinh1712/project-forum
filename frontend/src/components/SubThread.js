@@ -18,7 +18,7 @@ import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import Pagination from "material-ui-flat-pagination";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Button from '@material-ui/core/Button';
-import './SubThread.css'; 
+import './SubThread.css';
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
