@@ -16,5 +16,6 @@ urlpatterns = [
     path('notifications/', NotificationListView.as_view()),
     path('create-post/', CreatePostView.as_view()),
     re_path(r'^posts/(?P<pk>[0-9]+)/$', PostView.as_view()),
-    path('report/', RepostListView.as_view())
+    re_path('report/', RepostListView.as_view()),       
+    path('create-report/', CreateReport.createpost)   
 ]
