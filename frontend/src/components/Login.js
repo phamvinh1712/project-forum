@@ -40,10 +40,21 @@ export default class Login extends Component {
       .then(json => {
         localStorage.setItem('token', json.key);
       });
+    fetch('http://localhost:8000/api/user-detail/', {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Token ' + localStorage.getItem('token').toString()
+      }
+    })
+    .then(res => {
+      return res.json();
+    }).then(json => {
+      localStorage.setItem('user_name', json.username);
+      })
     if(localStorage.getItem('token')===null) {
             console.log("failed");
         } else {
-  this.props.history.push('/navbar');
+        this.props.history.push('/navbar');
 
       };
   }
