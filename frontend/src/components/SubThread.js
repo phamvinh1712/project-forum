@@ -136,12 +136,13 @@ const MultiCelltheme = createMuiTheme({
     MuiTableCell: {
       // Name of the rule
       head: {
-        fontSize: "4rem",
+        fontSize: "3rem",
+        height: 100,
         color: 'black',
 
       },
       numeric: {
-        color: 'blue',
+        color: 'black',
         height: 100,
         fontSize: "2rem",
         textAlign: "left",
@@ -344,7 +345,7 @@ class EnhancedTable extends React.Component {
                     >
                       <MuiThemeProvider theme={MultiCelltheme}>
                         <TableCell numeric>
-                          <div><img src={n.user.profile.avatar} width="20" height="40"/></div>
+                          <div><img src={n.user.profile.avatar} width="40" height="40"/></div>
                         </TableCell>
                         <TableCell numeric component="th" scope="row">
                           <div> {n.title} <br/></div>

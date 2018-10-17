@@ -8,7 +8,7 @@ class HashtagListView(generics.ListCreateAPIView):
     serializer_class = HashtagListSerializer
 
     def perform_create(self, serializer):
-        serializer.save(create_user=self.request.user.profile)
+        serializer.save(create_user=self.request.user)
 
 
 

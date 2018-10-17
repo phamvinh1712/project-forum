@@ -1,15 +1,17 @@
 import React, {Component} from "react";
-import {Button, FormGroup, FormControl, ControlLabel} from "react-bootstrap";
-import { Redirect } from "react-router-dom";
+import {Button, FormGroup, FormControl, ControlLabel, Modal, ModalBody} from "react-bootstrap";
+import {Redirect} from "react-router-dom";
 import "./Login.css";
-// gin page
+
 export default class Login extends Component {
   constructor(props) {
     super(props);
-// valu loe of data
+    this.handleHide = this.handleHide.bind(this);
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      loginInfo: "",
+      show: false
     };
   }
 
@@ -34,29 +36,23 @@ export default class Login extends Component {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({"email":email,"password":pass})
+      body: JSON.stringify({"email": email, "password": pass})
     })
       .then(res => res.json())
       .then(json => {
-        localStorage.setItem('token', json.key);
+        if (json.key) {
+          localStorage.setItem('token', json.key);
+          this.setState({loginInfo: 'You are now login', show: true});
+          this.props.handleToken()
+        }
+        if (json.non_field_errors) {
+          this.setState({loginInfo: json.non_field_errors, show: true})
+        }
       });
-    fetch('http://localhost:8000/api/user-detail/', {
-      method: 'GET',
-      headers: {
-        'Authorization': 'Token ' + localStorage.getItem('token').toString()
-      }
-    })
-    .then(res => {
-      return res.json();
-    }).then(json => {
-      localStorage.setItem('user_name', json.username);
-      })
-    if(localStorage.getItem('token')===null) {
-            console.log("failed");
-        } else {
-        this.props.history.push('/navbar');
+  }
 
-      };
+  handleHide() {
+    this.setState({show: false});
   }
 
 // main screen
@@ -90,6 +86,16 @@ export default class Login extends Component {
             Login
           </Button>
         </form>
+        <Modal
+          show={this.state.show}
+          onHide={this.handleHide}
+          container={this}>
+          <Modal.Header closeButton>
+            <Modal.Title>Login info</Modal.Title>
+          </Modal.Header>
+
+          <Modal.Body>{this.state.loginInfo}</Modal.Body>
+        </Modal>
       </div>
     );
   }

@@ -26,9 +26,6 @@ SECRET_KEY = 'wq3ux=*4s$lat_gfn-rf*1@3ne%%=aehn3vpgyxa2awaokwwj#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -161,10 +158,6 @@ REST_FRAMEWORK = {
     )
 }
 django_heroku.settings(locals())
-AUTHENTICATION_BACKENDS = (
-    "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
-)
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587

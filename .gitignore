@@ -70,7 +70,7 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 ### PyCharm Patch ###
-# Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
+# Comments Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
 
 # *.iml
 # modules.xml
@@ -94,7 +94,7 @@ ENV/
 env.bak/
 venv.bak/
 node_modules/
-
+/frontend/package-lock.json
 
 # misc
 .DS_Store
@@ -109,3 +109,4 @@ yarn-error.log*
 *.log
 local_settings.py
 db.sqlite3
+__pycache__/
