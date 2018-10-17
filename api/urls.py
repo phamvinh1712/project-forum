@@ -17,5 +17,6 @@ urlpatterns = [
     path('create-post/', CreatePostView.as_view()),
     re_path(r'^posts/(?P<pk>[0-9]+)/$', PostView.as_view()),
     re_path('report/', RepostListView.as_view()),       
-    path('create-report/', CreateReport.createpost)
+    path('create-report/', CreateReport.createpost())
+    path('delete-post/',DeletePost.delete_post())
 ]
