@@ -243,7 +243,7 @@ class EnhancedTable extends React.Component {
     page: 0,
     rowsPerPage: 10,
     title: "",
-    nextpage: '/api/subthread/' + this.props.match.params.handle.toString() + '/posts/?limit=1',
+    nextpage: '/api/subthread/' + this.props.match.params.handle.toString() + '/posts/',
     offset: 0,
     total: 0,
   };
@@ -288,7 +288,7 @@ class EnhancedTable extends React.Component {
   };
 
   handleChangePage(offset) {
-    let url = '/api/subthread/' + this.props.match.params.handle.toString() + '/posts/?limit=1&offset=' + (offset / 10).toString();
+    let url = '/api/subthread/' + this.props.match.params.handle.toString() + '/posts/?page=' + (offset/10+1).toString();
     fetch(url, {
       method: 'GET',
     })
@@ -373,7 +373,7 @@ class EnhancedTable extends React.Component {
               <Pagination
                 limit={10}
                 offset={this.state.offset}
-                total={this.state.total * 10}
+                total={this.state.total}
                 onClick={(e, offset) => this.handleChangePage(offset)}
                 size={'large'}
               />
