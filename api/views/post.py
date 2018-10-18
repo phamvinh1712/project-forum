@@ -1,26 +1,14 @@
 from rest_framework import generics
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 from ..models import Post
-from ..serializers import PostSerializer, PostDetailSerializer
-from rest_framework.permissions import IsAuthenticated
+from ..serializers import PostSerializer
 
-
-class CreatePostView(generics.CreateAPIView):
+class PostView(generics.ListCreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = IsAuthenticated,
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
-
-class PostView(generics.RetrieveAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostDetailSerializer
-
-    def delete_post(id, req):
-    	try:
-    		req.method == 'POST':
-    		Post(req.POST, id=id).delete()
-    		console.log("Successful")
-    	except Exception as e 
-    		console.log(e)
+def delete_post(req, id):
+		instance = Post.objects.get(pk=id)
+		#instance = get_object_or_404(Post, id=id)
+		instance.delete()
