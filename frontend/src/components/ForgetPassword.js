@@ -28,8 +28,10 @@ export default class ForgetPassword extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({"email": email})
-    })
-    this.setState({request:true});
+    }).then(res => res.json())
+      .then(json => {
+            this.setState({request:true});
+      });
 
   };
 

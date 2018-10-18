@@ -8,7 +8,8 @@ import SubThreadDisplay from "./components/SubThread";
 import CreatePost from "./components/CreatePost";
 import Post from "./components/Post";
 import Content from "./components/Content";
-
+import ForgetPassword from "./components/ForgetPassword";
+import Reset from "./components/Reset";
 
 class App extends Component {
   constructor(props) {

@@ -38,13 +38,13 @@ class Register extends Component {
   validateForm() {
     return (
       this.state.email.length > 0 &&
-      this.state.password.length > 4 &&
+      this.state.password.length > 7 &&
       this.state.password === this.state.confirmPassword
     );
   }
 
   passwordValidation() {
-    if ((this.state.password.length > 4) &&
+    if ((this.state.password.length > 7) &&
       (this.state.password === this.state.confirmPassword)) {
       return "success"
     }
