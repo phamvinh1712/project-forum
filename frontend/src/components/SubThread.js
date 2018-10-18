@@ -378,7 +378,7 @@ class EnhancedTable extends React.Component {
               />
             </MuiThemeProvider>
           </div>
-          
+
           <Link to="/createpost">
           <Button variant="contained" color="secondary" >
             Create post

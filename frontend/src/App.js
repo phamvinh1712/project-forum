@@ -8,7 +8,8 @@ import SubThreadDisplay from "./components/SubThread";
 import CreatePost from "./components/CreatePost";
 import Post from "./components/Post";
 import Content from "./components/Content";
-
+import ForgetPassword from "./components/ForgetPassword";
+import Reset from "./components/Reset";
 
 class App extends Component {
   constructor(props) {
@@ -41,12 +42,15 @@ class App extends Component {
         <div>
           <NavBar user={this.state.user}/>
           <div>
-          <Route exact path="/" component={Content}/>
-          <Route path="/login" render={() => <Login handleToken={this.handleToken}/>}/>
-          <Route path="/register" component={Register}/>
-          <Route path="/subthread/:handle" component={SubThreadDisplay}/>
-          <Route path="/createpost" component={CreatePost}/>
-          <Route path="/posts/:id" component={Post}/>
+            <Route exact path="/" component={Content}/>
+            <Route path="/login" render={() => <Login handleToken={this.handleToken}/>}/>
+            <Route path="/register" component={Register}/>
+            <Route path="/subthread/:handle" component={SubThreadDisplay}/>
+            <Route path="/createpost" component={CreatePost}/>
+            <Route path="/posts/:id" component={Post}/>
+            <Route path="/forgetpassword" component={ForgetPassword}/>
+            <Route path="/reset/:uid/:token" component={Reset}/>
+
           </div>
 
         </div>
