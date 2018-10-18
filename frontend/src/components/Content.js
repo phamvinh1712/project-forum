@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './screen.css';
-const API = 'api/thread/';
+const API = '/api/thread/';
 
 export default class Content extends React.Component {
   constructor(props) {
