@@ -21,4 +21,5 @@ urlpatterns = [
     path('notifications/', NotificationListView.as_view()),
     re_path(r'^subthread/(?P<pk>[0-9]+)/posts/$', ListPostDetailView.as_view(), name="postlist-detail"),
 
+
 ]

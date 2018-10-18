@@ -1,7 +1,7 @@
 import React, {Component} from "react";
-import {Button, FormGroup, FormControl, ControlLabel, Modal, ModalBody} from "react-bootstrap";
-import {Redirect} from "react-router-dom";
+import {Button, FormGroup, FormControl, ControlLabel, Modal, ModalBody,HelpBlock} from "react-bootstrap";
 import "./Login.css";
+import {Link} from 'react-router-dom';
 
 export default class Login extends Component {
   constructor(props) {
@@ -76,6 +76,7 @@ export default class Login extends Component {
               onChange={this.handleChange}
               type="password"
             />
+            <Link to = "/ForgetPassword" ><HelpBlock bsClass ="help-blockLogin"> Forget your password?</HelpBlock> </Link>
           </FormGroup>
           <Button
             block
