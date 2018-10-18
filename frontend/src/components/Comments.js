@@ -18,18 +18,18 @@ export default class Comments extends Component {
       avatar: props.comment.user.profile.avatar,
       create_time: props.comment.create_time,
       content: props.comment.content,
-      replies :[],
-      reply:""
+      replies: [],
+      reply: ""
 
     };
   }
 
-    handleChange = event => {
+  handleChange = event => {
     this.setState({
       reply: event.target.value
     });
   }
- handleSubmit = event => {
+  handleSubmit = event => {
     event.preventDefault();
     const reply = this.state.reply;
 
@@ -39,13 +39,13 @@ export default class Comments extends Component {
         'Content-Type': 'application/json',
         'Authorization': 'Token ' + localStorage.getItem('token').toString()
       },
-      body: JSON.stringify({"content": reply, "comment":this.state.id})
+      body: JSON.stringify({"content": reply, "comment": this.state.id})
     })
-    .then(res => res.json())
+      .then(res => res.json())
       .then(json => {
-        let newReply=this.state.replies
+        let newReply = this.state.replies
         newReply.push(json)
-        this.setState({replies: newReply,reply:""})
+        this.setState({replies: newReply, reply: ""})
       });
   }
   handleReplyClick = () => {
@@ -84,6 +84,9 @@ export default class Comments extends Component {
             <Icon link name='triangle down'/>
             5
           </Comment.Action>
+          <button type="button" className="btn btn-default btn-sm align-left">
+            <span className="glyphicon glyphicon-flag" aria-hidden="true"></span>
+          </button>
         </Comment.Actions>
       </Comment.Content>
 
@@ -107,23 +110,27 @@ export default class Comments extends Component {
                     <Icon link name='triangle down'/>
                     5
                   </Comment.Action>
+                   <button type="button" className="btn btn-default btn-sm align-left">
+                  <span className="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                </button>
                 </Comment.Actions>
+
               </Comment.Content>
             </Comment>
           )}
-                       <form onSubmit={this.handleSubmit}>
-              <FormGroup controlId="reply">
-                <FormControl
-                  value={this.state.reply}
-                  onChange={this.handleChange}
-                  componentClass="textarea"/>
-              </FormGroup>
-              <Button
-                disabled={!(this.state.reply.length >0)}
-                type="submit">
-                Add reply
-              </Button>
-            </form>
+          <form onSubmit={this.handleSubmit}>
+            <FormGroup controlId="reply">
+              <FormControl
+                value={this.state.reply}
+                onChange={this.handleChange}
+                componentClass="textarea"/>
+            </FormGroup>
+            <Button
+              disabled={!(this.state.reply.length > 0)}
+              type="submit">
+              Add reply
+            </Button>
+          </form>
         </Comment.Group>
 
       </Collapse>

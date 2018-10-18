@@ -85,14 +85,19 @@ class Post extends Component {
             <div dangerouslySetInnerHTML={{__html: this.state.content}}/>
 
           </Container>
+           <button type="button" className="btn btn-danger">
+            <span className="glyphicon glyphicon-flag" aria-hidden="true"></span> Report
+          </button>
         </Segment>
         <Segment>
+
           <Comment.Group threaded>
             <Header as='h3' dividing>
               Comments
             </Header>
             {this.state.comments.map(value =>
               <Comments comment={value}/>
+
             )}
              <form onSubmit={this.handleSubmit}>
               <FormGroup controlId="comment">
