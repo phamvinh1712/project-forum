@@ -13,7 +13,7 @@ class CreatePostView(generics.CreateAPIView):
         serializer.save(user=self.request.user)
 
 
-class EditPostView(generics.RetrieveUpdateDestroyAPIView):
+class EditPostView(generics.UpdateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = IsAuthenticated,
