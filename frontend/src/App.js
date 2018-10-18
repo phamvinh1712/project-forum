@@ -40,7 +40,7 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <NavBar user={this.state.user}/>
-          <div className="root-content">
+          <div>
           <Route exact path="/" component={Content}/>
           <Route path="/login" render={() => <Login handleToken={this.handleToken}/>}/>
           <Route path="/register" component={Register}/>

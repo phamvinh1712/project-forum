@@ -1,4 +1,5 @@
-import { Comment, Icon, Segment, Header, Image, Container, Form, Button} from 'semantic-ui-react';
+import {Comment, Segment, Header, Image, Container} from 'semantic-ui-react';
+import {Button, FormGroup, FormControl, ControlLabel} from "react-bootstrap";
 import {Component} from "react";
 import "./Post.css"
 import React from "react";
@@ -13,12 +14,41 @@ class Post extends Component {
       username: "",
       avatar: "",
       content: "",
-      comments: []
+      comments: [],
+      comment : ""
     };
   }
 
-    componentDidMount() {
-    let url = 'http://localhost:8000/api/posts/' + this.props.match.params.id.toString() + '/'
+  handleChange = event => {
+    this.setState({
+      comment: event.target.value
+    });
+  }
+
+// function handle submit onclick event
+  handleSubmit = event => {
+    event.preventDefault();
+    const comment = this.state.comment;
+
+    fetch('/api/create-comment/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Token ' + localStorage.getItem('token').toString()
+      },
+      body: JSON.stringify({"content": comment, "post":this.props.match.params.id})
+    })
+    .then(res => res.json())
+      .then(json => {
+        let newComment=this.state.comments
+        newComment.push(json)
+        this.setState({comments: newComment,comment:""})
+      });
+  }
+
+
+  componentDidMount() {
+    let url = '/api/posts/' + this.props.match.params.id.toString() + '/'
     fetch(url, {
       method: 'GET',
     })
@@ -36,20 +66,21 @@ class Post extends Component {
 
 
   }
+
   render() {
     return (
       <div className="post">
         <Segment vertical>
 
-            <Header as='h2'>{this.state.title}</Header>
+          <Header as='h2'>{this.state.title}</Header>
 
         </Segment>
         <Segment vertical>
           <p>Posted by </p>
-         <Header as='h3'>
-          <Image circular src={this.state.avatar} avatar />
+          <Header as='h3'>
+            <Image circular src={this.state.avatar} avatar/>
             {this.state.username}
-            </Header>
+          </Header>
           <Container fluid>
             <div dangerouslySetInnerHTML={{__html: this.state.content}}/>
 
@@ -61,16 +92,27 @@ class Post extends Component {
               Comments
             </Header>
             {this.state.comments.map(value =>
-              <Comments comment = {value}/>
+              <Comments comment={value}/>
             )}
-            <Form reply>
-              <Form.TextArea/>
-              <Button content='Add Comment' labelPosition='left' icon='edit' primary/>
-            </Form>
+             <form onSubmit={this.handleSubmit}>
+              <FormGroup controlId="comment">
+                <ControlLabel>Comment</ControlLabel>
+                <FormControl
+                  value={this.state.comment}
+                  onChange={this.handleChange}
+                  componentClass="textarea"/>
+              </FormGroup>
+              <Button
+                disabled={!(this.state.comment.length >0)}
+                type="submit">
+                Add comment
+              </Button>
+            </form>
           </Comment.Group>
         </Segment>
       </div>
     );
   }
 }
+
 export default Post;
