@@ -1,9 +1,21 @@
 import {Comment, Segment, Header, Image, Container} from 'semantic-ui-react';
-import {Button, FormGroup, FormControl, ControlLabel} from "react-bootstrap";
+import {Button, FormGroup, FormControl, ControlLabel, DropdownButton, MenuItem} from "react-bootstrap";
 import {Component} from "react";
 import "./Post.css"
+import { withStyles } from '@material-ui/core/styles';
 import React from "react";
+import Chip from '@material-ui/core/Chip';
 import Comments from './Comments' ;
+  const styles = theme => ({
+  root: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+  },
+  chip: {
+    margin: theme.spacing.unit,
+  },
+});
 
 class Post extends Component {
   constructor(props) {
@@ -15,9 +27,11 @@ class Post extends Component {
       avatar: "",
       content: "",
       comments: [],
-      comment : ""
+      comment: "",
+      hashtags: [],
     };
   }
+
 
   handleChange = event => {
     this.setState({
@@ -36,13 +50,13 @@ class Post extends Component {
         'Content-Type': 'application/json',
         'Authorization': 'Token ' + localStorage.getItem('token').toString()
       },
-      body: JSON.stringify({"content": comment, "post":this.props.match.params.id})
+      body: JSON.stringify({"content": comment, "post": this.props.match.params.id})
     })
-    .then(res => res.json())
+      .then(res => res.json())
       .then(json => {
-        let newComment=this.state.comments
+        let newComment = this.state.comments
         newComment.push(json)
-        this.setState({comments: newComment,comment:""})
+        this.setState({comments: newComment, comment: ""})
       });
   }
 
@@ -55,12 +69,14 @@ class Post extends Component {
       .then(res => {
         return res.json();
       }).then(json => {
+        console.log(json);
       this.setState({
         title: json.title,
         content: json.content,
         avatar: json.user.profile.avatar,
         username: json.user.username,
-        comments: json.comments
+        comments: json.comments,
+        hashtags: json.hashtags
       })
     })
 
@@ -68,7 +84,9 @@ class Post extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
+
       <div className="post">
         <Segment vertical>
 
@@ -76,6 +94,17 @@ class Post extends Component {
 
         </Segment>
         <Segment vertical>
+          <div style={{float: 'right',margin:'10px'}}>
+          <DropdownButton pullRight
+          >
+
+            <MenuItem eventKey="1" onClick={()=>{
+              let temp = "/edit-post/:id".replace(":id", this.props.match.params.id);
+              this.props.history.push(temp);
+            }}>Edit</MenuItem>
+            <MenuItem eventKey="2">Delete</MenuItem>
+          </DropdownButton>
+          </div>
           <p>Posted by </p>
           <Header as='h3'>
             <Image circular src={this.state.avatar} avatar/>
@@ -83,11 +112,14 @@ class Post extends Component {
           </Header>
           <Container fluid>
             <div dangerouslySetInnerHTML={{__html: this.state.content}}/>
-
-          </Container>
-           <button type="button" className="btn btn-danger">
+   <button type="button" className="btn btn-danger" style={{float: 'right',margin:'5px'}}>
             <span className="glyphicon glyphicon-flag" aria-hidden="true"></span> Report
           </button>
+            <div> {this.state.hashtags.map(value =>
+               <Chip label={value.name} className={classes.chip}/>
+            )}</div>
+          </Container>
+
         </Segment>
         <Segment>
 
@@ -97,9 +129,8 @@ class Post extends Component {
             </Header>
             {this.state.comments.map(value =>
               <Comments comment={value}/>
-
             )}
-             <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit}>
               <FormGroup controlId="comment">
                 <ControlLabel>Comment</ControlLabel>
                 <FormControl
@@ -108,7 +139,7 @@ class Post extends Component {
                   componentClass="textarea"/>
               </FormGroup>
               <Button
-                disabled={!(this.state.comment.length >0)}
+                disabled={!(this.state.comment.length > 0)}
                 type="submit">
                 Add comment
               </Button>
@@ -120,4 +151,4 @@ class Post extends Component {
   }
 }
 
-export default Post;
+export default withStyles(styles)(Post);

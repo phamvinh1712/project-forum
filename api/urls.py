@@ -23,4 +23,5 @@ urlpatterns = [
     re_path(r'^comments/(?P<pk>[0-9]+)/replies/$', ReplyView.as_view()),
     path('create-comment/', CreateCommentView.as_view()),
     path('create-reply/', CreateReplyView.as_view()),
+    re_path(r'^edit-post/(?P<pk>[0-9]+)/$', EditPostView.as_view()),
 ]
