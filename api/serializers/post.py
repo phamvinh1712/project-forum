@@ -2,6 +2,7 @@ from rest_framework import serializers
 from ..models import Post
 from .user import UserDetailSerializer
 from .comment import CommentSerializer
+from .hashtag import HashtagListSerializer
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -13,6 +14,7 @@ class PostSerializer(serializers.ModelSerializer):
 class PostDetailSerializer(serializers.ModelSerializer):
     user = UserDetailSerializer()
     comments = CommentSerializer(many=True)
+    hashtags = HashtagListSerializer(many=True)
 
     class Meta:
         model = Post

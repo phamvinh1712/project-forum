@@ -1,10 +1,25 @@
-@media all and (min-width: 480px) {
-  .CreatePost {
-    padding: 40px 0;
-  }
 
-  .CreatePost {
+.CreatePost {
+    padding: 40px 0;
+}
+
+.CreatePost {
     margin: 30px;
-    max-width: 320px;
-  }
+    max-width: 800px;
+}
+.Quill {
+    min-height: 500px;
+}
+.Cancelbutton{
+    width: 30%;
+    float: left;
+    margin: 5px;
+    color: #4f5b69;
+
+}
+.Postbutton{
+    width: 30%;
+    float: left;
+    margin: 5px;
+
 }

@@ -1,11 +1,12 @@
 import React, {Component} from "react";
 import {Button, FormGroup, FormControl, ControlLabel} from "react-bootstrap";
-import "./CreatePost.css";
+
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import {Link} from "react-router-dom";
-// CreatePost Page
-export default class CreatePost extends Component {
+
+// Edit Post Page
+export default class EditPost extends Component {
   constructor(props) {
     super(props)
     this.state = {text: '', title: ''} // You can also pass a Quill Delta here
@@ -21,29 +22,57 @@ export default class CreatePost extends Component {
     this.setState({title: event.target.value})
   }
 
+  componentDidMount() {
+    let url = '/api/posts/' + this.props.match.params.id.toString() + '/'
+    fetch(url, {
+      method: 'GET',
+    })
+      .then(res => {
+        return res.json();
+      }).then(json => {
+      console.log(json)
+      this.setState({
+        sub_thread: json.sub_thread,
+        view_count: json.view_count,
+        title: json.title,
+        text: json.content
+      })
+    })
+
+
+  }
+
 // function handle submit onclick event
   handleSubmit = event => {
     event.preventDefault();
     const title = this.state.title;
     const text = this.state.text;
-    fetch('/api/create-post/', {
-      method: 'POST',
+    fetch('/api/edit-post/:id/'.replace(":id", this.props.match.params.id), {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Token ' + localStorage.getItem('token').toString()
       },
-      body: JSON.stringify({"title": title, "content": text, "sub_thread": this.props.match.params.handle})
+      body: JSON.stringify({
+        "title": title,
+        "content": text,
+        "sub_thread": this.state.sub_thread,
+        "view_count": this.state.view_count
+      })
     })
-      .then(res => res.json())
-      .then(json => {
-        console.log(json);
-      });
+      .then(function (res) {
+        if (res.ok) {
+          let temp = "/posts/:id".replace(":id", this.props.match.params.id);
+          this.props.history.push(temp);
+        }
+      }.bind(this))
+
   }
 
 // main screen
   render() {
     return (
-      <div className="CreatePost">
+      <div className="EditPost">
         <form onSubmit={this.handleSubmit}>
           <FormGroup controlId="title" bsSize="large">
             <ControlLabel>Tittle</ControlLabel>
@@ -59,7 +88,7 @@ export default class CreatePost extends Component {
 
             <ReactQuill
               value={this.state.text}
-              modules={CreatePost.modules}
+              modules={EditPost.modules}
               onChange={this.handleChange}>
 
             </ReactQuill>
@@ -76,14 +105,14 @@ export default class CreatePost extends Component {
                   bsSize="small"
                   type="submit"
           >
-            Post
+            Save
           </Button>
         </form>
       </div>
     );
   }
 }
-CreatePost.modules = {
+EditPost.modules = {
   toolbar: [
     [{'header': '1'}, {'header': '2'}, {'font': []}],
     [{size: []}],
