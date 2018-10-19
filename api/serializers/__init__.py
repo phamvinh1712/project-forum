@@ -8,8 +8,3 @@ from .comment import CommentSerializer,CreateCommentSerializer
 from .thread import ThreadSerializer
 from .post import PostSerializer, PostDetailSerializer, PostReportSerializer
 from .reply import ReplySerializer, CreateReplySerializer
-from .report import ReportListSerializer
-from .comment import CommentSerializer, CreateCommentSerializer
-from .thread import ThreadSerializer
-from .post import PostSerializer, PostDetailSerializer
-from .reply import ReplySerializer, CreateReplySerialize
