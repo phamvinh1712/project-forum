@@ -7,7 +7,7 @@ html
 	font: normal 12px "Trebuchet MS", "Lucida Grande", Verdana, Georgia, Sans-Serif;
 }
 
-/* Links */
+ /*Links */
 
 a:link { text-decoration: none; color: #7799bb; }
 
@@ -15,7 +15,7 @@ a:visited { text-decoration: none; color: #557799; }
 
 a:hover, a:active { color: #dd5555; }
 
-/* Html Elements */
+ /*Html Elements */
 
 h1, h2, h3, h5, h6 { font-weight: normal; margin: 0; padding: 10px 0; color: #779955; }
 

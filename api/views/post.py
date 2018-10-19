@@ -8,9 +8,18 @@ class CreatePostView(generics.CreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = IsAuthenticated,
-
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+class DeletePost(generics.DestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = IsAuthenticated,
+
+class EditPostView(generics.UpdateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = IsAuthenticated,
 
 
 class PostView(generics.RetrieveAPIView):

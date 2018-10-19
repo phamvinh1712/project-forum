@@ -10,7 +10,9 @@ import Post from "./components/Post";
 import Content from "./components/Content";
 import Admin from "./components/Admin_page";
 import {ToastContainer} from "react-toastify";
-
+import EditPost from "./components/EditPost";
+import ForgetPassword from "./components/ForgetPassword";
+import Reset from "./components/Reset";
 
 class App extends Component {
   constructor(props) {
@@ -46,9 +48,12 @@ class App extends Component {
             <Route exact path="/" component={Content}/>
             <Route path="/login" render={() => <Login handleToken={this.handleToken}/>}/>
             <Route path="/register" component={Register}/>
-            <Route path="/subthread/:handle" component={SubThreadDisplay}/>
-            <Route path="/createpost" component={CreatePost}/>
+            <Route exact path="/subthread/:handle" component={SubThreadDisplay}/>
+            <Route path="/subthread/:handle/createpost/" component={CreatePost}/>
             <Route path="/posts/:id" component={Post}/>
+            <Route path="/forgetpassword" component={ForgetPassword}/>
+            <Route path="/reset/:uid/:token" component={Reset}/>
+            <Route path="/edit-post/:id" component={EditPost}/>
             <Route path="/admin" component={Admin}/>
           </div>
           <ToastContainer autoClose={false}/>
