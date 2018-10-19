@@ -8,16 +8,12 @@ from datetime import datetime
 
 
 class Report(models.Model):
-    REPORT_TYPE = (
-        ('SPAM', 'Spam'),
-        ('LAN', 'Language violation'),
-    )
     STATUS = {
         ('SOLVED', 'Report solved'),
         ('WAITING', 'Waiting')
     }
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    type = models.CharField(max_length=4, choices=REPORT_TYPE)
+    reason = models.CharField(max_length=250,null = True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True)
     reply = models.ForeignKey(Reply, on_delete=models.CASCADE, null=True)

@@ -8,12 +8,15 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         exclude = ('user',)
-
-
+        
 class PostDetailSerializer(serializers.ModelSerializer):
     user = UserDetailSerializer()
     comments = CommentSerializer(many=True)
+    hashtags = HashtagListSerializer(many=True)
 
+
+class PostReportSerializer(serializers.ModelSerializer):
+    user = UserDetailSerializer()
     class Meta:
         model = Post
         fields = '__all__'
