@@ -17,8 +17,9 @@ import {lighten} from "@material-ui/core/styles/colorManipulator";
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import Pagination from "material-ui-flat-pagination";
 import CssBaseline from "@material-ui/core/CssBaseline";
-
-
+import Button from '@material-ui/core/Button';
+import './SubThread.css';
+import {Link} from "react-router-dom";
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -242,21 +243,32 @@ class EnhancedTable extends React.Component {
     Posts: [],
     page: 0,
     rowsPerPage: 10,
-    title: "",
+    thread: [],
+    nextpage: '/api/subthread/' + this.props.match.params.handle.toString() + '/posts/',
+    offset: 0,
+    total: 0,
   };
 
   componentDidMount() {
-    let url = 'http://localhost:8000/api/subthread/' + this.props.match.params.handle.toString() + '/'
+    let url = '/api/subthread/' + this.props.match.params.handle.toString() + '/'
     fetch(url, {
       method: 'GET',
     })
       .then(res => {
         return res.json();
       }).then(json => {
-      this.setState({title: json.sub_thread_title})
-      this.setState({Posts: json.post})
+      this.setState({thread: json})
     })
+    url = this.state.nextpage;
+    fetch(url, {
+      method: 'GET',
+    })
+      .then(res => {
+        return res.json();
+      }).then(json => {
+      this.setState({Posts: json.results,nextpage: json.next,total: json.count})
 
+    })
 
   }
 
@@ -272,12 +284,21 @@ class EnhancedTable extends React.Component {
   };
 
   handleClick = (event, id) => {
-    console.log(id)
+    let temp = "/posts/" + id;
+    this.props.history.push(temp);
   };
 
-  handleChangePage = (event, page) => {
-    this.setState({page});
-  };
+  handleChangePage(offset) {
+    let url = '/api/subthread/' + this.props.match.params.handle.toString() + '/posts/?page=' + (offset/10+1).toString();
+    fetch(url, {
+      method: 'GET',
+    })
+      .then(res => {
+        return res.json();
+      }).then(json => {
+      this.setState({Posts: json.results,nextpage: json.next,offset})
+    });
+  }
 
 
   render() {
@@ -289,7 +310,7 @@ class EnhancedTable extends React.Component {
     return (
 
       <Paper className={classes.root}>
-        <EnhancedTableToolbar title={this.state.title}/>
+        <EnhancedTableToolbar title={this.state.thread.sub_thread_title}/>
         <div style={{
           width: 1500,
           margin: '0 auto',
@@ -314,6 +335,7 @@ class EnhancedTable extends React.Component {
                 .map(n => {
                   return (
                     <TableRow
+
                       onClick={event => this.handleClick(event, n.id)}
                       tabIndex={-1}
                       key={n.id}
@@ -326,7 +348,7 @@ class EnhancedTable extends React.Component {
                           <div> {n.title} <br/></div>
                           <div style={{
                             fontSize: "1rem",
-                          }}>  {n.ds} </div>
+                          }}>  {n.user.username} </div>
                         </TableCell>
                         <TableCell numeric>{n.view_count}</TableCell>
                         <TableCell numeric>{n.create_time}</TableCell>
@@ -343,17 +365,25 @@ class EnhancedTable extends React.Component {
               </TableFooter>
             </TableBody>
           </Table>
-          <MuiThemeProvider theme={PaginationTheme}>
+          <div className={"pagination"}>
+            <MuiThemeProvider theme={PaginationTheme}>
 
-            <CssBaseline/>
-            <Pagination
-              limit={10}
-              offset={this.state.offset}
-              total={100}
-              onClick={(e, offset) => this.handleClick(offset)}
-              size={'large'}
-            />
-          </MuiThemeProvider>
+              <CssBaseline/>
+              <Pagination
+                limit={10}
+                offset={this.state.offset}
+                total={this.state.total}
+                onClick={(e, offset) => this.handleChangePage(offset)}
+                size={'large'}
+              />
+            </MuiThemeProvider>
+          </div>
+          
+          <Link to={`${this.props.match.url}createpost/`}>
+          <Button variant="contained" color="secondary" >
+            Create post
+          </Button>
+          </Link>
         </div>
 
       </Paper>
