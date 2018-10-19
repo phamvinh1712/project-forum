@@ -12,9 +12,8 @@ class PostSerializer(serializers.ModelSerializer):
 class PostDetailSerializer(serializers.ModelSerializer):
     user = UserDetailSerializer()
     comments = CommentSerializer(many=True)
-    class Meta:
-        model = Post
-        fields = '__all__'
+    hashtags = HashtagListSerializer(many=True)
+
 
 class PostReportSerializer(serializers.ModelSerializer):
     user = UserDetailSerializer()

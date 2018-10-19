@@ -16,6 +16,11 @@ class DeletePost(generics.DestroyAPIView):
     serializer_class = PostSerializer
     permission_classes = IsAuthenticated,
 
+class EditPostView(generics.UpdateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = IsAuthenticated,
+    
 class PostView(generics.RetrieveAPIView):
     queryset = Post.objects.all()
     serializer_class = PostDetailSerializer

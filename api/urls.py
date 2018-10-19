@@ -23,4 +23,14 @@ urlpatterns = [
     path('create-post/', CreatePostView.as_view()),
     re_path(r'^posts/(?P<pk>[0-9]+)/$', PostView.as_view()),
     re_path(r'^posts/delete/(?P<pk>[0-9]+)/$', DeletePost.as_view()),
+
+    path('thread/', ThreadListView.as_view()),
+    path('report/', RepostListView.as_view()),
+    re_path(r'^subthread/(?P<pk>[0-9]+)/$', SubThreadDetailView.as_view(), name="subthread-detail"),
+    path('notifications/', NotificationListView.as_view()),
+    re_path(r'^subthread/(?P<pk>[0-9]+)/posts/$', ListPostDetailView.as_view(), name="postlist-detail"),
+    re_path(r'^comments/(?P<pk>[0-9]+)/replies/$', ReplyView.as_view()),
+    path('create-comment/', CreateCommentView.as_view()),
+    path('create-reply/', CreateReplyView.as_view()),
+    re_path(r'^edit-post/(?P<pk>[0-9]+)/$', EditPostView.as_view()),
 ]
