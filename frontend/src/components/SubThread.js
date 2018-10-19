@@ -213,11 +213,11 @@ let EnhancedTableToolbar = props => {
       </div>
       <div className={classes.spacer}/>
             <div>
-          {/*<Link to={`${props.match.url}createpost/`}>*/}
+          <Link to={`${props.url}createpost/`}>
           <Button style={{float: 'right',margin:'5px'}} variant="contained" color="secondary" >
             Create post
           </Button>
-          {/*</Link>*/}
+          </Link>
       </div>
     </Toolbar>
   );
@@ -231,8 +231,9 @@ EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
 
 const styles = theme => ({
   root: {
-    width: "90%",
+    width: "100%",
     marginTop: theme.spacing.unit * 4,
+    margin : 'auto'
   },
   table: {
     maxWidth: "100%",
@@ -319,7 +320,7 @@ class EnhancedTable extends React.Component {
     return (
 
       <Paper className={classes.root}>
-        <EnhancedTableToolbar title={this.state.thread.sub_thread_title}/>
+        <EnhancedTableToolbar url ={this.props.match.url} title={this.state.thread.sub_thread_title}/>
         <div style={{
           width: "90%",
           margin: '0 auto',
