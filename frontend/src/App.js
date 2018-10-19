@@ -11,10 +11,6 @@ import Content from "./components/Content";
 import EditPost from "./components/EditPost";
 import ForgetPassword from "./components/ForgetPassword";
 import Reset from "./components/Reset";
-<<<<<<< HEAD
-
-=======
->>>>>>> a681c4027953fcfc298be3b784e6fce23f91d36e
 
 class App extends Component {
   constructor(props) {
