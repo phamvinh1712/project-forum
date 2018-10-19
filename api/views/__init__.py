@@ -6,5 +6,4 @@ from .sub_thread import SubThreadDetailView
 from .notification import NotificationListView
 from .listpost import ListPostDetailView
 from .post import CreatePostView, PostView, EditPostView, DeletePost
-#CreatePostView, PostView, DeletePost
 from .thread import ThreadListView

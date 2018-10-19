@@ -11,6 +11,8 @@ import Content from "./components/Content";
 import EditPost from "./components/EditPost";
 import ForgetPassword from "./components/ForgetPassword";
 import Reset from "./components/Reset";
+
+
 class App extends Component {
   constructor(props) {
     super(props)
