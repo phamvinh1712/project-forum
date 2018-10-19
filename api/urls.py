@@ -14,9 +14,13 @@ urlpatterns = [
     path('user-detail/', UserDetailView.as_view()),
     re_path(r'^subthread/(?P<pk>[0-9]+)/$', SubThreadDetailView.as_view(), name="subthread-detail"),
     path('notifications/', NotificationListView.as_view()),
+
+        #API for report
+    path('create-report/',CreateReportView.as_view()),
+    re_path('report/', ReportListView.as_view() ),       
+    re_path(r'^reports/delete/(?P<pk>[0-9]+)/$',DeleteReport.as_view()),
+        #API for post (GET, PUT, POST, DELETE)
     path('create-post/', CreatePostView.as_view()),
     re_path(r'^posts/(?P<pk>[0-9]+)/$', PostView.as_view()),
-    re_path('report/', RepostListView.as_view()),       
-    path('create-report/', CreateReport.createpost())
-    path('delete-post/',DeletePost.delete_post())
+    re_path(r'^posts/delete/(?P<pk>[0-9]+)/$', DeletePost.as_view()),
 ]
