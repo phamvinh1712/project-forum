@@ -20,6 +20,8 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Button from '@material-ui/core/Button';
 import './SubThread.css';
 import {Link} from "react-router-dom";
+import moment from 'moment';
+
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -360,7 +362,7 @@ class EnhancedTable extends React.Component {
                           }}>  {n.user.username} </div>
                         </TableCell>
                         <TableCell numeric>{n.view_count}</TableCell>
-                        <TableCell numeric>{n.create_time}</TableCell>
+                        <TableCell numeric>{moment(n.create_time, moment.ISO_8601).format("DD-MM-YYYY")}</TableCell>
                       </MuiThemeProvider>
                     </TableRow>
                   )
