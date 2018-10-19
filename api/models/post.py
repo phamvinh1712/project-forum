@@ -12,7 +12,7 @@ class Post(models.Model):
     sub_thread = models.ForeignKey(SubThread, on_delete=models.CASCADE,related_name="post")
     view_count = models.IntegerField(default=0)
     create_time = models.DateTimeField(default=datetime.now)
-    hashtags = models.ManyToManyField(Hashtag, blank=True)
+    hashtags = models.ManyToManyField(Hashtag, blank=True) 
 
     class Meta:
         ordering = ['-create_time', ]

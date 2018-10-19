@@ -52,7 +52,6 @@ class App extends Component {
             <Route path="/forgetpassword" component={ForgetPassword}/>
             <Route path="/reset/:uid/:token" component={Reset}/>
             <Route path="/edit-post/:id" component={EditPost}/>
-
           </div>
 
         </div>
