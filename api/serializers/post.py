@@ -2,6 +2,7 @@ from rest_framework import serializers
 from ..models import Post
 from .user import UserDetailSerializer
 from .comment import CommentSerializer
+from .hashtag import HashtagListSerializer
 
 
 class PostSerializer(serializers.ModelSerializer):

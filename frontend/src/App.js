@@ -11,7 +11,10 @@ import Content from "./components/Content";
 import EditPost from "./components/EditPost";
 import ForgetPassword from "./components/ForgetPassword";
 import Reset from "./components/Reset";
+<<<<<<< HEAD
 
+=======
+>>>>>>> a681c4027953fcfc298be3b784e6fce23f91d36e
 
 class App extends Component {
   constructor(props) {
@@ -43,8 +46,8 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <NavBar user={this.state.user}/>
-          <div className="root-content">
-          <Route exact path="/" component={Content}/>
+          <div>
+            <Route exact path="/" component={Content}/>
             <Route path="/login" render={() => <Login handleToken={this.handleToken}/>}/>
             <Route path="/register" component={Register}/>
             <Route exact path="/subthread/:handle" component={SubThreadDisplay}/>

@@ -20,6 +20,7 @@ class EditPostView(generics.UpdateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = IsAuthenticated,
+<<<<<<< HEAD
     
 class PostView(generics.RetrieveAPIView):
     queryset = Post.objects.all()
@@ -35,3 +36,10 @@ class PostView(generics.RetrieveAPIView):
 
 
 
+=======
+
+
+class PostView(generics.RetrieveAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostDetailSerializer
+>>>>>>> a681c4027953fcfc298be3b784e6fce23f91d36e

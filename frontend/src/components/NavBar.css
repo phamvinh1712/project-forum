@@ -1,5 +1,4 @@
 .navbar {
-    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -48,8 +47,8 @@
 .btn {
     outline: none !important;
    box-shadow: none;
-    background: rgb(85, 145, 146);
-    border-color: rgb(85, 145, 146);
+    /*background: rgb(85, 145, 146);*/
+    /*border-color: rgb(85, 145, 146);*/
 }
 .btn:focus {
     outline: none !important;

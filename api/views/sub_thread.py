@@ -1,9 +1,10 @@
 from rest_framework import generics
-from rest_framework.response import Response
 from ..models import SubThread
 from ..serializers import SubThreadSerializer
+from rest_framework import pagination
 
 
 class SubThreadDetailView(generics.RetrieveAPIView):
     serializer_class = SubThreadSerializer
+    pagination_class = pagination.LimitOffsetPagination
     queryset = SubThread.objects.all()

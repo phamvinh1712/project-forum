@@ -7,3 +7,5 @@ from .notification import NotificationListView
 from .listpost import ListPostDetailView
 from .post import CreatePostView, PostView, EditPostView, DeletePost
 from .thread import ThreadListView
+from .reply import ReplyView,CreateReplyView
+from .comment import CreateCommentView
