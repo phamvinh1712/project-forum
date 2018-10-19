@@ -14,8 +14,4 @@ class ReplySerializer(serializers.ModelSerializer):
 class CreateReplySerializer(serializers.ModelSerializer):
     class Meta:
         model = Reply
-<<<<<<< HEAD
         exclude = ('user',)
-=======
-        exclude = ('user',)
->>>>>>> a681c4027953fcfc298be3b784e6fce23f91d36e
