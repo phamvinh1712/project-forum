@@ -46,74 +46,26 @@ class sidebarMenu extends React.Component {
           <h3>Header</h3>
         </div>
         <ul className=" components">
-          <li className="active">
-          <Link to={"/admin"}>
-             <i className="fa fa-home" />
-              <span className="cur" />
-              Home <span className="arrow" />
-          </Link>
-          </li>
-         <li  className="dropdown" style = {{cursor:"pointer"}}>
-            <a className="button" onClick={this.showDropdownMenu}>
-                 <i className="fa fa-info-circle" />
-                 <span className="cur" />
-             About
-                <span className="arrow1">
-                                <i className="fa fa-angle-down" />
-                </span>
-            </a>
-             {this.state.displayMenu ? (
-                     <ul>
-                         <li><a className="active" href="#Create Page">Purpose</a></li>
-                         <li><Link to={"/admin"}>Terms</Link></li>
-                     </ul>
-                 ):
-                 (
-                     null
-                 )
-             }
-         </li>
 
-          <li className="dropdown" style={{cursor:"pointer"}}>
-            <a className="button" onClick={this.showDropdownMenu2}>
-                <i className="fa fa-forumbee" />
-                <span className="cur" />
-                Forum
-                <span className="arrow2">
-                    <i className="fa fa-angle-down" />
-                </span>
-            </a>
-              {this.state.displayMenu2 ? (
-                  <ul>
-              <li>
-                     <Link to={"/admin"}>Top</Link>
-              </li>
-              <li>
-                     <Link to={"/admin"}>Hot</Link>
-              </li>
-              <li>
-                     <Link to={"/admin"}>Transport</Link>
-              </li>
-            </ul>
-              ):
-                  (
-                      null
-                  )
-
-              }
-          </li>
           <li>
-            <Link to={"/admin"}>
+            <Link to={"/admin/report/"}>
               <i className="fa fa-comment" />
               <span className="cur" />
-              Livechat
+              Report
             </Link>
           </li>
           <li>
-            <Link to={"/admin"}>
+            <Link to={"/admin/threads/"}>
               <i className="fa fa-phone-square" />
               <span className="cur" />
-              Contact
+              Thread management
+            </Link>
+          </li>
+          <li>
+            <Link to={"/admin/users"}>
+              <i className="fa fa-phone-square" />
+              <span className="cur" />
+              User management
             </Link>
           </li>
         </ul>

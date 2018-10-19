@@ -14,3 +14,16 @@ class ThreadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Thread
         fields = '__all__'
+
+
+class ThreadCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Thread
+        fields = ('id', 'title', 'description', 'display_flag')
+
+
+class ThreadUpdateOrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Thread
+        fields = ('id', 'display_order')
+
