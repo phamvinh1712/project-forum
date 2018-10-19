@@ -10,7 +10,7 @@ class EmailConfirmView(APIView, ConfirmEmailView):
     def get_serializer(self, *args, **kwargs):
         return VerifyEmailSerializer(*args, **kwargs)
 
-    def get(self, request,key, *args, **kwargs):
+    def get(self, request, key, *args, **kwargs):
         serializer = self.get_serializer(data={'key': key})
         serializer.is_valid(raise_exception=True)
         self.kwargs['key'] = serializer.validated_data['key']

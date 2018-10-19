@@ -9,3 +9,13 @@ class Comment(models.Model):
     create_time = models.DateTimeField(default=datetime.now)
     content = models.TextField()
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+
+    @property
+    def up_vote_count(self):
+        from .vote import Vote
+        return Vote.objects.filter(comment=self, type='UP').count()
+
+    @property
+    def down_vote_count(self):
+        from .vote import Vote
+        return Vote.objects.filter(comment=self, type='DOWN').count()

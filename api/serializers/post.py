@@ -13,6 +13,8 @@ class PostSerializer(serializers.ModelSerializer):
 class PostDetailSerializer(serializers.ModelSerializer):
     user = UserDetailSerializer()
     comments = CommentSerializer(many=True)
+    up_vote_count = serializers.ReadOnlyField()
+    down_vote_count = serializers.ReadOnlyField()
 
     class Meta:
         model = Post
