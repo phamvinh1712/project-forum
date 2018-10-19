@@ -8,8 +8,6 @@ import SubThreadDisplay from "./components/SubThread";
 import CreatePost from "./components/CreatePost";
 import Post from "./components/Post";
 
-
-
 class App extends Component {
   constructor(props) {
     super(props)
