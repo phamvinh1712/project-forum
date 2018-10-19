@@ -22,7 +22,6 @@ urlpatterns = [
     re_path(r'^posts/(?P<pk>[0-9]+)/$', PostView.as_view()),
     path('threads/', ThreadListView.as_view()),
     re_path(r'^posts/delete/(?P<pk>[0-9]+)/$', DeletePost.as_view()),
-    path('report/', RepostListView.as_view()),
     re_path(r'^subthread/(?P<pk>[0-9]+)/$', SubThreadDetailView.as_view(), name="subthread-detail"),
     re_path(r'^subthread/(?P<pk>[0-9]+)/posts/$', ListPostDetailView.as_view(), name="postlist-detail"),
     re_path(r'^comments/(?P<pk>[0-9]+)/replies/$', ReplyView.as_view()),

@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import ThreadEdit from './ThreadEdit';
-import Switch from '@material-ui/core/Switch';
 import DragIndicator from '@material-ui/icons/DragIndicator';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
 import {ControlLabel, FormControl, FormGroup, Modal} from "react-bootstrap";
 import Checkbox from "@material-ui/core/Checkbox/Checkbox";
