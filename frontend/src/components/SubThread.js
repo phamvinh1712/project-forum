@@ -78,7 +78,7 @@ class EnhancedTableHead extends React.Component {
     } = this.props;
 
     return (
-      <TableHead >
+      <TableHead>
         <TableRow>
           {rows.map(row => {
             return (
@@ -207,19 +207,19 @@ let EnhancedTableToolbar = props => {
             {numSelected} selected
           </Typography>
         ) : (
-          <Typography variant="h3" id="tableTitle">
+          <Typography variant="h4" id="tableTitle">
 
             {title}
           </Typography>
         )}
       </div>
       <div className={classes.spacer}/>
-            <div>
-          {/*<Link to={`${props.match.url}createpost/`}>*/}
-          <Button style={{float: 'right',margin:'5px'}} variant="contained" color="secondary" >
-            Create post
-          </Button>
-          {/*</Link>*/}
+      <div>
+        {/*<Link to={`${props.match.url}createpost/`}>*/}
+        <Button style={{float: 'right', margin: '5px'}} variant="contained" color="secondary">
+          Create post
+        </Button>
+        {/*</Link>*/}
       </div>
     </Toolbar>
   );
@@ -277,7 +277,7 @@ class EnhancedTable extends React.Component {
       .then(res => {
         return res.json();
       }).then(json => {
-      this.setState({Posts: json.results,nextpage: json.next,total: json.count})
+      this.setState({Posts: json.results, nextpage: json.next, total: json.count})
 
     })
 
@@ -300,14 +300,14 @@ class EnhancedTable extends React.Component {
   };
 
   handleChangePage(offset) {
-    let url = '/api/subthread/' + this.props.match.params.handle.toString() + '/posts/?page=' + (offset/10+1).toString();
+    let url = '/api/subthread/' + this.props.match.params.handle.toString() + '/posts/?page=' + (offset / 10 + 1).toString();
     fetch(url, {
       method: 'GET',
     })
       .then(res => {
         return res.json();
       }).then(json => {
-      this.setState({Posts: json.results,nextpage: json.next,offset})
+      this.setState({Posts: json.results, nextpage: json.next, offset})
     });
   }
 
@@ -361,19 +361,17 @@ class EnhancedTable extends React.Component {
                             fontSize: "1rem",
                           }}>  {n.user.username} </div>
                         </TableCell>
-                        <TableCell numeric>{n.view_count}</TableCell>
-                        <TableCell numeric>{moment(n.create_time, moment.ISO_8601).format("DD-MM-YYYY")}</TableCell>
+                        <TableCell numeric component="th" scope="row">{n.view_count}</TableCell>
+                        <TableCell numeric component="th" scope="row">{moment(n.create_time, moment.ISO_8601).format("DD-MM-YYYY")}</TableCell>
                       </MuiThemeProvider>
                     </TableRow>
-                  )
-                    ;
+                  );
                 })}
-              <TableFooter>
-                <TableRow>
-
+              {emptyRows > 0 && (
+                <TableRow style={{height: 49 * emptyRows}}>
+                  <TableCell colSpan={6}/>
                 </TableRow>
-
-              </TableFooter>
+              )}
             </TableBody>
           </Table>
           <div className={"pagination"}>

@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import './screen.css';
+import {Link} from 'react-router-dom';
+
 const API = '/api/threads/';
 
 export default class Content extends React.Component {
@@ -28,7 +30,9 @@ export default class Content extends React.Component {
             <dl>
               {value.sub_thread.map(value1 => (
                 <div>
-                  <dt>{value1.sub_thread_title}</dt>
+                  <Link to={"/Subthread/" + value.id.toString()}>
+                    <dt>{value1.sub_thread_title}</dt>
+                  </Link>
                   <dd>
                     {value1.description}
                   </dd>
