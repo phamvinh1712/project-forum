@@ -38,9 +38,15 @@ class ThreadEditList extends Component {
   }
 
   componentDidMount() {
-    fetch('/api/threads/')
+    fetch('/api/admin-threads/', {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Token ' + localStorage.getItem('token').toString()
+      },
+    })
       .then(response => response.json())
       .then(data => {
+        console.log(data)
         this.setState({threads: data});
       })
   }

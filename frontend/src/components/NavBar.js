@@ -16,6 +16,7 @@ import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
 import Popper from '@material-ui/core/Popper';
 import Paper from '@material-ui/core/Paper';
+import {Route, Redirect, withRouter} from 'react-router'
 import {toast} from 'react-toastify';
 
 
@@ -77,9 +78,11 @@ class navbar extends Component {
     super(props);
     this.state = {
       anchorEl: null,
-      authenticated: props.authenticated
+      authenticated: props.authenticated,
+      search: ""
     }
-
+    this.onChange = this.onChange.bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this);
   };
   handleLogout = () => {
     fetch('api/rest-auth/logout/', {
@@ -104,10 +107,21 @@ class navbar extends Component {
     this.setState({anchorEl: null});
   };
 
+  onChange(event) {
+    this.setState({search: event.target.value})
+  }
+
+  onKeyDown(event) {
+    if (event.key == 'Enter') {
+      let url = '/search/:param'.replace(':param', this.state.search);
+      this.props.history.push(url);
+    }
+
+  }
+
   render() {
     const {classes} = this.props;
     const isMenuOpen = Boolean(this.state.anchorEl);
-    console.log(this.props)
     const renderForm = (
       <div>
         <Link to="/Login">
@@ -154,8 +168,8 @@ class navbar extends Component {
         >
           {
             (this.props.authenticated && this.props.user.profile.avatar)
-            ? <Avatar src={this.props.user.profile.avatar} className={classes.avatar} />
-            : <AccountCircle/>
+              ? <Avatar src={this.props.user.profile.avatar} className={classes.avatar}/>
+              : <AccountCircle/>
           }
         </IconButton>
         {renderUserMenu}
@@ -220,6 +234,9 @@ class navbar extends Component {
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
+              value={this.state.search}
+              onChange={this.onChange}
+              onKeyDown={this.onKeyDown}
             />
           </div>
           <div className={classes.grow}/>
