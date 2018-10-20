@@ -6,7 +6,7 @@ import {fade} from '@material-ui/core/styles/colorManipulator';
 import './NavBar.css';
 import Button from '@material-ui/core/Button';
 import {Link} from 'react-router-dom';
-import {DropdownButton} from 'react-bootstrap';
+import {DropdownButton,ButtonToolbar} from 'react-bootstrap';
 import Avatar from '@material-ui/core/Avatar';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import IconButton from '@material-ui/core/IconButton';
@@ -16,6 +16,8 @@ import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
 import Popper from '@material-ui/core/Popper';
 import Paper from '@material-ui/core/Paper';
+import {toast} from 'react-toastify';
+
 
 // navigation bar with search bar UI and 2 button link to login page and register page
 const styles = theme => ({
@@ -28,12 +30,13 @@ const styles = theme => ({
   },
   search: {
     position: 'relative',
+    left:30,
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     '&:hover': {
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
-    marginLeft: 0,
+    marginLeft: -10,
     width: '100%',
     [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing.unit,
@@ -78,7 +81,21 @@ class navbar extends Component {
     }
 
   };
-
+  handleLogout = () => {
+    fetch('api/rest-auth/logout/', {
+      method: 'POST',
+    })
+      .then(res => {
+        return res.json();
+      }).then(json => {
+      localStorage.clear();
+      toast.info("You are now logout", {
+            position: toast.POSITION.TOP_CENTER
+          });
+      this.setState({anchorEl: null});
+      window.location.href = '/';
+    });
+  };
   handleProfileMenuOpen = event => {
     this.setState({anchorEl: event.currentTarget});
   };
@@ -118,7 +135,7 @@ class navbar extends Component {
                 <MenuList>
                   <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
                   <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
-                  <MenuItem onClick={this.handleMenuClose}>Logout</MenuItem>
+                  <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
                 </MenuList>
               </ClickAwayListener>
             </Paper>
@@ -149,7 +166,7 @@ class navbar extends Component {
       <header className="navbar">
         <nav className="navbar_navigation">
           <div className="navbar_logo"><span>THE LOGO</span></div>
-          <div className={"dropdownb"}>
+          <ButtonToolbar className={"dropdownb"}>
             <DropdownButton className={"Button1"}
                             title={"Ducati"}
                             key={1}
@@ -163,7 +180,36 @@ class navbar extends Component {
               <MenuItem divider/>
               <MenuItem eventKey="4">Separated link</MenuItem>
             </DropdownButton>
-          </div>
+
+            <DropdownButton className={"Button2"}
+                            title={"Yamaha"}
+                            key={2}
+                            id={`dropdown-basic-${2}`}
+            >
+              <MenuItem eventKey="1">Action</MenuItem>
+              <MenuItem eventKey="2">Another action</MenuItem>
+              <MenuItem eventKey="3" active>
+                Active Item
+              </MenuItem>
+              <MenuItem divider/>
+              <MenuItem eventKey="4">Separated link</MenuItem>
+            </DropdownButton>
+
+            <DropdownButton className={"Button3"}
+                            title={"Honda"}
+                            key={3}
+                            id={`dropdown-basic-${3}`}
+            >
+              <MenuItem eventKey="1">Action</MenuItem>
+              <MenuItem eventKey="2">Another action</MenuItem>
+              <MenuItem eventKey="3" active>
+                Active Item
+              </MenuItem>
+              <MenuItem divider/>
+              <MenuItem eventKey="4">Separated link</MenuItem>
+            </DropdownButton>
+          </ButtonToolbar>
+
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon/>
