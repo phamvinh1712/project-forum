@@ -253,4 +253,4 @@ class navbar extends Component {
   }
 }
 
-export default withStyles(styles)(navbar)
+export default withRouter(withStyles(styles)(navbar))
