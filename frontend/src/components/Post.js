@@ -2,11 +2,12 @@ import {Comment, Segment, Header, Image, Container} from 'semantic-ui-react';
 import {Button, FormGroup, FormControl, ControlLabel, DropdownButton, MenuItem} from "react-bootstrap";
 import {Component} from "react";
 import "./Post.css"
-import { withStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import React from "react";
 import Chip from '@material-ui/core/Chip';
 import Comments from './Comments' ;
-  const styles = theme => ({
+
+const styles = theme => ({
   root: {
     display: 'flex',
     justifyContent: 'center',
@@ -60,6 +61,11 @@ class Post extends Component {
       });
   }
 
+  handleClickHashtag = (event, id) => {
+    let temp = "/hashtag/" + id;
+    this.props.history.push(temp);
+  }
+
 
   componentDidMount() {
     let url = '/api/posts/' + this.props.match.params.id.toString() + '/'
@@ -69,7 +75,7 @@ class Post extends Component {
       .then(res => {
         return res.json();
       }).then(json => {
-        console.log(json);
+      console.log(json);
       this.setState({
         title: json.title,
         content: json.content,
@@ -84,7 +90,7 @@ class Post extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const {classes} = this.props;
     return (
 
       <div className="post">
@@ -94,16 +100,16 @@ class Post extends Component {
 
         </Segment>
         <Segment vertical>
-          <div style={{float: 'right',margin:'10px'}}>
-          <DropdownButton pullRight
-          >
+          <div style={{float: 'right', margin: '10px'}}>
+            <DropdownButton pullRight
+            >
 
-            <MenuItem eventKey="1" onClick={()=>{
-              let temp = "/edit-post/:id".replace(":id", this.props.match.params.id);
-              this.props.history.push(temp);
-            }}>Edit</MenuItem>
-            <MenuItem eventKey="2">Delete</MenuItem>
-          </DropdownButton>
+              <MenuItem eventKey="1" onClick={() => {
+                let temp = "/edit-post/:id".replace(":id", this.props.match.params.id);
+                this.props.history.push(temp);
+              }}>Edit</MenuItem>
+              <MenuItem eventKey="2">Delete</MenuItem>
+            </DropdownButton>
           </div>
           <p>Posted by </p>
           <Header as='h3'>
@@ -112,11 +118,13 @@ class Post extends Component {
           </Header>
           <Container fluid>
             <div dangerouslySetInnerHTML={{__html: this.state.content}}/>
-   <button type="button" className="btn btn-danger" style={{float: 'right',margin:'5px'}}>
-            <span className="glyphicon glyphicon-flag" aria-hidden="true"></span> Report
-          </button>
+            <button type="button" className="btn btn-danger" style={{float: 'right', margin: '5px'}}>
+              <span className="glyphicon glyphicon-flag" aria-hidden="true"></span> Report
+            </button>
             <div> {this.state.hashtags.map(value =>
-               <Chip label={value.name} className={classes.chip}/>
+              <Chip label={value.name}
+                    className={classes.chip}
+                    onClick={event => this.handleClickHashtag(event, value.id)}/>
             )}</div>
           </Container>
 

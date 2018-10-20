@@ -39,5 +39,8 @@ urlpatterns = [
     re_path(r'^sub-threads/(?P<pk>[0-9]+)/$', SubThreadEditView.as_view()),
     path('update-thread-order/', ThreadUpdateOrderView.as_view()),
     path('update-sub-thread-order/', SubThreadUpdateOrderView.as_view()),
-
+    path('admin-threads/', ThreadAdminListView.as_view()),
+    re_path(r'^posts$', ListPostSearchView.as_view()),
+    re_path(r'^hashtag/(?P<pk>[0-9]+)/', HashtagListPostView.as_view()),
+    re_path(r'^hashtag-name/(?P<pk>[0-9]+)/', HashtagNameView.as_view()),
 ]

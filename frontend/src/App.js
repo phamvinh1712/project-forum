@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import NavBar from "./components/NavBar";
-import {BrowserRouter, Route} from "react-router-dom";
+import {BrowserRouter, Route,Switch} from "react-router-dom";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import SubThreadDisplay from "./components/SubThread";
@@ -13,6 +13,9 @@ import {ToastContainer} from "react-toastify";
 import EditPost from "./components/EditPost";
 import ForgetPassword from "./components/ForgetPassword";
 import Reset from "./components/Reset";
+import NotFound from "./components/NotFound";
+import PostList from "./components/PostList";
+import Hashtag from "./components/Hashtag";
 
 class App extends Component {
   constructor(props) {
@@ -57,8 +60,10 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <NavBar authenticated={this.state.authenticated} user={this.state.user}/>
-          <div>
+          <NavBar
+            onChange = {this.onChange} onKeyDown = {this.onKeyDown} search = {this.state.search}
+            authenticated={this.state.authenticated} user={this.state.user}/>
+          <Switch>
             <Route exact path="/" component={Content}/>
             <Route path="/login" render={(props) => <Login {...props} handleToken={this.handleToken}/>}/>
             <Route path="/register" component={Register}/>
@@ -69,7 +74,11 @@ class App extends Component {
             <Route path="/reset/:uid/:token" component={Reset}/>
             <Route path="/edit-post/:id" component={EditPost}/>
             <Route path="/admin" component={Admin}/>
-          </div>
+            <Route path="/search/:param" component={PostList}/>
+            <Route path="/hashtag/:id" component={Hashtag}/>
+            <Route path="/search/" component={PostList}/>
+            <Route path="*" component={NotFound} />
+          </Switch>
           <ToastContainer autoClose={false}/>
 
         </div>
