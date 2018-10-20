@@ -22,7 +22,8 @@ class App extends Component {
     super(props)
     this.state = {
       user: {},
-      authenticated: false
+      authenticated: false,
+      isAdmin : false
     }
     this.handleToken = this.handleToken.bind(this)
   }
@@ -43,7 +44,7 @@ class App extends Component {
           throw new Error('Unable to get user information with token');
         }
       }).then(json => {
-      this.setState({user: json, authenticated: true});
+      this.setState({user: json, authenticated: true,isAdmin:json.is_staff});
     })
       .catch((error) => {
         console.log(error);
@@ -59,21 +60,30 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div>
+        <div className="root-content">
           <NavBar
             onChange = {this.onChange} onKeyDown = {this.onKeyDown} search = {this.state.search}
             authenticated={this.state.authenticated} user={this.state.user}/>
           <Switch>
             <Route exact path="/" component={Content}/>
-            <Route path="/login" render={(props) => <Login {...props} handleToken={this.handleToken}/>}/>
-            <Route path="/register" component={Register}/>
+            //authentication route, prevent authenticated user to redirect to this
+            {!this.state.authenticated &&
+            <Route path="/login" render={(props) => <Login {...props} handleToken={this.handleToken}/>}/>}
+            {!this.state.authenticated && <Route path="/register" component={Register}/>}
+            {!this.state.authenticated && <Route path="/forgetpassword" component={ForgetPassword}/>}
+            {!this.state.authenticated && <Route path="/reset/:uid/:token" component={Reset}/>}
+
+            //protected route only for authenticated user
+            {this.state.authenticated && <Route path="/subthread/:handle/createpost/" component={CreatePost}/>}
+            {this.state.authenticated && <Route path="/edit-post/:id" component={EditPost}/>}
+
+            //protected route only for admin user
+            { this.state.isAdmin && <Route path="/admin" component={Admin}/>}
+
+            //public route
             <Route exact path="/subthread/:handle" component={SubThreadDisplay}/>
-            <Route path="/subthread/:handle/createpost/" component={CreatePost}/>
-            <Route path="/posts/:id" component={Post}/>
-            <Route path="/forgetpassword" component={ForgetPassword}/>
-            <Route path="/reset/:uid/:token" component={Reset}/>
-            <Route path="/edit-post/:id" component={EditPost}/>
-            <Route path="/admin" component={Admin}/>
+            <Route path="/posts/:id"
+                   render={(props) => <Post {...props} authenticated={this.state.authenticated} user={this.state.user}/>} />
             <Route path="/search/:param" component={PostList}/>
             <Route path="/hashtag/:id" component={Hashtag}/>
             <Route path="/search/" component={PostList}/>

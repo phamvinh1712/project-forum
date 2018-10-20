@@ -4,7 +4,7 @@ from .sub_thread import SubThreadSerializer, SubThreadCreateSerializer, SubThrea
 from .notification import NotificationSerializer
 from .listpost import ListPostSerializer
 from .report import ReportListSerializer, ReportSerializer
-from .comment import CommentSerializer, CreateCommentSerializer
+from .comment import CommentSerializer, CreateCommentSerializer,CommentResponseSerializer
 from .thread import ThreadSerializer, ThreadCreateSerializer, ThreadUpdateOrderSerializer,ThreadAdminSerializer
 from .post import PostSerializer, PostDetailSerializer, PostReportSerializer
 from .reply import ReplySerializer, CreateReplySerializer
