@@ -62,7 +62,9 @@ export default class Login extends Component {
         }
       })
       .catch((error) => {
-        console.log(error)
+        toast.warn(error.toString, {
+            position: toast.POSITION.TOP_CENTER
+          });
       });
     ;
   }
