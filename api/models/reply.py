@@ -5,7 +5,7 @@ from datetime import datetime
 
 
 class Reply(models.Model):
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="replies")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     create_time = models.DateTimeField(default=datetime.now)
     content = models.TextField()

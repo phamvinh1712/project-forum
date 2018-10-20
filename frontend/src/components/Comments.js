@@ -20,6 +20,7 @@ export default class Comments extends Component {
       avatar: props.comment.user.profile.avatar,
       create_time: props.comment.create_time,
       content: props.comment.content,
+      reply_count : props.comment.reply_count,
       replies: [],
       reply: ""
 
@@ -46,9 +47,13 @@ export default class Comments extends Component {
     })
       .then(res => res.json())
       .then(json => {
-        let newReply = this.state.replies
-        newReply.push(json)
-        this.setState({replies: newReply, reply: ""})
+        // let newReply = this.state.replies
+        // newReply.push(json)
+        this.setState({
+          replies: json.replies,
+          reply: "",up_vote_count: json.up_vote_count,
+          down_vote_count:json.down_vote_count,
+          reply_count : json.replies.length})
       });
   }
 
@@ -157,7 +162,7 @@ export default class Comments extends Component {
         </Comment.Metadata>
         <Comment.Text>{this.state.content}</Comment.Text>
         <Comment.Actions>
-          <Comment.Action onClick={this.handleReplyClick}>Reply</Comment.Action>
+          <Comment.Action onClick={this.handleReplyClick}>Reply {(this.state.reply_count) ? ('('+this.state.reply_count+')') : null} </Comment.Action>
           <Comment.Action onClick={() => this.handleVoteComment('UP')}>
             <Icon link name='triangle up'/>
             {this.state.up_vote_count}
@@ -200,7 +205,8 @@ export default class Comments extends Component {
               </Comment.Content>
             </Comment>
           )}
-          <form onSubmit={this.handleSubmit}>
+
+          {(this.props.authenticated) ? <form onSubmit={this.handleSubmit}>
             <FormGroup controlId="reply">
               <FormControl
                 value={this.state.reply}
@@ -212,7 +218,7 @@ export default class Comments extends Component {
               type="submit">
               Add reply
             </Button>
-          </form>
+          </form> : null}
         </Comment.Group>
 
       </Collapse>

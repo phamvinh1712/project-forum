@@ -1,7 +1,7 @@
 from rest_framework import generics, status
 from ..models import Reply
 from rest_framework.response import Response
-from ..serializers import ReplySerializer, CreateReplySerializer
+from ..serializers import ReplySerializer, CreateReplySerializer,CommentResponseSerializer
 from rest_framework.permissions import IsAuthenticated
 
 
@@ -19,7 +19,7 @@ class CreateReplyView(generics.CreateAPIView):
         reply = Reply(user=request.user, comment=comment, content=content)
         reply.save()
 
-        return Response(ReplySerializer(reply).data, status.HTTP_200_OK)
+        return Response(CommentResponseSerializer(reply.comment).data, status.HTTP_200_OK)
 
 
 class ReplyView(generics.ListCreateAPIView):
