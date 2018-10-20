@@ -1,12 +1,14 @@
 import React, {Component} from "react";
-import {Button, FormGroup, FormControl, ControlLabel, Modal, ModalBody,HelpBlock} from "react-bootstrap";
+import {Button, FormGroup, FormControl, ControlLabel, Modal, ModalBody, HelpBlock} from "react-bootstrap";
 import "./Login.css";
 import {Link} from 'react-router-dom';
+import {toast} from 'react-toastify';
 
 export default class Login extends Component {
   constructor(props) {
     super(props);
     this.handleHide = this.handleHide.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       email: "",
       password: "",
@@ -26,8 +28,9 @@ export default class Login extends Component {
       [event.target.id]: event.target.value
     });
   }
+
 // function handle submit onclick event
-  handleSubmit = event => {
+  handleSubmit(event) {
     event.preventDefault();
     const email = this.state.email;
     const pass = this.state.password;
@@ -38,17 +41,30 @@ export default class Login extends Component {
       },
       body: JSON.stringify({"email": email, "password": pass})
     })
-      .then(res => res.json())
+      .then(function (res) {
+        if (res.status < 500)
+          return res.json()
+        else {
+          throw new Error('Something went wrong,please try again');
+        }
+      })
       .then(json => {
         if (json.key) {
           localStorage.setItem('token', json.key);
-          this.setState({loginInfo: 'You are now login', show: true});
+          toast.info("You are now login", {
+            position: toast.POSITION.TOP_CENTER
+          });
           this.props.handleToken()
+          this.props.history.push('')
         }
         if (json.non_field_errors) {
           this.setState({loginInfo: json.non_field_errors, show: true})
         }
+      })
+      .catch((error) => {
+        console.log(error)
       });
+    ;
   }
 
   handleHide() {
@@ -76,7 +92,7 @@ export default class Login extends Component {
               onChange={this.handleChange}
               type="password"
             />
-            <Link to = "/ForgetPassword" ><HelpBlock bsClass ="help-blockLogin"> Forget your password?</HelpBlock> </Link>
+            <Link to="/ForgetPassword"><HelpBlock bsClass="help-blockLogin"> Forget your password?</HelpBlock> </Link>
           </FormGroup>
           <Button
             block

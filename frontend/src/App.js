@@ -19,13 +19,14 @@ class App extends Component {
     super(props)
     this.state = {
       user: {},
-      isLoggedIn: false
+      authenticated: false
     }
     this.handleToken = this.handleToken.bind(this)
   }
 
   handleToken() {
-    if (!localStorage.getItem('token')) return
+    if (!localStorage.getItem('token')) return;
+    if (this.state.authenticated) return;
     fetch('/api/user-detail/', {
       method: 'GET',
       headers: {
@@ -33,20 +34,33 @@ class App extends Component {
       }
     })
       .then(res => {
-        return res.json();
+        if (res.ok)
+          return res.json();
+        else {
+          throw new Error('Unable to get user information with token');
+        }
       }).then(json => {
-      this.setState({user: json, isLoggedIn: true});
+      this.setState({user: json, authenticated: true});
     })
+      .catch((error) => {
+        console.log(error);
+        this.setState({authenticated: false});
+        localStorage.clear();
+      });
+  }
+
+  componentDidMount() {
+    this.handleToken()
   }
 
   render() {
     return (
       <BrowserRouter>
         <div>
-          <NavBar user={this.state.user}/>
+          <NavBar authenticated={this.state.authenticated} user={this.state.user}/>
           <div>
             <Route exact path="/" component={Content}/>
-            <Route path="/login" render={() => <Login handleToken={this.handleToken}/>}/>
+            <Route path="/login" render={(props) => <Login {...props} handleToken={this.handleToken}/>}/>
             <Route path="/register" component={Register}/>
             <Route exact path="/subthread/:handle" component={SubThreadDisplay}/>
             <Route path="/subthread/:handle/createpost/" component={CreatePost}/>
