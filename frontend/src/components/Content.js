@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import './screen.css';
 import {Link} from 'react-router-dom';
-
 const API = '/api/threads/';
 
 export default class Content extends React.Component {
@@ -14,11 +13,19 @@ export default class Content extends React.Component {
 
   componentDidMount() {
     fetch(API)
-      .then(response => response.json())
+      .then(function (response) {
+        if (response.ok)
+          return response.json()
+        else {
+          throw new Error('Something went wrong');
+        }
+      })
       .then(data => {
-        console.log(data);
         this.setState({list: data});
       })
+      .catch((error) => {
+        console.log(error)
+      });
   }
 
   render() {

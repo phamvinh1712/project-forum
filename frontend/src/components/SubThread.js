@@ -214,12 +214,12 @@ let EnhancedTableToolbar = props => {
         )}
       </div>
       <div className={classes.spacer}/>
-      <div>
-        {/*<Link to={`${props.match.url}createpost/`}>*/}
-        <Button style={{float: 'right', margin: '5px'}} variant="contained" color="secondary">
-          Create post
-        </Button>
-        {/*</Link>*/}
+            <div>
+          <Link to={`${props.url}createpost/`}>
+          <Button style={{float: 'right',margin:'5px'}} variant="contained" color="secondary" >
+            Create post
+          </Button>
+          </Link>
       </div>
     </Toolbar>
   );
@@ -233,8 +233,9 @@ EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
 
 const styles = theme => ({
   root: {
-    width: "90%",
+    width: "100%",
     marginTop: theme.spacing.unit * 4,
+    margin : 'auto'
   },
   table: {
     maxWidth: "100%",
@@ -277,7 +278,7 @@ class EnhancedTable extends React.Component {
       .then(res => {
         return res.json();
       }).then(json => {
-      this.setState({Posts: json.results, nextpage: json.next, total: json.count})
+      this.setState({Posts: json.results,nextpage: json.next,total: json.count})
 
     })
 
@@ -300,14 +301,14 @@ class EnhancedTable extends React.Component {
   };
 
   handleChangePage(offset) {
-    let url = '/api/subthread/' + this.props.match.params.handle.toString() + '/posts/?page=' + (offset / 10 + 1).toString();
+    let url = '/api/subthread/' + this.props.match.params.handle.toString() + '/posts/?page=' + (offset/10+1).toString();
     fetch(url, {
       method: 'GET',
     })
       .then(res => {
         return res.json();
       }).then(json => {
-      this.setState({Posts: json.results, nextpage: json.next, offset})
+      this.setState({Posts: json.results,nextpage: json.next,offset})
     });
   }
 
@@ -361,17 +362,19 @@ class EnhancedTable extends React.Component {
                             fontSize: "1rem",
                           }}>  {n.user.username} </div>
                         </TableCell>
-                        <TableCell numeric component="th" scope="row">{n.view_count}</TableCell>
-                        <TableCell numeric component="th" scope="row">{moment(n.create_time, moment.ISO_8601).format("DD-MM-YYYY")}</TableCell>
+                        <TableCell numeric>{n.view_count}</TableCell>
+                        <TableCell numeric>{n.create_time}</TableCell>
                       </MuiThemeProvider>
                     </TableRow>
-                  );
+                  )
+                    ;
                 })}
-              {emptyRows > 0 && (
-                <TableRow style={{height: 49 * emptyRows}}>
-                  <TableCell colSpan={6}/>
+              <TableFooter>
+                <TableRow>
+
                 </TableRow>
-              )}
+
+              </TableFooter>
             </TableBody>
           </Table>
           <div className={"pagination"}>

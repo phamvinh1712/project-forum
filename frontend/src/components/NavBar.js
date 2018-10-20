@@ -7,10 +7,9 @@ import './NavBar.css';
 import Button from '@material-ui/core/Button';
 import {Link} from 'react-router-dom';
 import {DropdownButton} from 'react-bootstrap';
+import Avatar from '@material-ui/core/Avatar';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
 import MenuList from '@material-ui/core/MenuList';
@@ -75,7 +74,7 @@ class navbar extends Component {
     super(props);
     this.state = {
       anchorEl: null,
-      user: props.user
+      authenticated: props.authenticated
     }
 
   };
@@ -91,7 +90,7 @@ class navbar extends Component {
   render() {
     const {classes} = this.props;
     const isMenuOpen = Boolean(this.state.anchorEl);
-
+    console.log(this.props)
     const renderForm = (
       <div>
         <Link to="/Login">
@@ -130,18 +129,17 @@ class navbar extends Component {
 
     const renderUser = (
       <div>
-        <IconButton color="inherit">
-          <Badge className={classes.margin} badgeContent={17} color="secondary">
-            <NotificationsIcon/>
-          </Badge>
-        </IconButton>
         <IconButton
           aria-owns={isMenuOpen ? 'material-appbar' : null}
           aria-haspopup="true"
           onClick={this.handleProfileMenuOpen}
           color="inherit"
         >
-          <AccountCircle/>
+          {
+            (this.props.authenticated && this.props.user.profile.avatar)
+            ? <Avatar src={this.props.user.profile.avatar} className={classes.avatar} />
+            : <AccountCircle/>
+          }
         </IconButton>
         {renderUserMenu}
       </div>
@@ -181,9 +179,9 @@ class navbar extends Component {
           <div className={classes.grow}/>
           <div>
             {
-              (localStorage.getItem('token') === null)
-                ? renderForm
-                : renderUser
+              (this.props.authenticated)
+                ? renderUser
+                : renderForm
             }
           </div>
         </nav>
