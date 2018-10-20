@@ -57,8 +57,8 @@ const rows = [
     disablePadding: false,
     label: "Topic Title"
   },
-  {id: "view", numeric: true, disablePadding: false, label: "View"},
-  {id: "ds", numeric: true, disablePadding: false, label: "Date Start"},
+  {id: "count_view", numeric: true, disablePadding: false, label: "View"},
+  {id: "create_time", numeric: true, disablePadding: false, label: "Date Start"},
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -173,7 +173,7 @@ const styles = theme => ({
 class PostList extends React.Component {
   state = {
     order: "asc",
-    orderBy: "view",
+    orderBy: "count_view",
     Posts: [],
     page: 0,
     rowsPerPage: 10,

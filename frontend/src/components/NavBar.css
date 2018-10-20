@@ -36,31 +36,32 @@
     left: 1rem;
 }
 
-.btn:hover {
+.btn1:hover {
     outline: none !important;
-   box-shadow: none;
+    box-shadow: none;
     background: rgb(85, 145, 146);
     border-color: rgb(85, 145, 146);
 
 }
 
-.btn {
+.btn1 {
     outline: none !important;
     box-shadow: none;
     background: rgb(85, 145, 146);
     border-color: rgb(85, 145, 146);
 }
 
-.btn:focus {
+.btn1:focus {
     outline: none !important;
-   box-shadow: none;
+    box-shadow: none;
     background: rgb(85, 145, 146);
     border-color: rgb(85, 145, 146);
 
 }
-.btn:active {
+
+.btn1:active {
     outline: none !important;
-   box-shadow: none;
+    box-shadow: none;
     background: rgb(85, 145, 146);
     border-color: rgb(85, 145, 146);
 
@@ -71,14 +72,14 @@
     left: 2rem;
 }
 
-.btn-default.active.focus, .btn-default.active:focus, .btn-default.active:hover, .btn-default:active.focus, .btn-default:active:focus, .btn-default:active:hover, .open>.dropdown-toggle.btn-default.focus, .open>.dropdown-toggle.btn-default:focus, .open>.dropdown-toggle.btn-default:hover {
+.btn1.active.focus, .btn1.active:focus, .btn1.active:hover, .btn1:active.focus, .btn1:active:focus, .btn1:active:hover, .open > .dropdown-toggle.btn1.focus, .open > .dropdown-toggle.btn1:focus, .open > .dropdown-toggle.btn1:hover {
     outline: none !important;
     box-shadow: none;
     background: rgb(85, 145, 146);
     border-color: rgb(85, 145, 146);
 }
 
-.btn-group.open .dropdown-toggle {
+.btn1.open .dropdown-toggle {
     outline: none !important;
     box-shadow: none;
     background: rgb(85, 145, 146);

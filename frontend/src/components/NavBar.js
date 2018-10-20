@@ -181,7 +181,7 @@ class navbar extends Component {
         <nav className="navbar_navigation">
           <div className="navbar_logo"><span>THE LOGO</span></div>
           <ButtonToolbar className={"dropdownb"}>
-            <DropdownButton className={"Button1"}
+            <DropdownButton className={"btn1"}
                             title={"Ducati"}
                             key={1}
                             id={`dropdown-basic-${1}`}
@@ -195,7 +195,7 @@ class navbar extends Component {
               <MenuItem eventKey="4">Separated link</MenuItem>
             </DropdownButton>
 
-            <DropdownButton className={"Button2"}
+            <DropdownButton className={"btn1"}
                             title={"Yamaha"}
                             key={2}
                             id={`dropdown-basic-${2}`}
@@ -209,7 +209,7 @@ class navbar extends Component {
               <MenuItem eventKey="4">Separated link</MenuItem>
             </DropdownButton>
 
-            <DropdownButton className={"Button3"}
+            <DropdownButton className={"btn1"}
                             title={"Honda"}
                             key={3}
                             id={`dropdown-basic-${3}`}

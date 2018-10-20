@@ -62,8 +62,8 @@ const rows = [
     disablePadding: false,
     label: "Topic Title"
   },
-  {id: "view", numeric: true, disablePadding: false, label: "View"},
-  {id: "ds", numeric: true, disablePadding: false, label: "Date Start"},
+  {id: "view_count", numeric: true, disablePadding: false, label: "View"},
+  {id: "create_time", numeric: true, disablePadding: false, label: "Date Start"},
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -111,12 +111,9 @@ class EnhancedTableHead extends React.Component {
 }
 
 EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.string.isRequired,
   orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired
 };
 
 const PaginationTheme = createMuiTheme({
@@ -252,7 +249,6 @@ class EnhancedTable extends React.Component {
     order: "asc",
     orderBy: "view",
     Posts: [],
-    page: 0,
     rowsPerPage: 10,
     thread: [],
     nextpage: '/api/subthread/' + this.props.match.params.handle.toString() + '/posts/',
@@ -269,7 +265,6 @@ class EnhancedTable extends React.Component {
         return res.json();
       }).then(json => {
       this.setState({thread: json})
-      console.log(this.state.thread);
     })
     url = this.state.nextpage;
     fetch(url, {
@@ -278,8 +273,7 @@ class EnhancedTable extends React.Component {
       .then(res => {
         return res.json();
       }).then(json => {
-      this.setState({Posts: json.results, nextpage: json.next, total: json.count})
-
+      this.setState({Posts: json.results, nextpage: json.next, total: json.count});
     })
 
   }
@@ -308,16 +302,16 @@ class EnhancedTable extends React.Component {
       .then(res => {
         return res.json();
       }).then(json => {
-      this.setState({Posts: json.results, nextpage: json.next, offset})
+      console.log(json);
+      this.setState({Posts: json.results, nextpage: json.next, offset});
+      window.scrollTo(0, 0);
     });
   }
 
 
   render() {
     const {classes} = this.props;
-    const {Posts, order, orderBy, rowsPerPage, page} = this.state;
-    const emptyRows =
-      rowsPerPage - Math.min(rowsPerPage, Posts.length - page * rowsPerPage);
+    let {Posts, order, orderBy, rowsPerPage, offset} = this.state;
 
     return (
 
@@ -344,11 +338,10 @@ class EnhancedTable extends React.Component {
             />
             <TableBody>
               {stableSort(Posts, getSorting(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .slice(0,rowsPerPage)
                 .map(n => {
                   return (
                     <TableRow
-
                       onClick={event => this.handleClick(event, n.id)}
                       tabIndex={-1}
                       key={n.id}
@@ -364,7 +357,7 @@ class EnhancedTable extends React.Component {
                           }}>  {n.user.username} </div>
                         </TableCell>
                         <TableCell numeric>{n.view_count}</TableCell>
-                        <TableCell numeric>{n.create_time}</TableCell>
+                        <TableCell numeric>{moment(n.create_time, moment.ISO_8601).format("DD-MM-YYYY")}</TableCell>
                       </MuiThemeProvider>
                     </TableRow>
                   )
