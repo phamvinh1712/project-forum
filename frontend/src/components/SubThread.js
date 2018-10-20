@@ -265,7 +265,6 @@ class EnhancedTable extends React.Component {
         return res.json();
       }).then(json => {
       this.setState({thread: json})
-      console.log(this.state.thread);
     })
     url = this.state.nextpage;
     fetch(url, {
@@ -274,8 +273,7 @@ class EnhancedTable extends React.Component {
       .then(res => {
         return res.json();
       }).then(json => {
-      this.setState({Posts: json.results, nextpage: json.next, total: json.count})
-
+      this.setState({Posts: json.results, nextpage: json.next, total: json.count});
     })
 
   }
@@ -304,16 +302,16 @@ class EnhancedTable extends React.Component {
       .then(res => {
         return res.json();
       }).then(json => {
-      this.setState({Posts: json.results, nextpage: json.next, offset})
+      console.log(json);
+      this.setState({Posts: json.results, nextpage: json.next, offset});
+      window.scrollTo(0, 0);
     });
   }
 
 
   render() {
     const {classes} = this.props;
-    const {Posts, order, orderBy, rowsPerPage, offset} = this.state;
-    const emptyRows =
-      rowsPerPage - Math.min(rowsPerPage, Posts.length - offset * rowsPerPage);
+    let {Posts, order, orderBy, rowsPerPage, offset} = this.state;
 
     return (
 
@@ -340,7 +338,7 @@ class EnhancedTable extends React.Component {
             />
             <TableBody>
               {stableSort(Posts, getSorting(order, orderBy))
-                .slice(offset * rowsPerPage, offset * rowsPerPage + rowsPerPage)
+                .slice(0,rowsPerPage)
                 .map(n => {
                   return (
                     <TableRow
