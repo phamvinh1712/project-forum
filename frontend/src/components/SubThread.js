@@ -20,6 +20,8 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Button from '@material-ui/core/Button';
 import './SubThread.css';
 import {Link} from "react-router-dom";
+import moment from 'moment';
+
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -76,7 +78,7 @@ class EnhancedTableHead extends React.Component {
     } = this.props;
 
     return (
-      <TableHead >
+      <TableHead>
         <TableRow>
           {rows.map(row => {
             return (
@@ -190,7 +192,7 @@ const toolbarStyles = theme => ({
 });
 
 let EnhancedTableToolbar = props => {
-  const {numSelected, classes, title} = props;
+  const {numSelected, classes, title, handle} = props;
 
 
   return (
@@ -205,19 +207,19 @@ let EnhancedTableToolbar = props => {
             {numSelected} selected
           </Typography>
         ) : (
-          <Typography variant="h3" id="tableTitle">
+          <Typography variant="h4" id="tableTitle">
 
             {title}
           </Typography>
         )}
       </div>
       <div className={classes.spacer}/>
-            <div>
-          <Link to={`${props.url}createpost/`}>
-          <Button style={{float: 'right',margin:'5px'}} variant="contained" color="secondary" >
+      <div>
+        <Link to={(handle.toString() + "/createpost/")}>
+          <Button style={{float: 'right', margin: '5px'}} variant="contained" color="primary">
             Create post
           </Button>
-          </Link>
+        </Link>
       </div>
     </Toolbar>
   );
@@ -233,7 +235,7 @@ const styles = theme => ({
   root: {
     width: "100%",
     marginTop: theme.spacing.unit * 4,
-    margin : 'auto'
+    margin: 'auto'
   },
   table: {
     maxWidth: "100%",
@@ -276,7 +278,7 @@ class EnhancedTable extends React.Component {
       .then(res => {
         return res.json();
       }).then(json => {
-      this.setState({Posts: json.results,nextpage: json.next,total: json.count})
+      this.setState({Posts: json.results, nextpage: json.next, total: json.count})
 
     })
 
@@ -299,14 +301,14 @@ class EnhancedTable extends React.Component {
   };
 
   handleChangePage(offset) {
-    let url = '/api/subthread/' + this.props.match.params.handle.toString() + '/posts/?page=' + (offset/10+1).toString();
+    let url = '/api/subthread/' + this.props.match.params.handle.toString() + '/posts/?page=' + (offset / 10 + 1).toString();
     fetch(url, {
       method: 'GET',
     })
       .then(res => {
         return res.json();
       }).then(json => {
-      this.setState({Posts: json.results,nextpage: json.next,offset})
+      this.setState({Posts: json.results, nextpage: json.next, offset})
     });
   }
 
@@ -320,7 +322,8 @@ class EnhancedTable extends React.Component {
     return (
 
       <Paper className={classes.root}>
-        <EnhancedTableToolbar url ={this.props.match.url} title={this.state.thread.sub_thread_title}/>
+        <EnhancedTableToolbar title={this.state.thread.sub_thread_title}
+                              handle={this.props.match.params.handle.toString()}/>
         <div style={{
           width: "90%",
           margin: '0 auto',
