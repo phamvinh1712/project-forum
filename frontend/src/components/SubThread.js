@@ -62,8 +62,8 @@ const rows = [
     disablePadding: false,
     label: "Topic Title"
   },
-  {id: "view", numeric: true, disablePadding: false, label: "View"},
-  {id: "ds", numeric: true, disablePadding: false, label: "Date Start"},
+  {id: "view_count", numeric: true, disablePadding: false, label: "View"},
+  {id: "create_time", numeric: true, disablePadding: false, label: "Date Start"},
 ];
 
 class EnhancedTableHead extends React.Component {
