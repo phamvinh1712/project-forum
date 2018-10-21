@@ -56,7 +56,7 @@ class Post extends Component {
     this.setState({ open: false, check:true });
   };
 
-  CreatePost = () =>{ 
+  CreateReport = () =>{ 
     fetch(PostAPI ,
     {
     method: 'POST' ,
@@ -288,7 +288,7 @@ class Post extends Component {
             <div>
             {this.state.check ? (
                 <div>
-                  {this.CreatePost()}
+                  {this.CreateReport()}
                  </div>
 
              ) : (

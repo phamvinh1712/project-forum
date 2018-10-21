@@ -7,7 +7,6 @@ class ReportList extends React.Component {
           <h4>Report list</h4>
           <div className="table-responsive">
                         <Table />
-
           </div>
         </div>
     );

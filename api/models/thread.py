@@ -9,7 +9,7 @@ class Thread(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     create_time = models.DateTimeField(default=datetime.now)
     display_order = models.SmallIntegerField(default=0)
-    display_flag = True
+    display_flag = models.BooleanField()
 
     class Meta:
         ordering = ['display_order', ]

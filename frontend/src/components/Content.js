@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import './screen.css';
+
+import {Link} from 'react-router-dom';
+
 const API = '/api/threads/';
 
 export default class Content extends React.Component {
@@ -12,11 +15,19 @@ export default class Content extends React.Component {
 
   componentDidMount() {
     fetch(API)
-      .then(response => response.json())
+      .then(function (response) {
+        if (response.ok)
+          return response.json()
+        else {
+          throw new Error('Something went wrong');
+        }
+      })
       .then(data => {
-        console.log(data);
         this.setState({list: data});
       })
+      .catch((error) => {
+        console.log(error)
+      });
   }
 
   render() {
@@ -28,7 +39,9 @@ export default class Content extends React.Component {
             <dl>
               {value.sub_thread.map(value1 => (
                 <div>
-                  <dt>{value1.sub_thread_title}</dt>
+                  <Link to={"/Subthread/" + value.id.toString()}>
+                    <dt>{value1.sub_thread_title}</dt>
+                  </Link>
                   <dd>
                     {value1.description}
                   </dd>
