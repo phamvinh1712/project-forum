@@ -66,21 +66,21 @@ class App extends Component {
             authenticated={this.state.authenticated} user={this.state.user}/>
           <Switch>
             <Route exact path="/" component={Content}/>
-            //authentication route, prevent authenticated user to redirect to this
+            {/*authentication route, prevent authenticated user to redirect to this*/}
             {!this.state.authenticated &&
             <Route path="/login" render={(props) => <Login {...props} handleToken={this.handleToken}/>}/>}
             {!this.state.authenticated && <Route path="/register" component={Register}/>}
             {!this.state.authenticated && <Route path="/forgetpassword" component={ForgetPassword}/>}
             {!this.state.authenticated && <Route path="/reset/:uid/:token" component={Reset}/>}
 
-            //protected route only for authenticated user
+            {/*protected route only for authenticated user*/}
             {this.state.authenticated && <Route path="/subthread/:handle/createpost/" component={CreatePost}/>}
             {this.state.authenticated && <Route path="/edit-post/:id" component={EditPost}/>}
 
-            //protected route only for admin user
+            {/*protected route only for admin user*/}
             { this.state.isAdmin && <Route path="/admin" component={Admin}/>}
 
-            //public route
+            {/*public route*/}
             <Route exact path="/subthread/:handle" component={SubThreadDisplay}/>
             <Route path="/posts/:id"
                    render={(props) => <Post {...props} authenticated={this.state.authenticated} user={this.state.user}/>} />
