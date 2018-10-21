@@ -156,8 +156,7 @@ export default class CreatePost extends Component {
     );
   }
 }
-CreatePost
-  .modules = {
+CreatePost.modules = {
   toolbar: [
     [{'header': '1'}, {'header': '2'}, {'font': []}],
     [{size: []}],
