@@ -9,18 +9,13 @@ import TableHead from "@material-ui/core/TableHead";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import Tooltip from "@material-ui/core/Tooltip";
-import {lighten} from "@material-ui/core/styles/colorManipulator";
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import Pagination from "material-ui-flat-pagination";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Button from '@material-ui/core/Button';
 import './SubThread.css';
-import {Link} from "react-router-dom";
-import moment from 'moment';
+import Chip from "@material-ui/core/Chip/Chip";
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -62,7 +57,7 @@ const rows = [
     disablePadding: false,
     label: "Topic Title"
   },
-  {id: "view_count", numeric: true, disablePadding: false, label: "View"},
+  {id: "count_view", numeric: true, disablePadding: false, label: "View"},
   {id: "create_time", numeric: true, disablePadding: false, label: "Date Start"},
 ];
 
@@ -78,7 +73,7 @@ class EnhancedTableHead extends React.Component {
     } = this.props;
 
     return (
-      <TableHead >
+      <TableHead>
         <TableRow>
           {rows.map(row => {
             return (
@@ -111,9 +106,12 @@ class EnhancedTableHead extends React.Component {
 }
 
 EnhancedTableHead.propTypes = {
+  numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
+  onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.string.isRequired,
   orderBy: PropTypes.string.isRequired,
+  rowCount: PropTypes.number.isRequired
 };
 
 const PaginationTheme = createMuiTheme({
@@ -156,89 +154,11 @@ const MultiCelltheme = createMuiTheme({
 });
 
 
-const toolbarStyles = theme => ({
-  root: {
-    background: 'linear-gradient(45deg,#6bc6b9 30%, #3e8e99 80%)',
-    paddingRight: theme.spacing.unit,
-    height: 50,
-  },
-  highlight:
-    theme.palette.type === "light"
-      ? {
-        color: theme.palette.secondary.main,
-        backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-        fontSize: "12pt"
-
-      }
-      : {
-        color: theme.palette.text.primary,
-        backgroundColor: theme.palette.secondary.dark,
-        fontSize: "12pt"
-
-      },
-  spacer: {
-    flex: "1 1 100%"
-  },
-  actions: {
-    color: theme.palette.text.secondary
-  },
-  title: {
-    fontSize: "100px"
-
-  }
-});
-
-let EnhancedTableToolbar = props => {
-  const {numSelected, classes, title, handle} = props;
-
-
-  return (
-    <Toolbar
-      className={classNames(classes.root, {
-        [classes.highlight]: numSelected > 0
-      })}
-    >
-      <div className={classes.title}>
-        {numSelected > 0 ? (
-          <Typography color="inherit" variant="subheading">
-            {numSelected} selected
-          </Typography>
-        ) : (
-
-          <Typography variant="h4" id="tableTitle">
-
-
-            {title}
-          </Typography>
-        )}
-      </div>
-      <div className={classes.spacer}/>
-
-      <div>
-        <Link to={(handle.toString() + "/createpost/")}>
-          <Button style={{float: 'right', margin: '5px'}} variant="contained" color="primary">
-            Create post
-          </Button>
-        </Link>
-
-      </div>
-    </Toolbar>
-  );
-};
-
-EnhancedTableToolbar.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
-
 const styles = theme => ({
   root: {
     width: "100%",
     marginTop: theme.spacing.unit * 4,
-
     margin: 'auto'
-
   },
   table: {
     maxWidth: "100%",
@@ -250,39 +170,42 @@ const styles = theme => ({
 });
 
 
-class EnhancedTable extends React.Component {
+class PostList extends React.Component {
   state = {
     order: "asc",
-    orderBy: "view",
+    orderBy: "count_view",
     Posts: [],
+    page: 0,
     rowsPerPage: 10,
     thread: [],
-    nextpage: '/api/subthread/' + this.props.match.params.handle.toString() + '/posts/',
+    nextpage: '/api/posts?search=',
     offset: 0,
     total: 0,
   };
 
   componentDidMount() {
-    let url = '/api/subthread/' + this.props.match.params.handle.toString() + '/'
-    fetch(url, {
-      method: 'GET',
-    })
-      .then(res => {
-        return res.json();
-      }).then(json => {
-      this.setState({thread: json})
-      console.log(this.state.thread);
-    })
-    url = this.state.nextpage;
-    fetch(url, {
-      method: 'GET',
-    })
-      .then(res => {
-        return res.json();
-      }).then(json => {
-      this.setState({Posts: json.results, nextpage: json.next, total: json.count});
-    })
+    this.handleSearch(this.props.match.params.param)
 
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.match.params.param !== this.props.match.params.param) {
+      this.handleSearch(nextProps.match.params.param)
+    }
+  }
+
+  handleSearch = (param) => {
+    if (!param) param = ''
+    let url = '/api/posts?search=' + param
+
+    fetch(url, {
+      method: 'GET',
+    })
+      .then(res => {
+        return res.json();
+      }).then(json => {
+      this.setState({Posts: json.results, nextpage: json.next, total: json.count})
+    })
   }
 
   handleRequestSort = (event, property) => {
@@ -300,39 +223,44 @@ class EnhancedTable extends React.Component {
     let temp = "/posts/" + id;
     this.props.history.push(temp);
   };
+  handleClickHashtag = (event, id) => {
+    let temp = "/hashtag/" + id;
+    this.props.history.push(temp);
+  }
 
   handleChangePage(offset) {
-    let url = '/api/subthread/' + this.props.match.params.handle.toString() + '/posts/?page=' + (offset / 10 + 1).toString();
+    let param = (this.props.match.params.param) ? this.props.match.params.param.toString() : ""
+    let page = (offset / 10 + 1).toString()
+    let url = '/api/posts?page=' + page + '&search=' + param
     fetch(url, {
       method: 'GET',
     })
       .then(res => {
         return res.json();
       }).then(json => {
-      console.log(json);
-      this.setState({Posts: json.results, nextpage: json.next, offset});
-      window.scrollTo(0, 0);
+      this.setState({Posts: json.results, nextpage: json.next, offset})
     });
   }
 
 
   render() {
     const {classes} = this.props;
-    let {Posts, order, orderBy, rowsPerPage, offset} = this.state;
+    const {Posts, order, orderBy, rowsPerPage, page} = this.state;
+    const emptyRows =
+      rowsPerPage - Math.min(rowsPerPage, Posts.length - page * rowsPerPage);
 
     return (
 
       <Paper className={classes.root}>
-
-        <EnhancedTableToolbar title={this.state.thread.sub_thread_title}
-                              handle={this.props.match.params.handle.toString()}/>
 
         <div style={{
           width: "90%",
           margin: '0 auto',
           height: 1000
         }} className={classes.tableWrapper}>
+          <h2>{this.state.total} result(s) found</h2>
           <Table className={classes.table} aria-labelledby="tableTitle">
+
             <colgroup>
               <col style={{width: '1%'}}/>
               <col style={{width: '50%'}}/>
@@ -347,11 +275,12 @@ class EnhancedTable extends React.Component {
             />
             <TableBody>
               {stableSort(Posts, getSorting(order, orderBy))
-                .slice(0,rowsPerPage)
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(n => {
                   return (
                     <TableRow
-                      onClick={event => this.handleClick(event, n.id)}
+
+
                       tabIndex={-1}
                       key={n.id}
                     >
@@ -360,13 +289,18 @@ class EnhancedTable extends React.Component {
                           <div><img src={n.user.profile.avatar} width="40" height="40"/></div>
                         </TableCell>
                         <TableCell numeric component="th" scope="row">
-                          <div> {n.title} <br/></div>
+                          <div onClick={event => this.handleClick(event, n.id)}> {n.title} <br/></div>
                           <div style={{
                             fontSize: "1rem",
-                          }}>  {n.user.username} </div>
+                          }}>  {n.user.username} {n.hashtags.map(value =>
+                            <Chip
+                              label={value.name}
+                              className={classes.chip}
+                              onClick={event => this.handleClickHashtag(event, value.id)}/>
+                          )}</div>
                         </TableCell>
                         <TableCell numeric>{n.view_count}</TableCell>
-                        <TableCell numeric>{moment(n.create_time, moment.ISO_8601).format("DD-MM-YYYY")}</TableCell>
+                        <TableCell numeric>{n.create_time}</TableCell>
                       </MuiThemeProvider>
                     </TableRow>
                   )
@@ -401,8 +335,8 @@ class EnhancedTable extends React.Component {
   }
 }
 
-EnhancedTable.propTypes = {
+PostList.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(EnhancedTable);
+export default withStyles(styles)(PostList);

@@ -45,8 +45,8 @@ INSTALLED_APPS = [
     'rest_auth',
     'rest_auth.registration',
     'allauth.socialaccount',
-    'storages'
-
+    'storages',
+    'django.contrib.postgres'
 ]
 
 MIDDLEWARE = [

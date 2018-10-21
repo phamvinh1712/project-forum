@@ -6,17 +6,19 @@ import {fade} from '@material-ui/core/styles/colorManipulator';
 import './NavBar.css';
 import Button from '@material-ui/core/Button';
 import {Link} from 'react-router-dom';
-import {DropdownButton} from 'react-bootstrap';
+import {DropdownButton,ButtonToolbar} from 'react-bootstrap';
+import Avatar from '@material-ui/core/Avatar';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
 import Popper from '@material-ui/core/Popper';
 import Paper from '@material-ui/core/Paper';
+import {Route, Redirect, withRouter} from 'react-router'
+import {toast} from 'react-toastify';
+
 
 // navigation bar with search bar UI and 2 button link to login page and register page
 const styles = theme => ({
@@ -29,12 +31,13 @@ const styles = theme => ({
   },
   search: {
     position: 'relative',
+    left:30,
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     '&:hover': {
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
-    marginLeft: 0,
+    marginLeft: -10,
     width: '100%',
     [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing.unit,
@@ -75,11 +78,27 @@ class navbar extends Component {
     super(props);
     this.state = {
       anchorEl: null,
-      user: props.user
+      authenticated: props.authenticated,
+      search: ""
     }
-
+    this.onChange = this.onChange.bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this);
   };
-
+  handleLogout = () => {
+    fetch('api/rest-auth/logout/', {
+      method: 'POST',
+    })
+      .then(res => {
+        return res.json();
+      }).then(json => {
+      localStorage.clear();
+      toast.info("You are now logout", {
+            position: toast.POSITION.TOP_CENTER
+          });
+      this.setState({anchorEl: null});
+      window.location.href = '/';
+    });
+  };
   handleProfileMenuOpen = event => {
     this.setState({anchorEl: event.currentTarget});
   };
@@ -88,10 +107,25 @@ class navbar extends Component {
     this.setState({anchorEl: null});
   };
 
+  onChange(event) {
+    this.setState({search: event.target.value})
+  }
+
+  onKeyDown(event) {
+    if (event.key == 'Enter') {
+      let url = '/search/:param'.replace(':param', this.state.search);
+      this.props.history.push(url);
+    }
+
+  }
+
+  handleAdminClick = () => {
+    this.props.history.push('/admin');
+  }
+
   render() {
     const {classes} = this.props;
     const isMenuOpen = Boolean(this.state.anchorEl);
-
     const renderForm = (
       <div>
         <Link to="/Login">
@@ -118,8 +152,9 @@ class navbar extends Component {
               <ClickAwayListener onClickAway={this.handleMenuClose}>
                 <MenuList>
                   <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
-                  <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
-                  <MenuItem onClick={this.handleMenuClose}>Logout</MenuItem>
+                  { (this.props.authenticated && this.props.user.is_staff) ?
+                  <MenuItem onClick={this.handleAdminClick}>Admin</MenuItem> : null}
+                  <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
                 </MenuList>
               </ClickAwayListener>
             </Paper>
@@ -130,18 +165,17 @@ class navbar extends Component {
 
     const renderUser = (
       <div>
-        <IconButton color="inherit">
-          <Badge className={classes.margin} badgeContent={17} color="secondary">
-            <NotificationsIcon/>
-          </Badge>
-        </IconButton>
         <IconButton
           aria-owns={isMenuOpen ? 'material-appbar' : null}
           aria-haspopup="true"
           onClick={this.handleProfileMenuOpen}
           color="inherit"
         >
-          <AccountCircle/>
+          {
+            (this.props.authenticated && this.props.user.profile.avatar)
+              ? <Avatar src={this.props.user.profile.avatar} className={classes.avatar}/>
+              : <AccountCircle/>
+          }
         </IconButton>
         {renderUserMenu}
       </div>
@@ -151,8 +185,8 @@ class navbar extends Component {
       <header className="navbar">
         <nav className="navbar_navigation">
           <div className="navbar_logo"><span>THE LOGO</span></div>
-          <div className={"dropdownb"}>
-            <DropdownButton className={"Button1"}
+          <ButtonToolbar className={"dropdownb"}>
+            <DropdownButton className={"btn1"}
                             title={"Ducati"}
                             key={1}
                             id={`dropdown-basic-${1}`}
@@ -165,7 +199,36 @@ class navbar extends Component {
               <MenuItem divider/>
               <MenuItem eventKey="4">Separated link</MenuItem>
             </DropdownButton>
-          </div>
+
+            <DropdownButton className={"btn1"}
+                            title={"Yamaha"}
+                            key={2}
+                            id={`dropdown-basic-${2}`}
+            >
+              <MenuItem eventKey="1">Action</MenuItem>
+              <MenuItem eventKey="2">Another action</MenuItem>
+              <MenuItem eventKey="3" active>
+                Active Item
+              </MenuItem>
+              <MenuItem divider/>
+              <MenuItem eventKey="4">Separated link</MenuItem>
+            </DropdownButton>
+
+            <DropdownButton className={"btn1"}
+                            title={"Honda"}
+                            key={3}
+                            id={`dropdown-basic-${3}`}
+            >
+              <MenuItem eventKey="1">Action</MenuItem>
+              <MenuItem eventKey="2">Another action</MenuItem>
+              <MenuItem eventKey="3" active>
+                Active Item
+              </MenuItem>
+              <MenuItem divider/>
+              <MenuItem eventKey="4">Separated link</MenuItem>
+            </DropdownButton>
+          </ButtonToolbar>
+
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon/>
@@ -176,14 +239,17 @@ class navbar extends Component {
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
+              value={this.state.search}
+              onChange={this.onChange}
+              onKeyDown={this.onKeyDown}
             />
           </div>
           <div className={classes.grow}/>
           <div>
             {
-              (localStorage.getItem('token') === null)
-                ? renderForm
-                : renderUser
+              (this.props.authenticated)
+                ? renderUser
+                : renderForm
             }
           </div>
         </nav>
@@ -192,4 +258,4 @@ class navbar extends Component {
   }
 }
 
-export default withStyles(styles)(navbar)
+export default withRouter(withStyles(styles)(navbar))
