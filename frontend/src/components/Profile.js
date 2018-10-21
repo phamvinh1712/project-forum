@@ -1,8 +1,44 @@
 import React, { Component } from 'react';
 import avatar from './avatar.js';
-
-const profile = props => (
-<div>
+const PostAPI = '/api/users/';
+class Profile extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+          check:false,
+          open:false,
+          first_name:'',
+          last_name:'',
+          phone_number:'',
+    };
+    this.CreateProfile = this.CreateProfile.bind(this);
+  }
+CreateProfile = () =>{ 
+  fetch(PostAPI ,
+  {
+  method: 'POST' ,
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Token ' + localStorage.getItem('token').toString()
+  },
+  body: JSON.stringify(
+    {
+      'first_name':document.getElementById("first_name"),
+      'last_name':document.getElementById("last_name"),
+      'phone_number':document.getElementById("phone"),
+    }
+  )
+  })
+  .then(function(response){
+      return response.json()
+  })
+  .then(function(data){
+      console.log(data)
+  })
+};
+    render() {
+        return (
+          <div>
   <title>Bootstrap Profile Page</title>
   <meta charSet="utf-8" />
   <link rel="stylesheet" href="../../public/css/bootstrap.min.css" />
@@ -55,39 +91,9 @@ const profile = props => (
                 </div>
               </div>
               <div className="form-group">
-                <div className="col-xs-6">
-                  <label htmlFor="mobile"><h4>Mobile</h4></label>
-                  <input type="text" className="form-control" name="mobile" id="mobile" placeholder="enter mobile number" title="enter your mobile number if any." />
-                </div>
-              </div>
-              <div className="form-group">
-                <div className="col-xs-6">
-                  <label htmlFor="email"><h4>Email</h4></label>
-                  <input type="email" className="form-control" name="email" id="email" placeholder="you@email.com" title="enter your email." />
-                </div>
-              </div>
-              <div className="form-group">
-                <div className="col-xs-6">
-                  <label htmlFor="email"><h4>Location</h4></label>
-                  <input type="email" className="form-control" id="location" placeholder="somewhere" title="enter a location" />
-                </div>
-              </div>
-              <div className="form-group">
-                <div className="col-xs-6">
-                  <label htmlFor="password"><h4>Password</h4></label>
-                  <input type="password" className="form-control" name="password" id="password" placeholder="password" title="enter your password." />
-                </div>
-              </div>
-              <div className="form-group">
-                <div className="col-xs-6">
-                  <label htmlFor="password2"><h4>Verify</h4></label>
-                  <input type="password" className="form-control" name="password2" id="password2" placeholder="password2" title="enter your password2." />
-                </div>
-              </div>
-              <div className="form-group">
                 <div className="col-xs-12">
                   <br />
-                  <button className="btn btn-lg btn-success" type="submit"><i className="glyphicon glyphicon-ok-sign" /> Save</button>
+                  <button onClick={this.CreateProfile}  className="btn btn-lg btn-success" type="submit"><i className="glyphicon glyphicon-ok-sign" /> Save</button>
                   <button className="btn btn-lg" type="reset"><i className="glyphicon glyphicon-repeat" /> Reset</button>
                 </div>
               </div>
@@ -99,6 +105,8 @@ const profile = props => (
     </div>
   </div>
 </div>
-);
+      );
+    }
+  }
 
-export default profile;
+export default Profile;

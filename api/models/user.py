@@ -6,6 +6,8 @@ from .notification import Notification
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
     birthday = models.DateField(null=True, blank=True)
     bio = models.CharField(max_length=250, blank=True)
     phone_number = models.CharField(max_length=20, blank=True)
