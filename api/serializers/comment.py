@@ -4,7 +4,9 @@ from ..serializers import UserDetailSerializer
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    user = UserDetailSerializer(read_only=True)
+    user = UserDetailSerializer()
+    up_vote_count = serializers.ReadOnlyField()
+    down_vote_count = serializers.ReadOnlyField()
 
     class Meta:
         model = Comment

@@ -9,10 +9,13 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         exclude = ('user',)
-        
+
+
 class PostDetailSerializer(serializers.ModelSerializer):
     user = UserDetailSerializer()
     comments = CommentSerializer(many=True)
+    up_vote_count = serializers.ReadOnlyField()
+    down_vote_count = serializers.ReadOnlyField()
     hashtags = HashtagListSerializer(many=True)
 
     class Meta:
@@ -20,9 +23,9 @@ class PostDetailSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-
 class PostReportSerializer(serializers.ModelSerializer):
     user = UserDetailSerializer()
+
     class Meta:
         model = Post
         fields = '__all__'

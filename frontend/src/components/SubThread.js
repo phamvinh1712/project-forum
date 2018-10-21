@@ -76,7 +76,7 @@ class EnhancedTableHead extends React.Component {
     } = this.props;
 
     return (
-      <TableHead>
+      <TableHead >
         <TableRow>
           {rows.map(row => {
             return (
@@ -121,10 +121,10 @@ const PaginationTheme = createMuiTheme({
   overrides: {
     MuiFlatPagination: {
       root: {
-        fontSize: "2rem",
+        fontSize: "15px",
       },
       text: {
-        fontSize: "2rem"
+        fontSize: "15px"
       }
     }
   }
@@ -135,21 +135,22 @@ const MultiCelltheme = createMuiTheme({
   overrides: {
     // Name of the component ️ / style sheet
     MuiTableCell: {
+
       // Name of the rule
       head: {
-        fontSize: "3rem",
-        height: 100,
+        fontSize: "25px",
+        height: 70,
         color: 'black',
 
       },
       numeric: {
         color: 'black',
-        height: 100,
-        fontSize: "2rem",
+        height: 70,
+        fontSize: "16px",
         textAlign: "left",
       },
       footer: {
-        fontSize: "5rem",
+        fontSize: "20px",
       }
     },
   },
@@ -158,22 +159,22 @@ const MultiCelltheme = createMuiTheme({
 
 const toolbarStyles = theme => ({
   root: {
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    background: 'linear-gradient(45deg,#6bc6b9 30%, #3e8e99 80%)',
     paddingRight: theme.spacing.unit,
-    height: 100
+    height: 50,
   },
   highlight:
     theme.palette.type === "light"
       ? {
         color: theme.palette.secondary.main,
         backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-        fontSize: "10pt"
+        fontSize: "12pt"
 
       }
       : {
         color: theme.palette.text.primary,
         backgroundColor: theme.palette.secondary.dark,
-        fontSize: "10pt"
+        fontSize: "12pt"
 
       },
   spacer: {
@@ -183,7 +184,6 @@ const toolbarStyles = theme => ({
     color: theme.palette.text.secondary
   },
   title: {
-    flex: "100 0 auto",
     fontSize: "100px"
 
   }
@@ -205,12 +205,20 @@ let EnhancedTableToolbar = props => {
             {numSelected} selected
           </Typography>
         ) : (
-          <Typography variant="h1" id="tableTitle">
+          <Typography variant="h3" id="tableTitle">
+
             {title}
           </Typography>
         )}
       </div>
       <div className={classes.spacer}/>
+            <div>
+          <Link to={`${props.url}createpost/`}>
+          <Button style={{float: 'right',margin:'5px'}} variant="contained" color="secondary" >
+            Create post
+          </Button>
+          </Link>
+      </div>
     </Toolbar>
   );
 };
@@ -225,10 +233,11 @@ const styles = theme => ({
   root: {
     width: "100%",
     marginTop: theme.spacing.unit * 4,
+    margin : 'auto'
   },
   table: {
-    minWidth: 1500,
-    padding: "1000px",
+    maxWidth: "100%",
+    padding: "20px",
   },
   tableWrapper: {
     overflowX: "auto",
@@ -258,6 +267,7 @@ class EnhancedTable extends React.Component {
         return res.json();
       }).then(json => {
       this.setState({thread: json})
+      console.log(this.state.thread);
     })
     url = this.state.nextpage;
     fetch(url, {
@@ -310,11 +320,11 @@ class EnhancedTable extends React.Component {
     return (
 
       <Paper className={classes.root}>
-        <EnhancedTableToolbar title={this.state.thread.sub_thread_title}/>
+        <EnhancedTableToolbar url ={this.props.match.url} title={this.state.thread.sub_thread_title}/>
         <div style={{
-          width: 1500,
+          width: "90%",
           margin: '0 auto',
-          height: 1200
+          height: 1000
         }} className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <colgroup>
@@ -378,12 +388,7 @@ class EnhancedTable extends React.Component {
               />
             </MuiThemeProvider>
           </div>
-          
-          <Link to={`${this.props.match.url}createpost/`}>
-          <Button variant="contained" color="secondary" >
-            Create post
-          </Button>
-          </Link>
+
         </div>
 
       </Paper>

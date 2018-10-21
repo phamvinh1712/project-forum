@@ -64,7 +64,7 @@ a, a:hover, a:focus {
 
 #sidebar ul li.active > a, a[aria-expanded="true"] {
     color: #fff;
-    background: ; /*background of button menu */
+    /*background: ; !*background of button menu *!*/
     text-decoration: none;
 }
 ul ul a {

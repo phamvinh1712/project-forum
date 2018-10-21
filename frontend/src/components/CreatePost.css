@@ -4,8 +4,8 @@
 }
 
 .CreatePost {
-    margin: 30px;
-    max-width: 800px;
+    margin: auto;
+    max-width: 80%;
 }
 .Quill {
     min-height: 500px;

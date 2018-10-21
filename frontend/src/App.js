@@ -8,6 +8,8 @@ import SubThreadDisplay from "./components/SubThread";
 import CreatePost from "./components/CreatePost";
 import Post from "./components/Post";
 import Content from "./components/Content";
+import Admin from "./components/Admin_page";
+import {ToastContainer} from "react-toastify";
 import EditPost from "./components/EditPost";
 import ForgetPassword from "./components/ForgetPassword";
 import Reset from "./components/Reset";
@@ -52,7 +54,9 @@ class App extends Component {
             <Route path="/forgetpassword" component={ForgetPassword}/>
             <Route path="/reset/:uid/:token" component={Reset}/>
             <Route path="/edit-post/:id" component={EditPost}/>
+            <Route path="/admin" component={Admin}/>
           </div>
+          <ToastContainer autoClose={false}/>
 
         </div>
       </BrowserRouter>
