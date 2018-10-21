@@ -54,7 +54,8 @@ class VoteCommentView(APIView):
                     vote.delete()
                     return Response(CommentSerializer(comment).data, status=status.HTTP_200_OK)
                 else :
-                    vote.type = type
+                    vote.type = type   
+                    vote.save()
 
 
             return Response(CommentSerializer(vote.comment).data, status=status.HTTP_200_OK)
