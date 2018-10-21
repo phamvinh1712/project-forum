@@ -17,10 +17,8 @@ import {lighten} from "@material-ui/core/styles/colorManipulator";
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import Pagination from "material-ui-flat-pagination";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Button from '@material-ui/core/Button';
 import './SubThread.css';
-import {Link} from "react-router-dom";
-import moment from 'moment';
+import Chip from "@material-ui/core/Chip/Chip";
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -62,8 +60,8 @@ const rows = [
     disablePadding: false,
     label: "Topic Title"
   },
-  {id: "view_count", numeric: true, disablePadding: false, label: "View"},
-  {id: "create_time", numeric: true, disablePadding: false, label: "Date Start"},
+  {id: "view", numeric: true, disablePadding: false, label: "View"},
+  {id: "ds", numeric: true, disablePadding: false, label: "Date Start"},
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -78,7 +76,7 @@ class EnhancedTableHead extends React.Component {
     } = this.props;
 
     return (
-      <TableHead >
+      <TableHead>
         <TableRow>
           {rows.map(row => {
             return (
@@ -111,9 +109,12 @@ class EnhancedTableHead extends React.Component {
 }
 
 EnhancedTableHead.propTypes = {
+  numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
+  onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.string.isRequired,
   orderBy: PropTypes.string.isRequired,
+  rowCount: PropTypes.number.isRequired
 };
 
 const PaginationTheme = createMuiTheme({
@@ -189,7 +190,7 @@ const toolbarStyles = theme => ({
 });
 
 let EnhancedTableToolbar = props => {
-  const {numSelected, classes, title, handle} = props;
+  const {numSelected, classes, title} = props;
 
 
   return (
@@ -204,20 +205,14 @@ let EnhancedTableToolbar = props => {
             {numSelected} selected
           </Typography>
         ) : (
-          <Typography variant="h4" id="tableTitle">
+          <Typography variant="h3" id="tableTitle">
 
             {title}
           </Typography>
         )}
       </div>
       <div className={classes.spacer}/>
-      <div>
-        <Link to={(handle.toString() + "/createpost/")}>
-          <Button style={{float: 'right', margin: '5px'}} variant="contained" color="primary">
-            Create post
-          </Button>
-        </Link>
-      </div>
+
     </Toolbar>
   );
 };
@@ -249,23 +244,24 @@ class EnhancedTable extends React.Component {
     order: "asc",
     orderBy: "view",
     Posts: [],
+    page: 0,
     rowsPerPage: 10,
-    thread: [],
-    nextpage: '/api/subthread/' + this.props.match.params.handle.toString() + '/posts/',
+    name: "",
+    nextpage: '/api/hashtag/' + this.props.match.params.id.toString() + '/',
     offset: 0,
     total: 0,
   };
 
   componentDidMount() {
-    let url = '/api/subthread/' + this.props.match.params.handle.toString() + '/'
+    let url = '/api/hashtag-name/' + this.props.match.params.id.toString() + '/'
     fetch(url, {
       method: 'GET',
     })
       .then(res => {
-        return res.json();
+        if (res.ok)
+          return res.json();
       }).then(json => {
-      this.setState({thread: json})
-      console.log(this.state.thread);
+      this.setState({name: json.name})
     })
     url = this.state.nextpage;
     fetch(url, {
@@ -274,7 +270,8 @@ class EnhancedTable extends React.Component {
       .then(res => {
         return res.json();
       }).then(json => {
-      this.setState({Posts: json.results, nextpage: json.next, total: json.count});
+      this.setState({Posts: json.results, nextpage: json.next, total: json.count})
+
     })
 
   }
@@ -295,35 +292,42 @@ class EnhancedTable extends React.Component {
     this.props.history.push(temp);
   };
 
+  handleClickHashtag = (event, id) => {
+    let temp = "/hashtag/" + id;
+    this.props.history.push(temp);
+  }
+
   handleChangePage(offset) {
-    let url = '/api/subthread/' + this.props.match.params.handle.toString() + '/posts/?page=' + (offset / 10 + 1).toString();
+
+    let url = '/api/hashtag/' + this.props.match.params.id.toString() + '/?page=' + (offset/10 + 1).toString();
     fetch(url, {
       method: 'GET',
     })
       .then(res => {
         return res.json();
       }).then(json => {
-      console.log(json);
-      this.setState({Posts: json.results, nextpage: json.next, offset});
-      window.scrollTo(0, 0);
+      console.log(json)
+      this.setState({Posts: json.results, nextpage: json.next, offset})
     });
   }
 
 
   render() {
     const {classes} = this.props;
-    let {Posts, order, orderBy, rowsPerPage, offset} = this.state;
+    const {Posts, order, orderBy, rowsPerPage, page} = this.state;
+    const emptyRows =
+      rowsPerPage - Math.min(rowsPerPage, Posts.length - page * rowsPerPage);
 
     return (
 
       <Paper className={classes.root}>
-        <EnhancedTableToolbar title={this.state.thread.sub_thread_title}
-                              handle={this.props.match.params.handle.toString()}/>
+        <EnhancedTableToolbar title={this.state.name}/>
         <div style={{
           width: "90%",
           margin: '0 auto',
           height: 1000
         }} className={classes.tableWrapper}>
+          <h2>{this.state.total} post(s)</h2>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <colgroup>
               <col style={{width: '1%'}}/>
@@ -339,10 +343,11 @@ class EnhancedTable extends React.Component {
             />
             <TableBody>
               {stableSort(Posts, getSorting(order, orderBy))
-                .slice(0,rowsPerPage)
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(n => {
                   return (
                     <TableRow
+
                       onClick={event => this.handleClick(event, n.id)}
                       tabIndex={-1}
                       key={n.id}
@@ -355,10 +360,15 @@ class EnhancedTable extends React.Component {
                           <div> {n.title} <br/></div>
                           <div style={{
                             fontSize: "1rem",
-                          }}>  {n.user.username} </div>
+                          }}>  {n.user.username}{n.hashtags.map(value =>
+                            <Chip
+                              label={value.name}
+                              className={classes.chip}
+                              onClick={event => this.handleClickHashtag(event, value.id)}/>
+                          )} </div>
                         </TableCell>
                         <TableCell numeric>{n.view_count}</TableCell>
-                        <TableCell numeric>{moment(n.create_time, moment.ISO_8601).format("DD-MM-YYYY")}</TableCell>
+                        <TableCell numeric>{n.create_time}</TableCell>
                       </MuiThemeProvider>
                     </TableRow>
                   )

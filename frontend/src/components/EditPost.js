@@ -4,6 +4,7 @@ import {Button, FormGroup, FormControl, ControlLabel} from "react-bootstrap";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import {Link} from "react-router-dom";
+import {toast} from "react-toastify";
 
 // Edit Post Page
 export default class EditPost extends Component {
@@ -28,9 +29,9 @@ export default class EditPost extends Component {
       method: 'GET',
     })
       .then(res => {
-        return res.json();
+        if (res.ok) return res.json();
+        else throw new Error('Something went wrong')
       }).then(json => {
-      console.log(json)
       this.setState({
         sub_thread: json.sub_thread,
         view_count: json.view_count,
@@ -38,6 +39,12 @@ export default class EditPost extends Component {
         text: json.content
       })
     })
+      .catch(function (error) {
+        toast.error(error.toString, {
+          position: toast.POSITION.TOP_CENTER
+        });
+        this.props.history.push('/');
+      }.bind(this));
 
 
   }
@@ -64,7 +71,12 @@ export default class EditPost extends Component {
         if (res.ok) {
           let temp = "/posts/:id".replace(":id", this.props.match.params.id);
           this.props.history.push(temp);
-        }
+        } else throw new Error('You may not have the permission to do this')
+      }.bind(this))
+      .catch(function (error) {
+        toast.error(error.toString(), {
+          position: toast.POSITION.TOP_CENTER
+        });
       }.bind(this))
 
   }

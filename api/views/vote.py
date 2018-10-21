@@ -21,7 +21,6 @@ class VotePostView(APIView):
             if vote is None:
                 vote = Vote(user=request.user, post=post, type=type)
             else:
-
                 if vote.type == type:
                     post = vote.post
                     vote.delete()
@@ -29,7 +28,6 @@ class VotePostView(APIView):
                 else:
                     vote.type = type
                     vote.save()
-
 
             return Response(PostDetailSerializer(vote.post).data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -57,7 +55,6 @@ class VoteCommentView(APIView):
                     vote.type = type
                     vote.save()
 
-
             return Response(CommentSerializer(vote.comment).data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -74,7 +71,6 @@ class VoteReplyView(APIView):
             vote = Vote.objects.filter(user=request.user, reply=reply).first()
             if vote is None:
                 vote = Vote(user=request.user, reply=reply, type=type)
-
                 vote.save()
             else:
                 if vote.type == type:
@@ -86,5 +82,4 @@ class VoteReplyView(APIView):
                     vote.save()
 
             return Response(ReplySerializer(vote.reply).data, status=status.HTTP_200_OK)
-
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -31,7 +31,6 @@ class ThreadSerializer(serializers.ModelSerializer):
         return SubThreadSerializer(sub_thread, many=True).data
 
 
-
 class ThreadCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Thread
@@ -42,4 +41,3 @@ class ThreadUpdateOrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Thread
         fields = ('id', 'display_order')
-
