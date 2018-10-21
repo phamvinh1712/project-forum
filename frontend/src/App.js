@@ -89,6 +89,10 @@ class App extends Component {
             <Route path="/search/" component={PostList}/>
             <Route path="*" component={NotFound} />
           </Switch>
+          <ToastContainer autoClose={false}/>
+
+        </div>
+      </BrowserRouter>
     );
   }
 }
