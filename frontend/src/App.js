@@ -82,6 +82,7 @@ class App extends Component {
 
             {/*public route*/}
             <Route exact path="/subthread/:handle" component={SubThreadDisplay}/>
+
             <Route path="/posts/:id"
                    render={(props) => <Post {...props} authenticated={this.state.authenticated} user={this.state.user}/>} />
             <Route path="/search/:param" component={PostList}/>
@@ -89,6 +90,7 @@ class App extends Component {
             <Route path="/search/" component={PostList}/>
             <Route path="*" component={NotFound} />
           </Switch>
+
           <ToastContainer autoClose={false}/>
 
         </div>

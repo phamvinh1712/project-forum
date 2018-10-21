@@ -23,6 +23,7 @@ class CommentResponseSerializer(serializers.ModelSerializer):
     down_vote_count = serializers.ReadOnlyField()
     replies = ReplySerializer(many=True)
 
+
     class Meta:
         model = Comment
         fields = '__all__'

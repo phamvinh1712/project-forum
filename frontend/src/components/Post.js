@@ -8,6 +8,10 @@ import Chip from '@material-ui/core/Chip';
 import Comments from './Comments' ;
 import {toast} from "react-toastify";
 
+import DialogActions from "@material-ui/core/DialogActions/DialogActions";
+import Dialog from "@material-ui/core/Dialog/Dialog";
+import DialogContent from "@material-ui/core/DialogContent/DialogContent";
+
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -18,7 +22,7 @@ const styles = theme => ({
     margin: theme.spacing.unit,
   },
 });
-
+const PostAPI = '/api/create-report/';
 class Post extends Component {
   constructor(props) {
     super(props);
@@ -32,10 +36,56 @@ class Post extends Component {
       comment: "",
       hashtags: [],
       input_email : "",
-      show:false
-    };
-  }
 
+      show:false,
+      reason:'',
+      open: false,
+
+    };
+    this.handleChangeReason = this.handleChangeReason.bind(this)
+    this.handleChange = this.handleChange.bind(this);
+    this.CreatePost = this.CreatePost.bind(this);
+  }
+  handleChangeReason(event){
+    this.setState({ reason: event.target.value })
+  }      
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose1 = () => {
+    this.setState({ open: false });
+  };
+  handleChange1 = () => { 
+    this.setState({ open: false, check:true });
+  };
+
+  CreateReport = () =>{ 
+    fetch(PostAPI ,
+    {
+    method: 'POST' ,
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Token ' + localStorage.getItem('token').toString()
+    },
+    body: JSON.stringify(
+      {
+        'status':'WAITING',
+        'reason':this.state.reason,
+        'comment':'',
+        'hashtag':'',
+        'post':this.props.match.params.id,
+        'reply':'',
+      }
+    )
+    })
+    .then(function(response){
+        return response.json()
+    })
+    .then(function(data){
+        console.log(data)
+    })
+};
 
   handleChange = event => {
     this.setState({
@@ -209,9 +259,52 @@ class Post extends Component {
           </Header>
           <Container fluid>
             <div dangerouslySetInnerHTML={{__html: this.state.content}}/>
-            <button type="button" className="btn btn-danger" style={{float: 'right', margin: '5px'}}>
+
+            <div>
+            <button onClick={this.handleClickOpen} type="button" className="btn btn-danger" style={{float: 'right', margin: '5px'}}>
               <span className="glyphicon glyphicon-flag" aria-hidden="true"></span> Report
             </button>
+            <Dialog
+          open={this.state.open}
+          onClose={this.handleClose1}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          >
+          <DialogContent>
+        <FormGroup
+          controlId="formBasicText"
+        >
+          <ControlLabel>Reason</ControlLabel>
+          <FormControl
+              type="reason"
+              value={this.state.reason}
+              onChange={this.handleChangeReason}
+            />
+          <FormControl.Feedback />
+        </FormGroup>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleChange1} color="primary">
+                     Report
+            </Button>
+            <Button onClick={this.handleClose} color="primary" autoFocus>
+              No
+            </Button>
+            <div>
+            {this.state.check ? (
+                <div>
+                  {this.CreateReport()}
+                 </div>
+
+             ) : (
+                null 
+              )
+            }
+            </div>
+          </DialogActions>
+          </Dialog>
+          </div>
+
             <div> {this.state.hashtags.map(value =>
               <Chip label={value.name}
                     className={classes.chip}

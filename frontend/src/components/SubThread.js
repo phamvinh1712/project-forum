@@ -78,7 +78,7 @@ class EnhancedTableHead extends React.Component {
     } = this.props;
 
     return (
-      <TableHead>
+      <TableHead >
         <TableRow>
           {rows.map(row => {
             return (
@@ -204,19 +204,23 @@ let EnhancedTableToolbar = props => {
             {numSelected} selected
           </Typography>
         ) : (
+
           <Typography variant="h4" id="tableTitle">
+
 
             {title}
           </Typography>
         )}
       </div>
       <div className={classes.spacer}/>
+
       <div>
         <Link to={(handle.toString() + "/createpost/")}>
           <Button style={{float: 'right', margin: '5px'}} variant="contained" color="primary">
             Create post
           </Button>
         </Link>
+
       </div>
     </Toolbar>
   );
@@ -232,7 +236,9 @@ const styles = theme => ({
   root: {
     width: "100%",
     marginTop: theme.spacing.unit * 4,
+
     margin: 'auto'
+
   },
   table: {
     maxWidth: "100%",
@@ -265,6 +271,7 @@ class EnhancedTable extends React.Component {
         return res.json();
       }).then(json => {
       this.setState({thread: json})
+      console.log(this.state.thread);
     })
     url = this.state.nextpage;
     fetch(url, {
@@ -316,8 +323,10 @@ class EnhancedTable extends React.Component {
     return (
 
       <Paper className={classes.root}>
+
         <EnhancedTableToolbar title={this.state.thread.sub_thread_title}
                               handle={this.props.match.params.handle.toString()}/>
+
         <div style={{
           width: "90%",
           margin: '0 auto',
