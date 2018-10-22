@@ -89,9 +89,13 @@ class App extends Component {
             <Route path="/hashtag/:id" component={Hashtag}/>
             <Route path="/profile" component={Profile}/>
             <Route path="/search/" component={PostList}/>
+
             <Route path="/changePassword" component={changePassword} />
+
+            <Route path="/api/rest-auth/registration/account-confirm-email/:key/" component={Content}/>
+
             <Route path="*" component={NotFound} />
-            
+
           </Switch>
           <ToastContainer autoClose={false}/>
 
