@@ -1,7 +1,6 @@
 import React from "react";
 import './sidebar-menu.css';
 import {Link} from 'react-router-dom';
-import 'font-awesome/css/font-awesome.min.css';
 class sidebarMenu extends React.Component {
     constructor(props) {
         super(props);
