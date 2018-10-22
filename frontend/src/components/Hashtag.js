@@ -202,10 +202,10 @@ let EnhancedTableToolbar = props => {
     >
       <div className={classes.title}>
 
-          <Typography variant="h3" id="tableTitle">
+        <Typography variant="h3" id="tableTitle">
 
-            {title}
-          </Typography>
+          {title}
+        </Typography>
 
       </div>
       <div className={classes.spacer}/>
@@ -265,11 +265,14 @@ class EnhancedTable extends React.Component {
       method: 'GET',
     })
       .then(res => {
-        if (res.ok)
-          return res.json();
+        if (res.ok) return res.json();
+        else throw new Error('hashtag not found')
       }).then(json => {
       this.setState({name: json.name})
     })
+      .catch(error => {
+        this.props.history.push('/notfound')
+      })
     url = '/api/hashtag/' + id.toString() + '/';
     fetch(url, {
       method: 'GET',
@@ -304,7 +307,7 @@ class EnhancedTable extends React.Component {
 
   handleChangePage(offset) {
 
-    let url = '/api/hashtag/' + this.props.match.params.id.toString() + '/?page=' + (offset/10 + 1).toString();
+    let url = '/api/hashtag/' + this.props.match.params.id.toString() + '/?page=' + (offset / 10 + 1).toString();
     fetch(url, {
       method: 'GET',
     })
