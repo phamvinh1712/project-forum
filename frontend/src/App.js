@@ -16,7 +16,7 @@ import Reset from "./components/Reset";
 import NotFound from "./components/NotFound";
 import PostList from "./components/PostList";
 import Hashtag from "./components/Hashtag";
-
+import Profile from "./components/Profile";
 class App extends Component {
   constructor(props) {
     super(props)
@@ -87,6 +87,7 @@ class App extends Component {
                    render={(props) => <Post {...props} authenticated={this.state.authenticated} user={this.state.user}/>} />
             <Route path="/search/:param" component={PostList}/>
             <Route path="/hashtag/:id" component={Hashtag}/>
+            <Route path="/profile/users/:id" component={Profile}/>
             <Route path="/search/" component={PostList}/>
             <Route path="*" component={NotFound} />
           </Switch>

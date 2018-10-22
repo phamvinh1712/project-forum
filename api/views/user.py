@@ -1,13 +1,15 @@
 from rest_framework.views import APIView
+from rest_framwork import generics
 from rest_framework.response import Response
-from ..serializers import UserDetailSerializer
+from ..serializers import UserDetailSerializer,ProfileSerializer
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAdminUser
 from rest_framework import status,serializers
+from rest_framework import generics
+from ..models import user
 
-
-class UserDetailView(APIView):
+class UserDetailView(generics.ListAPIView):
     def get(self, request, format=None):
         user = request.user
         serializer = UserDetailSerializer(user)
@@ -36,3 +38,7 @@ class UserSetAdminView(APIView):
         user.is_staff = True
         user.save()
         return Response(UserDetailSerializer(user).data, status=status.HTTP_200_OK)
+
+class UpdateUser(generics.CreateAPIViews):
+    queryset = user.objects.all()
+    serializer_class = ProfileSerializer

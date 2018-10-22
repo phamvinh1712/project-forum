@@ -49,5 +49,6 @@ urlpatterns = [
     re_path(r'^hashtag/(?P<pk>[0-9]+)/', HashtagListPostView.as_view()),
     re_path(r'^hashtag-name/(?P<pk>[0-9]+)/', HashtagNameView.as_view()),
     path('send_mail/', SendMail.as_view())
-
+    #update profile
+    re_path(r'^users/(?P<pk>[0-9]+)/$', UpdateUser.as_view()),
 ]

@@ -138,7 +138,7 @@ CreateProfile = () =>{
               <div className="form-group">
                 <div className="col-xs-12">
                   <br />
-                  <button onClick={this.CreateProfile}  className="btn btn-lg btn-success" type="submit"><i className="glyphicon glyphicon-ok-sign" /> Save</button>
+                  <button onSubmit={this.CreateProfile}  className="btn btn-lg btn-success" type="submit"><i className="glyphicon glyphicon-ok-sign" /> Save</button>
                   <button className="btn btn-lg" type="reset"><i className="glyphicon glyphicon-repeat" /> Reset</button>
                 </div>
               </div>
