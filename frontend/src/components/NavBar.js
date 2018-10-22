@@ -149,7 +149,7 @@ class navbar extends Component {
             id="menu-list-grow"
             style={{transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'}}
           >
-            <Paper>
+            <Paper  style={{position:'fixed',zIndex:'999'}}>
               <ClickAwayListener onClickAway={this.handleMenuClose}>
                 <MenuList>
                   <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
