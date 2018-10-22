@@ -11,6 +11,7 @@ urlpatterns = [
     re_path(r'^rest-auth/registration/$', NameRegistrationView.as_view(), name="rest_name_register"),
     path('hashtags/', HashtagListView.as_view()),
     path('user-detail/', UserDetailView.as_view()),
+    path('count-user/',CountUser.as_view()),
     re_path(r'^users/', UpdateUser.as_view()),
     path('notifications/', NotificationListView.as_view()),
 
@@ -21,9 +22,12 @@ urlpatterns = [
     # API for post (GET, PUT, POST, DELETE)
     path('create-post/', CreatePostView.as_view()),
     re_path(r'^posts/(?P<pk>[0-9]+)/$', PostView.as_view()),
+    path('count-post/',CountPost.as_view()),    
+
     path('threads/', ThreadListView.as_view()),
+    path('count-subthread/', CountSubThread.as_view()),
     re_path(r'^posts/delete/(?P<pk>[0-9]+)/$', DeletePost.as_view()),
-    re_path(r'^subthread/(?P<pk>[0-9]+)/$', SubThreadDetailView.as_view(), name="subthread-detail"),
+    re_path(r'^subthread/(?P<pk>[0-9]+)/$', SubThreadDetailView.as_view(), name="subthread-detail"), 
     re_path(r'^subthread/(?P<pk>[0-9]+)/posts/$', ListPostDetailView.as_view(), name="postlist-detail"),
     re_path(r'^comments/(?P<pk>[0-9]+)/replies/$', ReplyView.as_view()),
     path('create-comment/', CreateCommentView.as_view()),

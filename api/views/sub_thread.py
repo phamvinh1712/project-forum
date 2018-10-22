@@ -28,7 +28,6 @@ class SubThreadEditView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SubThreadCreateSerializer
     permission_classes = IsAdminUser,
 
-
 class SubThreadUpdateOrderView(APIView):
     queryset = SubThread.objects.all()
     permission_classes = IsAdminUser,
@@ -44,3 +43,8 @@ class SubThreadUpdateOrderView(APIView):
             sub_thread_list.append(temp)
         serializer = SubThreadSerializer(sub_thread_list, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class CountSubThread(APIView):
+    def get(self,request):
+        return Response(SubThread.objects.count())

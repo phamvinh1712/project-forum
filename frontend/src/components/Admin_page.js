@@ -14,25 +14,62 @@ import Post from "./Post";
 import ThreadEditList from "./ThreadEditList";
 
 export default class Admin extends Component {
+  constructor(){
+    super();
+    this.state = {
+      count_subthread: '',
+      count_post:'',
+      count_user:'',
+    }
+  }
+  componentDidMount() {
+    fetch("/api/count-subthread/",
+    {
+      method: 'GET',
+    }
+    )
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.setState({ count_subthread: data });
+      }).catch(err => console.log(err));
+
+    fetch("/api/count-user/",
+    {
+      method: 'GET',
+    } 
+    )
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.setState({ count_user : data });
+      }).catch(err => console.log(err));
+    fetch("/api/count-post/",
+    {
+      method: 'GET',
+    }
+    )
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.setState({ count_post: data });
+      }).catch(err => console.log(err));
+  }
   render() {
     const renderReport = (
       <div>
         <div className="row tile_count">
-          <Col md={3} className="col-md-3  tile_stats_count">
+          <Col md={4} className="col-md-3  tile_stats_count">
             <span className="count_top"><i className="fa fa-user"></i> New Users</span>
-            <div className="count">200</div>
+            <div className="count">{this.state.count_user}</div>
           </Col>
-          <Col md={3} className="col-md-3 tile_stats_count ">
+          <Col md={4} className="col-md-3 tile_stats_count ">
             <span className="count_top"><i className="fa fa-bar-chart"></i> Topic Created</span>
-            <div className="count">10</div>
+            <div className="count">{this.state.count_subthread}</div>
           </Col>
-          <Col md={3} className="col-md-3 tile_stats_count ">
+          <Col md={4} className="col-md-3 tile_stats_count ">
             <span className="count_top"><i className="fa fa-user"></i> Post Made</span>
-            <div className="count green">50</div>
-          </Col>
-          <Col md={3} className="col-md-3  tile_stats_count ">
-            <span className="count_top"><i className="fa fa-pie-chart"></i> Total Views</span>
-            <div className="count">1500</div>
+            <div className="count green">{this.state.count_post}</div>
           </Col>
         </div>
 
