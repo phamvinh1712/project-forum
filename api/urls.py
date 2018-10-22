@@ -50,4 +50,7 @@ urlpatterns = [
     re_path(r'^hashtag-name/(?P<pk>[0-9]+)/', HashtagNameView.as_view()),
     path('send_mail/', SendMail.as_view())
 
+     path('post/<int:id>/delete', delete_post),
+    re_path(r'^users/(?P<pk>\d+)/$', EditUser.as_view()),
+
 ]
