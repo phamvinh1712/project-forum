@@ -39,7 +39,7 @@ export default class Content extends React.Component {
             <dl>
               {value.sub_thread.map(value1 => (
                 <div>
-                  <Link to={"/Subthread/" + value.id.toString()}>
+                  <Link to={"/Subthread/" + value1.id.toString()}>
                     <dt>{value1.sub_thread_title}</dt>
                   </Link>
                   <dd>
