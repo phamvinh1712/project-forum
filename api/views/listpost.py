@@ -32,7 +32,7 @@ class ListPostSearchView(generics.ListAPIView):
     serializer_class = ListPostSerializer
     filter_backends = (filters.SearchFilter,)
     pagination_class = StandardResultsSetPagination
-    search_fields = ('title', '@content', 'hashtags__name')
+    search_fields = ('title', '@content', 'hashtags__name', 'user__username')
 
     def get_queryset(self):
         return Post.objects.filter(sub_thread__display_flag=True, sub_thread__thread__display_flag=True)
