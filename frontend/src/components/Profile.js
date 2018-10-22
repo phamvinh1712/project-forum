@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import avatar from './avatar.js';
-const PostAPI = '/api/users/';
+const PostAPI = 'http://localhost:8000/api/users/';
+localStorage.setItem('token','4c11d21aa1c4c6c1ed2396c8a4727430efc15b63');
 class Profile extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
           check:false,
           open:false,
-          firstName:'',
-          lastName:'',
           birthday:'',
           bio:'',
           phone_number:'',
@@ -16,20 +15,22 @@ class Profile extends React.Component{
     this.CreateProfile = this.CreateProfile.bind(this);
   }
 CreateProfile = () =>{ 
-  fetch(PostAPI ,
+  fetch(PostAPI + this.props.match.params.id.toString() + '/' ,
   {
   method: 'POST' ,
   headers: {
     'Content-Type': 'application/json',
-    'Authorization': 'Token ' + localStorage.getItem('token').toString()
+    'Authorization': 'Token ' + localStorage.getItem('token').toString(),
   },
   body: JSON.stringify(
     {
-      'firstname':document.getElementById("first_name"),
-      'lastname':document.getElementById("last_name"),
-      'birthday':document.getElementById("first_name"),
-      'bio':document.getElementById("first_name"),
+      'first_name':document.getElementById('first_name'),
+      'last_name':document.getElementById('last_name'),
+      'email':document.getElementById('email'),
+      'birthday':document.getElementById("birthday"),
+      'bio':document.getElementById("bio"),
       'phone_number':document.getElementById("phone"),
+      'avatar':document.getElementById("avatar"),
     }
   )
   })
@@ -59,7 +60,7 @@ CreateProfile = () =>{
         <div className="text-center">
           <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" className="avatar img-circle img-thumbnail" alt="avatar" />
           <h6>Upload a different photo...</h6>
-          <input type="file" className="text-center center-block file-upload" />
+          <input type="file" id="avatar" className="text-center center-block file-upload" />
           {/* CHANGE AVATAR */}
         </div><br /> {/* END */}
         {/* ACTIVITY COL */}
@@ -94,24 +95,14 @@ CreateProfile = () =>{
                   <input type="text" className="form-control" name="phone" id="phone" placeholder="enter phone" title="enter your phone number if any." />
                 </div>
               </div>
-              <div className="form-group">
-                <div className="col-xs-6">
-                  <label htmlFor="mobile"><h4>Mobile</h4></label>
-                  <input type="text" className="form-control" name="mobile" id="mobile" placeholder="enter mobile number" title="enter your mobile number if any." />
-                </div>
-              </div>
+    
               <div className="form-group">
                 <div className="col-xs-6">
                   <label htmlFor="email"><h4>Email</h4></label>
                   <input type="email" className="form-control" name="email" id="email" placeholder="you@email.com" title="enter your email." />
                 </div>
               </div>
-              <div className="form-group">
-                <div className="col-xs-6">
-                  <label htmlFor="email"><h4>Location</h4></label>
-                  <input type="email" className="form-control" id="location" placeholder="somewhere" title="enter a location" />
-                </div>
-              </div>
+       
               <div className="form-group">
                 <div className="col-xs-6">
                   <label htmlFor="password"><h4>Password</h4></label>
@@ -121,9 +112,29 @@ CreateProfile = () =>{
               <div className="form-group">
                 <div className="col-xs-6">
                   <label htmlFor="password2"><h4>Verify</h4></label>
-                  <input type="password" className="form-control" name="password2" id="password2" placeholder="password2" title="enter your password2." />
+                  <input type="password" className="form-control" name="password" id="password" placeholder="password" title="enter your password2." />
                 </div>
               </div>
+
+
+              <div className="form-group">
+                <div className="col-xs-6">
+                  <label htmlFor="bio"><h4>Biography</h4></label>
+                  <input type="text" className="form-control" id="bio" placeholder="your bio" title="enter your bio." />
+                </div>
+              </div>
+
+
+              <div className="form-group">
+                <div className="col-xs-6">
+                  <label htmlFor="birthday"><h4>Birthday</h4></label>
+                  <input type="date" className="form-control" id="birthday" placeholder="your birthday" title="enter your birthday." />
+                </div>
+              </div>
+
+
+
+
               <div className="form-group">
                 <div className="col-xs-12">
                   <br />
