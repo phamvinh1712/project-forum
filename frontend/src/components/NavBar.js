@@ -6,7 +6,7 @@ import {fade} from '@material-ui/core/styles/colorManipulator';
 import './NavBar.css';
 import Button from '@material-ui/core/Button';
 import {Link} from 'react-router-dom';
-import {DropdownButton,ButtonToolbar} from 'react-bootstrap';
+import {DropdownButton, ButtonToolbar} from 'react-bootstrap';
 import Avatar from '@material-ui/core/Avatar';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import IconButton from '@material-ui/core/IconButton';
@@ -31,7 +31,7 @@ const styles = theme => ({
   },
   search: {
     position: 'relative',
-    left:30,
+    left: 30,
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     '&:hover': {
@@ -84,6 +84,7 @@ class navbar extends Component {
     this.onChange = this.onChange.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
   };
+
   handleLogout = () => {
     fetch('api/rest-auth/logout/', {
       method: 'POST',
@@ -93,8 +94,8 @@ class navbar extends Component {
       }).then(json => {
       localStorage.clear();
       toast.info("You are now logout", {
-            position: toast.POSITION.TOP_CENTER
-          });
+        position: toast.POSITION.TOP_CENTER
+      });
       this.setState({anchorEl: null});
       window.location.href = '/';
     });
@@ -179,20 +180,17 @@ class navbar extends Component {
     return (
       <header className="navbar">
         <nav className="navbar_navigation">
-          <div className="navbar_logo"><span>THE LOGO</span></div>
+          <Link to = "/"><div className="navbar_logo"><span>THE LOGO</span></div> </Link>
           <ButtonToolbar className={"dropdownb"}>
             <DropdownButton className={"btn1"}
                             title={"Ducati"}
                             key={1}
                             id={`dropdown-basic-${1}`}
             >
-              <MenuItem eventKey="1">Action</MenuItem>
-              <MenuItem eventKey="2">Another action</MenuItem>
-              <MenuItem eventKey="3" active>
-                Active Item
-              </MenuItem>
-              <MenuItem divider/>
-              <MenuItem eventKey="4">Separated link</MenuItem>
+              <Link to="/hashtag/1"><MenuItem eventKey="1">Engine</MenuItem> </Link>
+              <Link to="/hashtag/2"><MenuItem eventKey="2">Frame</MenuItem> </Link>
+              <Link to="/hashtag/3"><MenuItem eventKey="3"> Accessories </MenuItem> </Link>
+
             </DropdownButton>
 
             <DropdownButton className={"btn1"}
@@ -200,13 +198,9 @@ class navbar extends Component {
                             key={2}
                             id={`dropdown-basic-${2}`}
             >
-              <MenuItem eventKey="1">Action</MenuItem>
-              <MenuItem eventKey="2">Another action</MenuItem>
-              <MenuItem eventKey="3" active>
-                Active Item
-              </MenuItem>
-              <MenuItem divider/>
-              <MenuItem eventKey="4">Separated link</MenuItem>
+              <Link to="/hashtag/4"><MenuItem eventKey="1">Engine</MenuItem> </Link>
+              <Link to="/hashtag/5"><MenuItem eventKey="2">Frame</MenuItem> </Link>
+              <Link to="/hashtag/6"><MenuItem eventKey="3"> Accessories </MenuItem> </Link>
             </DropdownButton>
 
             <DropdownButton className={"btn1"}
@@ -214,13 +208,9 @@ class navbar extends Component {
                             key={3}
                             id={`dropdown-basic-${3}`}
             >
-              <MenuItem eventKey="1">Action</MenuItem>
-              <MenuItem eventKey="2">Another action</MenuItem>
-              <MenuItem eventKey="3" active>
-                Active Item
-              </MenuItem>
-              <MenuItem divider/>
-              <MenuItem eventKey="4">Separated link</MenuItem>
+              <Link to="/hashtag/7"><MenuItem eventKey="1">Engine</MenuItem> </Link>
+              <Link to="/hashtag/8"><MenuItem eventKey="2">Frame</MenuItem> </Link>
+              <Link to="/hashtag/9"><MenuItem eventKey="3"> Accessories </MenuItem> </Link>
             </DropdownButton>
           </ButtonToolbar>
 
