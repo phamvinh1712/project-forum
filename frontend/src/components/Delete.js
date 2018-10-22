@@ -5,7 +5,6 @@ import Dialog from "@material-ui/core/Dialog/Dialog";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText/DialogContentText";
 const DeleteAPI = '/api/reports/delete/';
-localStorage.setItem('token','4c11d21aa1c4c6c1ed2396c8a4727430efc15b63');
 class Delete extends React.Component{
     constructor(props) {
         super(props);

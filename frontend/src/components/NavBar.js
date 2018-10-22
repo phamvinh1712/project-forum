@@ -120,6 +120,10 @@ class navbar extends Component {
 
   }
 
+  handleAdminClick = () => {
+    this.props.history.push('/admin');
+  }
+
   render() {
     const {classes} = this.props;
     const isMenuOpen = Boolean(this.state.anchorEl);
@@ -149,7 +153,8 @@ class navbar extends Component {
               <ClickAwayListener onClickAway={this.handleMenuClose}>
                 <MenuList>
                   <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
-                  <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
+                  { (this.props.authenticated && this.props.user.is_staff) ?
+                  <MenuItem onClick={this.handleAdminClick}>Admin</MenuItem> : null}
                   <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
                 </MenuList>
               </ClickAwayListener>

@@ -203,7 +203,7 @@ let EnhancedTableToolbar = props => {
 
             {title}
           </Typography>
-
+        )}
       </div>
       <div className={classes.spacer}/>
       <div>
