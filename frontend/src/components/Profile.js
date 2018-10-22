@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import avatar from './avatar.js';
-const PostAPI = 'http://localhost:8000/api/users/';
+const PostAPI = '/api/users/';
 localStorage.setItem('token','4c11d21aa1c4c6c1ed2396c8a4727430efc15b63');
 class Profile extends React.Component{
   constructor(props) {
