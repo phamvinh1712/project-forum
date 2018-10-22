@@ -1,9 +1,7 @@
 from rest_framework import generics
 from rest_framework.views import APIView
 from ..models import Thread
-
 from ..serializers import ThreadSerializer, ThreadCreateSerializer, ThreadUpdateOrderSerializer,ThreadAdminSerializer
-
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework import status
@@ -14,7 +12,6 @@ class ThreadListView(generics.ListAPIView):
     serializer_class = ThreadSerializer
 
     def get_queryset(self):
-
         return Thread.objects.filter(display_flag=True)
 
 
@@ -22,7 +19,6 @@ class ThreadAdminListView(generics.ListAPIView):
     queryset = Thread.objects.all()
     serializer_class = ThreadAdminSerializer
     permission_classes = IsAdminUser,
-
 
 
 class ThreadCreateView(generics.CreateAPIView):
