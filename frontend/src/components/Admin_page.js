@@ -58,7 +58,7 @@ export default class Admin extends Component {
             <SidebarMenu/>
           </Col>
 
-          <Col md={10} className="col-md-10 right_col" role="main">
+          <Col md={9} className="col-md-10 right_col" role="main">
             <Route exact path="/admin/report/" render={() => renderReport}/>
             <Route exact path="/admin/threads/" render={() => <ThreadEditList/>}/>
           </Col>

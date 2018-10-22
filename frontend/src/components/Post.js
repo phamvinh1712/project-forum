@@ -43,8 +43,6 @@ class Post extends Component {
 
     };
     this.handleChangeReason = this.handleChangeReason.bind(this)
-    this.handleChange = this.handleChange.bind(this);
-    this.CreateReport = this.CreateReport.bind(this);
   }
   handleChangeReason(event){
     this.setState({ reason: event.target.value })
@@ -61,6 +59,7 @@ class Post extends Component {
   };
 
   CreateReport = () =>{ 
+    this.setState({check :false})
     fetch(PostAPI ,
     {
     method: 'POST' ,
@@ -295,7 +294,7 @@ class Post extends Component {
                 <div>
                   {this.CreateReport()}
                  </div>
-
+                
              ) : (
                 null 
               )

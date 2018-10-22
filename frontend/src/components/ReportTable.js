@@ -19,9 +19,8 @@ class ReportTable extends React.Component {
       open3: false,
       open4: false,
       check: false,
+      id: '',
     };
-    this.DeleteReport = this.DeleteReport.bind(this);
-    this.handleChange = this.handleChange.bind(this);
  }
   handleClickOpen4 = () => {
      this.setState({ open4: true });
@@ -30,13 +29,14 @@ class ReportTable extends React.Component {
     this.setState({ open4: false });
   };
    handleChange = () => { 
-     this.setState({ open4: false, check:true });
+     this.setState({ open4: false, check: true });
    };
-   handleCheck = () => {
-     this.setState({ check:false });
-   }
-
+   handleCheck = (event) => {
+    this.setState({check:event});
+   };
    DeleteReport = (event) => {
+     this.handleCheck(!this.state.check);
+     console.log(this.state.check);
      fetch(DeleteAPI + event,
      {
      method: 'DELETE',
@@ -45,7 +45,6 @@ class ReportTable extends React.Component {
          'Authorization': 'Token ' + localStorage.getItem('token').toString()
        },          
      })
-     this.setState({check:false});
    };  
   componentDidMount() {
     fetch(API,
@@ -196,7 +195,7 @@ class ReportTable extends React.Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleChange} color="primary">
+            <Button onClick={this.handleChange}  color="primary">
               Yes
             </Button>
             <Button onClick={this.handleClose4} color="primary" autoFocus>
@@ -208,16 +207,16 @@ class ReportTable extends React.Component {
               <div>
               {this.state.check ? (
                   <div>
-                    {this.DeleteReport(value.id+'/')} 
+                    {this.DeleteReport(value.id +'/')} 
                    </div>
                ) : (
                   null 
                 )
               }
-              </div>   
+              </div>            
               </tr>              
               )
-            }.bind(this))}
+            }.bind(this))}  
             
 
           </tbody>
