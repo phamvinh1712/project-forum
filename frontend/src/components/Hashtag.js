@@ -19,6 +19,7 @@ import Pagination from "material-ui-flat-pagination";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import './SubThread.css';
 import Chip from "@material-ui/core/Chip/Chip";
+import moment from "moment";
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -60,8 +61,8 @@ const rows = [
     disablePadding: false,
     label: "Topic Title"
   },
-  {id: "view", numeric: true, disablePadding: false, label: "View"},
-  {id: "ds", numeric: true, disablePadding: false, label: "Date Start"},
+  {id: "view_count", numeric: true, disablePadding: false, label: "View"},
+  {id: "create_time", numeric: true, disablePadding: false, label: "Date Start"},
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -200,16 +201,12 @@ let EnhancedTableToolbar = props => {
       })}
     >
       <div className={classes.title}>
-        {numSelected > 0 ? (
-          <Typography color="inherit" variant="subheading">
-            {numSelected} selected
-          </Typography>
-        ) : (
-          <Typography variant="h3" id="tableTitle">
 
-            {title}
-          </Typography>
-        )}
+        <Typography variant="h3" id="tableTitle">
+
+          {title}
+        </Typography>
+
       </div>
       <div className={classes.spacer}/>
 
@@ -253,17 +250,30 @@ class EnhancedTable extends React.Component {
   };
 
   componentDidMount() {
-    let url = '/api/hashtag-name/' + this.props.match.params.id.toString() + '/'
+    this.handleGetData(this.props.match.params.id)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.match.params.id !== this.props.match.params.id) {
+      this.handleGetData(nextProps.match.params.id)
+    }
+  }
+
+  handleGetData = (id) => {
+    let url = '/api/hashtag-name/' + id.toString() + '/'
     fetch(url, {
       method: 'GET',
     })
       .then(res => {
-        if (res.ok)
-          return res.json();
+        if (res.ok) return res.json();
+        else throw new Error('hashtag not found')
       }).then(json => {
       this.setState({name: json.name})
     })
-    url = this.state.nextpage;
+      .catch(error => {
+        this.props.history.push('/notfound')
+      })
+    url = '/api/hashtag/' + id.toString() + '/';
     fetch(url, {
       method: 'GET',
     })
@@ -271,9 +281,7 @@ class EnhancedTable extends React.Component {
         return res.json();
       }).then(json => {
       this.setState({Posts: json.results, nextpage: json.next, total: json.count})
-
     })
-
   }
 
   handleRequestSort = (event, property) => {
@@ -299,7 +307,7 @@ class EnhancedTable extends React.Component {
 
   handleChangePage(offset) {
 
-    let url = '/api/hashtag/' + this.props.match.params.id.toString() + '/?page=' + (offset/10 + 1).toString();
+    let url = '/api/hashtag/' + this.props.match.params.id.toString() + '/?page=' + (offset / 10 + 1).toString();
     fetch(url, {
       method: 'GET',
     })
@@ -368,7 +376,7 @@ class EnhancedTable extends React.Component {
                           )} </div>
                         </TableCell>
                         <TableCell numeric>{n.view_count}</TableCell>
-                        <TableCell numeric>{n.create_time}</TableCell>
+                        <TableCell numeric>{moment(n.create_time, moment.ISO_8601).format("DD-MM-YYYY")}</TableCell>
                       </MuiThemeProvider>
                     </TableRow>
                   )

@@ -78,7 +78,7 @@ class EnhancedTableHead extends React.Component {
     } = this.props;
 
     return (
-      <TableHead >
+      <TableHead>
         <TableRow>
           {rows.map(row => {
             return (
@@ -199,16 +199,10 @@ let EnhancedTableToolbar = props => {
       })}
     >
       <div className={classes.title}>
-        {numSelected > 0 ? (
-          <Typography color="inherit" variant="subheading">
-            {numSelected} selected
-          </Typography>
-        ) : (
-          <Typography variant="h4" id="tableTitle">
+        <Typography variant="h4" id="tableTitle">
 
-            {title}
-          </Typography>
-        )}
+          {title}
+        </Typography>
       </div>
       <div className={classes.spacer}/>
       <div>
@@ -262,11 +256,14 @@ class EnhancedTable extends React.Component {
       method: 'GET',
     })
       .then(res => {
-        return res.json();
+        if (res.ok) return res.json();
+        else throw new Error('hashtag not found')
       }).then(json => {
       this.setState({thread: json})
-      console.log(this.state.thread);
     })
+      .catch(error => {
+        this.props.history.push('/notfound')
+      })
     url = this.state.nextpage;
     fetch(url, {
       method: 'GET',
@@ -339,7 +336,7 @@ class EnhancedTable extends React.Component {
             />
             <TableBody>
               {stableSort(Posts, getSorting(order, orderBy))
-                .slice(0,rowsPerPage)
+                .slice(0, rowsPerPage)
                 .map(n => {
                   return (
                     <TableRow

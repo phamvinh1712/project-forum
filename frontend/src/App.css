@@ -32,4 +32,6 @@
 }
 .root-content {
   margin-bottom: 20px;
+  position:relative;
+  z-index: 1;
 }

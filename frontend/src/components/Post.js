@@ -289,7 +289,7 @@ class Post extends Component {
                 <div>
                   {this.CreateReport()}
                  </div>
-                
+
              ) : (
                 null 
               )
