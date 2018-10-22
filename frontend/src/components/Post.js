@@ -44,7 +44,6 @@ class Post extends Component {
     };
     this.handleChangeReason = this.handleChangeReason.bind(this)
     this.handleChange = this.handleChange.bind(this);
-    this.CreatePost = this.CreatePost.bind(this);
   }
   handleChangeReason(event){
     this.setState({ reason: event.target.value })

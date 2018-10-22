@@ -91,7 +91,7 @@ class App extends Component {
             <Route path="*" component={NotFound} />
           </Switch>
 
-          <ToastContainer autoClose={false}/>
+          <ToastContainer/>
 
         </div>
       </BrowserRouter>
