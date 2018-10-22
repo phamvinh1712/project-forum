@@ -125,6 +125,7 @@ class ThreadEdit extends Component {
       input_sub_thread_description: sub_thread.description,
       input_sub_thread_display_flag: sub_thread.display_flag,
       showEditSubThread: true,
+      isCreateSubThread :false,
       currentSubThread: id,
     })
   }
