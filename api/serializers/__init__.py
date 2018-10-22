@@ -1,5 +1,5 @@
 from .hashtag import HashtagListSerializer,HashtagSerializer
-from .user import ProfileSerializer, UserDetailSerializer
+from .user import ProfileSerializer, UserDetailSerializer, UserUpdateSerializer
 from .sub_thread import SubThreadSerializer, SubThreadCreateSerializer, SubThreadUpdateOrderSerializer
 from .notification import NotificationSerializer
 from .listpost import ListPostSerializer

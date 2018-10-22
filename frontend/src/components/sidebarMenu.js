@@ -49,21 +49,21 @@ class sidebarMenu extends React.Component {
 
           <li>
             <Link to={"/admin/report/"}>
-              <i className="fa fa-comment" />
+              <i className="fa fa-flag" aria-hidden="true" />
               <span className="cur" />
               Report
             </Link>
           </li>
           <li>
             <Link to={"/admin/threads/"}>
-              <i className="fa fa-phone-square" />
+              <i className="fa  fa-object-ungroup" aria-hidden="true" />
               <span className="cur" />
               Thread management
             </Link>
           </li>
           <li>
             <Link to={"/admin/users"}>
-              <i className="fa fa-phone-square" />
+              <i className="fa fa-users" aria-hidden="true" />
               <span className="cur" />
               User management
             </Link>

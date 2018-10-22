@@ -179,3 +179,4 @@ AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend",
 )
 
+LOGOUT_ON_PASSWORD_CHANGE = False

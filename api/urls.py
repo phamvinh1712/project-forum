@@ -11,6 +11,7 @@ urlpatterns = [
     re_path(r'^rest-auth/registration/$', NameRegistrationView.as_view(), name="rest_name_register"),
     path('hashtags/', HashtagListView.as_view()),
     path('user-detail/', UserDetailView.as_view()),
+    re_path(r'^users/', UpdateUser.as_view()),
     path('notifications/', NotificationListView.as_view()),
 
     # API for report
@@ -18,7 +19,6 @@ urlpatterns = [
     re_path('report/', ReportListView.as_view()),
     re_path(r'^reports/delete/(?P<pk>[0-9]+)/$', DeleteReport.as_view()),
     # API for post (GET, PUT, POST, DELETE)
-
     path('create-post/', CreatePostView.as_view()),
     re_path(r'^posts/(?P<pk>[0-9]+)/$', PostView.as_view()),
     path('threads/', ThreadListView.as_view()),
@@ -35,15 +35,11 @@ urlpatterns = [
     path('set-user-active/', UserSetActiveView.as_view()),
     path('set-user-admin/', UserSetActiveView.as_view()),
     path('create-thread/', ThreadCreateView.as_view()),
-
-    path('create-subthread/',SubThreadCreateView.as_view()),
-
-
+    path('create-subthread/', SubThreadCreateView.as_view()),
     re_path(r'^threads/(?P<pk>[0-9]+)/$', ThreadEditView.as_view()),
     re_path(r'^sub-threads/(?P<pk>[0-9]+)/$', SubThreadEditView.as_view()),
     path('update-thread-order/', ThreadUpdateOrderView.as_view()),
     path('update-sub-thread-order/', SubThreadUpdateOrderView.as_view()),
-
     path('admin-threads/', ThreadAdminListView.as_view()),
     re_path(r'^posts$', ListPostSearchView.as_view()),
     re_path(r'^hashtag/(?P<pk>[0-9]+)/', HashtagListPostView.as_view()),

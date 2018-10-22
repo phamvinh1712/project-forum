@@ -16,7 +16,8 @@ import Reset from "./components/Reset";
 import NotFound from "./components/NotFound";
 import PostList from "./components/PostList";
 import Hashtag from "./components/Hashtag";
-
+import Profile from "./components/Profile";
+import changePassword from "./components/changePassword";
 class App extends Component {
   constructor(props) {
     super(props)
@@ -76,7 +77,8 @@ class App extends Component {
             {/*protected route only for authenticated user*/}
             {this.state.authenticated && <Route path="/subthread/:handle/createpost/" component={CreatePost}/>}
             {this.state.authenticated && <Route path="/edit-post/:id" component={EditPost}/>}
-
+            {this.state.authenticated && <Route path="/profile" component={Profile}/>}
+            {this.state.authenticated && <Route path="/changePassword" component={changePassword} />}
             {/*protected route only for admin user*/}
             { this.state.isAdmin && <Route path="/admin" component={Admin}/>}
 

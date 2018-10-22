@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import './screen.css';
-
 import {Link} from 'react-router-dom';
-
 const API = '/api/threads/';
 
 export default class Content extends React.Component {

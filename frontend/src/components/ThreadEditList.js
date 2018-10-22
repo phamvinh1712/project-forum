@@ -39,7 +39,6 @@ class ThreadEditList extends Component {
   }
 
   componentDidMount() {
-
     fetch('/api/admin-threads/', {
       method: 'GET',
       headers: {

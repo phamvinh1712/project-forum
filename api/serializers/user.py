@@ -17,3 +17,10 @@ class UserDetailSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'email', 'profile', 'full_name', 'first_name', 'last_name', 'is_staff', 'is_active')
 
+
+class UserUpdateSerializer(serializers.ModelSerializer):
+    profile = ProfileSerializer()
+
+    class Meta:
+        model = User
+        fields = ('email', 'profile', 'first_name', 'last_name')

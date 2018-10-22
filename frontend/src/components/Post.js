@@ -7,11 +7,9 @@ import React from "react";
 import Chip from '@material-ui/core/Chip';
 import Comments from './Comments' ;
 import {toast} from "react-toastify";
-
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
-
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -36,14 +34,11 @@ class Post extends Component {
       comment: "",
       hashtags: [],
       input_email : "",
-
       show:false,
       reason:'',
       open: false,
-
     };
     this.handleChangeReason = this.handleChangeReason.bind(this)
-    this.handleChange = this.handleChange.bind(this);
   }
   handleChangeReason(event){
     this.setState({ reason: event.target.value })
@@ -60,6 +55,7 @@ class Post extends Component {
   };
 
   CreateReport = () =>{ 
+    this.setState({check :false})
     fetch(PostAPI ,
     {
     method: 'POST' ,
@@ -258,7 +254,6 @@ class Post extends Component {
           </Header>
           <Container fluid>
             <div dangerouslySetInnerHTML={{__html: this.state.content}}/>
-
             <div>
             <button onClick={this.handleClickOpen} type="button" className="btn btn-danger" style={{float: 'right', margin: '5px'}}>
               <span className="glyphicon glyphicon-flag" aria-hidden="true"></span> Report
@@ -286,7 +281,7 @@ class Post extends Component {
             <Button onClick={this.handleChange1} color="primary">
                      Report
             </Button>
-            <Button onClick={this.handleClose} color="primary" autoFocus>
+            <Button onClick={this.handleClose1} color="primary" autoFocus>
               No
             </Button>
             <div>
@@ -303,7 +298,6 @@ class Post extends Component {
           </DialogActions>
           </Dialog>
           </div>
-
             <div> {this.state.hashtags.map(value =>
               <Chip label={value.name}
                     className={classes.chip}
