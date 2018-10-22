@@ -5,6 +5,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import {Link} from "react-router-dom";
 import {toast} from "react-toastify";
+import CreatableSelect from "react-select/lib/Creatable";
 
 // Edit Post Page
 export default class EditPost extends Component {
@@ -23,6 +24,36 @@ export default class EditPost extends Component {
     this.setState({title: event.target.value})
   }
 
+  handleCreate = (inputValue: any) => {
+    this.setState({isLoading: true});
+    fetch('/api/hashtags/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Token ' + localStorage.getItem('token').toString()
+      },
+      body: JSON.stringify({"name": inputValue})
+    })
+      .then(res => {
+        if (res.ok) return res.json()
+      })
+      .then(json => {
+        console.log(json);
+        let {hashtags, input_hashtag} = this.state;
+
+        const newOption = {value: json.id.toString(), label: json.name}
+        this.setState({
+          isLoading: false,
+          hashtags: [...hashtags, newOption],
+          input_hashtag: [...input_hashtag, newOption],
+        })
+      });
+  }
+
+  handleChangeSelect = (newValue: any, actionMeta: any) => {
+    this.setState({input_hashtag: newValue});
+  };
+
   componentDidMount() {
     let url = '/api/posts/' + this.props.match.params.id.toString() + '/'
     fetch(url, {
@@ -32,11 +63,15 @@ export default class EditPost extends Component {
         if (res.ok) return res.json();
         else throw new Error('Something went wrong')
       }).then(json => {
+      let hashtags = json.hashtags.map(n => {
+        return {value: n.id.toString(), label: n.name}
+      })
       this.setState({
         sub_thread: json.sub_thread,
         view_count: json.view_count,
         title: json.title,
-        text: json.content
+        text: json.content,
+        input_hashtag: hashtags
       })
     })
       .catch(function (error) {
@@ -46,6 +81,17 @@ export default class EditPost extends Component {
         this.props.history.push('/');
       }.bind(this));
 
+    fetch('/api/hashtags/')
+      .then(res => {
+        if (res.ok)
+          return res.json()
+      })
+      .then(json => {
+        let hashtags = json.map(n => {
+          return {value: n.id.toString(), label: n.name}
+        })
+        this.setState({hashtags: hashtags})
+      });
 
   }
 
@@ -54,6 +100,7 @@ export default class EditPost extends Component {
     event.preventDefault();
     const title = this.state.title;
     const text = this.state.text;
+    const hashtag = this.state.input_hashtag.map(value => value.value)
     fetch('/api/edit-post/:id/'.replace(":id", this.props.match.params.id), {
       method: 'PUT',
       headers: {
@@ -64,7 +111,8 @@ export default class EditPost extends Component {
         "title": title,
         "content": text,
         "sub_thread": this.state.sub_thread,
-        "view_count": this.state.view_count
+        "view_count": this.state.view_count,
+        "hashtags": hashtag
       })
     })
       .then(function (res) {
@@ -105,6 +153,19 @@ export default class EditPost extends Component {
 
             </ReactQuill>
           </FormGroup>
+          <CreatableSelect
+            isMulti
+            isClearable
+            name="colors"
+            options={this.state.hashtags}
+            className="basic-multi-select"
+            classNamePrefix="select"
+            onChange={this.handleChangeSelect}
+            onCreateOption={this.handleCreate}
+            isDisabled={this.state.isLoading}
+            isLoading={this.state.isLoading}
+            value={this.state.input_hashtag}
+          />
           <Button className='Cancelbutton'
                   block
                   bsSize="small"

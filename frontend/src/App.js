@@ -77,27 +77,24 @@ class App extends Component {
             {/*protected route only for authenticated user*/}
             {this.state.authenticated && <Route path="/subthread/:handle/createpost/" component={CreatePost}/>}
             {this.state.authenticated && <Route path="/edit-post/:id" component={EditPost}/>}
-
+            {this.state.authenticated && <Route path="/profile" component={Profile}/>}
+            {this.state.authenticated && <Route path="/changePassword" component={changePassword} />}
             {/*protected route only for admin user*/}
             { this.state.isAdmin && <Route path="/admin" component={Admin}/>}
 
             {/*public route*/}
             <Route exact path="/subthread/:handle" component={SubThreadDisplay}/>
+
             <Route path="/posts/:id"
                    render={(props) => <Post {...props} authenticated={this.state.authenticated} user={this.state.user}/>} />
             <Route path="/search/:param" component={PostList}/>
             <Route path="/hashtag/:id" component={Hashtag}/>
-            <Route path="/profile" component={Profile}/>
             <Route path="/search/" component={PostList}/>
-
-            <Route path="/changePassword" component={changePassword} />
-
             <Route path="/api/rest-auth/registration/account-confirm-email/:key/" component={Content}/>
-
             <Route path="*" component={NotFound} />
-
           </Switch>
-          <ToastContainer autoClose={false}/>
+
+          <ToastContainer/>
 
         </div>
       </BrowserRouter>

@@ -16,6 +16,7 @@ import Pagination from "material-ui-flat-pagination";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import './SubThread.css';
 import Chip from "@material-ui/core/Chip/Chip";
+import moment from "moment";
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -57,7 +58,7 @@ const rows = [
     disablePadding: false,
     label: "Topic Title"
   },
-  {id: "count_view", numeric: true, disablePadding: false, label: "View"},
+  {id: "view_count", numeric: true, disablePadding: false, label: "View"},
   {id: "create_time", numeric: true, disablePadding: false, label: "Date Start"},
 ];
 
@@ -300,7 +301,7 @@ class PostList extends React.Component {
                           )}</div>
                         </TableCell>
                         <TableCell numeric>{n.view_count}</TableCell>
-                        <TableCell numeric>{n.create_time}</TableCell>
+                        <TableCell numeric>{moment(n.create_time, moment.ISO_8601).format("DD-MM-YYYY")}</TableCell>
                       </MuiThemeProvider>
                     </TableRow>
                   )

@@ -55,7 +55,9 @@ class ThreadEdit extends Component {
       showEditThread: false,
       showEditSubThread: false,
       isCreateSubThread: false,
-      currentSubThread: ''
+      currentSubThread: '',
+      input_sub_thread_display_flag :false,
+      input_display_flag :false
     };
   }
 
@@ -108,7 +110,11 @@ class ThreadEdit extends Component {
           thread_title: json.title,
           description: json.description,
           display_flag: json.display_flag,
+          showEditThread : false
         })
+        toast.info('Edit success', {
+          position: toast.POSITION.TOP_CENTER
+        });
       });
   }
 
@@ -125,6 +131,7 @@ class ThreadEdit extends Component {
       input_sub_thread_description: sub_thread.description,
       input_sub_thread_display_flag: sub_thread.display_flag,
       showEditSubThread: true,
+      isCreateSubThread :false,
       currentSubThread: id,
     })
   }
@@ -161,7 +168,7 @@ class ThreadEdit extends Component {
       .then(json => {
         let sub_thread = this.state.sub_thread;
         if (this.state.isCreateSubThread) {
-          sub_thread.push(json);
+          sub_thread.unshift(json);
         } else {
           let obj = sub_thread.find((o, i) => {
             if (o.id === this.state.currentSubThread) {

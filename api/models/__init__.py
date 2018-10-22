@@ -9,4 +9,3 @@ from .vote import Vote
 from .image import Image
 from .hashtag import Hashtag
 from .report import Report
-from .user import Profile

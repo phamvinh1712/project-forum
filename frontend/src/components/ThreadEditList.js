@@ -33,7 +33,8 @@ class ThreadEditList extends Component {
     super(props);
 
     this.state = {
-      threads: []
+      threads: [],
+      input_display_flag :false
     };
   }
 
@@ -89,7 +90,7 @@ class ThreadEditList extends Component {
         let new_threads = this.state.threads;
         let new_thread = json;
         new_thread['sub_thread'] = []
-        new_threads.push(new_thread)
+        new_threads.unshift(new_thread)
         this.setState({show: false, threads: new_threads});
         toast.info("Add new thread success !", {
           position: toast.POSITION.TOP_CENTER
