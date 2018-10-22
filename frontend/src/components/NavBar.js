@@ -86,7 +86,7 @@ class navbar extends Component {
   };
 
   handleLogout = () => {
-    fetch('api/rest-auth/logout/', {
+    fetch('/api/rest-auth/logout/', {
       method: 'POST',
     })
       .then(res => {

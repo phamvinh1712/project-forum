@@ -250,7 +250,17 @@ class EnhancedTable extends React.Component {
   };
 
   componentDidMount() {
-    let url = '/api/hashtag-name/' + this.props.match.params.id.toString() + '/'
+    this.handleGetData(this.props.match.params.id)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.match.params.id !== this.props.match.params.id) {
+      this.handleGetData(nextProps.match.params.id)
+    }
+  }
+
+  handleGetData = (id) => {
+    let url = '/api/hashtag-name/' + id.toString() + '/'
     fetch(url, {
       method: 'GET',
     })
@@ -260,7 +270,7 @@ class EnhancedTable extends React.Component {
       }).then(json => {
       this.setState({name: json.name})
     })
-    url = this.state.nextpage;
+    url = '/api/hashtag/' + id.toString() + '/';
     fetch(url, {
       method: 'GET',
     })
@@ -268,9 +278,7 @@ class EnhancedTable extends React.Component {
         return res.json();
       }).then(json => {
       this.setState({Posts: json.results, nextpage: json.next, total: json.count})
-
     })
-
   }
 
   handleRequestSort = (event, property) => {
