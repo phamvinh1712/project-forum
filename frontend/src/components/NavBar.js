@@ -120,6 +120,10 @@ class navbar extends Component {
 
   }
 
+  handleProfileClick = () => {
+    this.props.history.push('/profile');
+  }
+
   handleAdminClick = () => {
     this.props.history.push('/admin');
   }
@@ -152,7 +156,7 @@ class navbar extends Component {
             <Paper  style={{position:'fixed',zIndex:'999'}}>
               <ClickAwayListener onClickAway={this.handleMenuClose}>
                 <MenuList>
-                  <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
+                  <MenuItem onClick={this.handleProfileClick}>Profile</MenuItem>
                   { (this.props.authenticated && this.props.user.is_staff) ?
                   <MenuItem onClick={this.handleAdminClick}>Admin</MenuItem> : null}
                   <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
