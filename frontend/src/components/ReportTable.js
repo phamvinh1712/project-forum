@@ -3,8 +3,8 @@ import Dialog from "@material-ui/core/Dialog/Dialog";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText/DialogContentText";
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import 'font-awesome/css/font-awesome.min.css';/
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'font-awesome/css/font-awesome.min.css';
 import React from "react";
 const API = '/api/report/';
 const DeleteAPI = '/api/reports/delete/';
@@ -92,7 +92,6 @@ class ReportTable extends React.Component {
               <th>Status</th>
               <th>Time</th>
               <th>User</th>
-              <th>Alert</th>
               <th>Delete</th>
             </tr>
           </thead>
@@ -147,34 +146,6 @@ class ReportTable extends React.Component {
                 <td>{value.create_time}</td>
                 <td>{value.user.username}</td>
                 <td>
-                <p>
-                  <span
-                    className="btn btn-primary btn-sm"
-                   className="btn btn-primary btn-sm" onClick={this.handleClickOpen}><i className="fa fa-exclamation-triangle"></i>
-                  </span>
-                </p>
-        <Dialog
-          open={this.state.open}
-          onClose={this.handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Are you sure you want to alert this user?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Yes
-            </Button>
-            <Button onClick={this.handleClose} color="primary" autoFocus>
-              No
-            </Button>
-          </DialogActions>
-        </Dialog>
-              </td>
-                  <td>
                 <p>
                   <span
                     className="btn btn-primary btn-sm" style={{background:'red'}}

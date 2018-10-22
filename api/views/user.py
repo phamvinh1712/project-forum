@@ -4,8 +4,12 @@ from ..serializers import UserDetailSerializer
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAdminUser
-from rest_framework import status
-
+from rest_framework import status,generics
+from django.db.models import Count
+from ..models import Profile
+class CountUser(APIView):
+    def get(self,request):
+        return Response(User.objects.count())        
 
 class UserDetailView(APIView):
     def get(self, request, format=None):
