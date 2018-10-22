@@ -185,7 +185,7 @@ class navbar extends Component {
     return (
       <header className="navbar">
         <nav className="navbar_navigation">
-          <Link to = "/"><div className="navbar_logo"><span>THE LOGO</span></div> </Link>
+          <Link to = "/"><div className="navbar_logo"><span>THE MOTOR</span></div> </Link>
           <ButtonToolbar className={"dropdownb"}>
             <DropdownButton className={"btn1"}
                             title={"Ducati"}
