@@ -20,6 +20,7 @@ class ReportTable extends React.Component {
       open4: false,
       check: false,
       id: '',
+      check1: true,
     };
  }
   handleClickOpen4 = () => {
@@ -31,12 +32,9 @@ class ReportTable extends React.Component {
    handleChange = () => { 
      this.setState({ open4: false, check: true });
    };
-   handleCheck = (event) => {
-    this.setState({check:event});
-   };
+
    DeleteReport = (event) => {
-     this.handleCheck(!this.state.check);
-     console.log(this.state.check);
+      this.state.check = false;
      fetch(DeleteAPI + event,
      {
      method: 'DELETE',
