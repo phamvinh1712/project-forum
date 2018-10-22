@@ -3,7 +3,6 @@ import Dialog from "@material-ui/core/Dialog/Dialog";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText/DialogContentText";
-import 'font-awesome/css/font-awesome.min.css';
 import React from "react";
 const API = '/api/report/';
 const DeleteAPI = '/api/reports/delete/';
