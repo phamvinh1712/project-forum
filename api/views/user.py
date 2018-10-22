@@ -1,7 +1,6 @@
 from rest_framework.views import APIView
-from rest_framwork import generics
 from rest_framework.response import Response
-from ..serializers import UserDetailSerializer,ProfileSerializer
+from ..serializers import UserDetailSerializer,ProfileSerializer, UserUpdateSerializer
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAdminUser
@@ -9,7 +8,8 @@ from rest_framework import status,serializers
 from rest_framework import generics
 from ..models import user
 
-class UserDetailView(generics.ListAPIView):
+
+class UserDetailView(APIView):
     def get(self, request, format=None):
         user = request.user
         serializer = UserDetailSerializer(user)
@@ -39,6 +39,22 @@ class UserSetAdminView(APIView):
         user.save()
         return Response(UserDetailSerializer(user).data, status=status.HTTP_200_OK)
 
-class UpdateUser(generics.CreateAPIViews):
-    queryset = user.objects.all()
-    serializer_class = ProfileSerializer
+class UpdateUser(APIView):
+
+   def post(self,request):
+       user = request.user
+       profile = user.profile
+       profile.bio = request.data['bio']
+       profile.birthday = request.data['birthday']
+       profile.phone_nunmber = request.data['phone_number']
+       profile.avatar = request.FILES.get('avatar')
+       profile.save()
+       
+       first_name = request.data['first_name']
+       user.first_name = first_name
+       last_name = request.data['last_name']
+       user.last_name = last_name
+       email = request.data['email']
+       user.email = email
+       user.save()
+       return Response(UserDetailSerializer(user).data, status=status.HTTP_200_OK)

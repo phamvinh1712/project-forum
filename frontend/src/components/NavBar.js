@@ -19,7 +19,6 @@ import Paper from '@material-ui/core/Paper';
 import {Route, Redirect, withRouter} from 'react-router'
 import {toast} from 'react-toastify';
 
-
 // navigation bar with search bar UI and 2 button link to login page and register page
 const styles = theme => ({
   menuButton: {
@@ -151,7 +150,7 @@ class navbar extends Component {
             <Paper>
               <ClickAwayListener onClickAway={this.handleMenuClose}>
                 <MenuList>
-                  <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
+                  <Link to = "/profile"><MenuItem onClick={this.handleMenuClose}>Profile</MenuItem> </Link>
                   { (this.props.authenticated && this.props.user.is_staff) ?
                   <MenuItem onClick={this.handleAdminClick}>Admin</MenuItem> : null}
                   <MenuItem onClick={this.handleLogout}>Logout</MenuItem>

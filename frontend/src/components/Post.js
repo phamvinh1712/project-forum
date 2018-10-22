@@ -287,7 +287,7 @@ class Post extends Component {
             <Button onClick={this.handleChange1} color="primary">
                      Report
             </Button>
-            <Button onClick={this.handleClose} color="primary" autoFocus>
+            <Button onClick={this.handleClose1} color="primary" autoFocus>
               No
             </Button>
             <div>
