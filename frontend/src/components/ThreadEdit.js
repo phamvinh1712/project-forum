@@ -55,7 +55,9 @@ class ThreadEdit extends Component {
       showEditThread: false,
       showEditSubThread: false,
       isCreateSubThread: false,
-      currentSubThread: ''
+      currentSubThread: '',
+      input_sub_thread_display_flag :false,
+      input_display_flag :false
     };
   }
 
@@ -166,7 +168,7 @@ class ThreadEdit extends Component {
       .then(json => {
         let sub_thread = this.state.sub_thread;
         if (this.state.isCreateSubThread) {
-          sub_thread.push(json);
+          sub_thread.unshift(json);
         } else {
           let obj = sub_thread.find((o, i) => {
             if (o.id === this.state.currentSubThread) {
