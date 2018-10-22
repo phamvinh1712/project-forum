@@ -6,11 +6,8 @@ from .thread import Thread
 class SubThread(models.Model):
     sub_thread_title = models.CharField(max_length=50)
     description = models.CharField(max_length=250, blank=True)
-<<<<<<< HEAD
+
     thread = models.ForeignKey(Thread, on_delete=models.CASCADE, related_name='sub_thread')
-=======
-    thread = models.ForeignKey(Thread, on_delete=models.CASCADE)
->>>>>>> Khoa
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     create_time = models.DateTimeField()
     display_order = models.SmallIntegerField(null=False, unique=True)
