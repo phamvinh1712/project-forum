@@ -88,6 +88,7 @@ class App extends Component {
             <Route path="/search/:param" component={PostList}/>
             <Route path="/hashtag/:id" component={Hashtag}/>
             <Route path="/search/" component={PostList}/>
+            <Route path="/api/rest-auth/registration/account-confirm-email/:key/" component={Content}/>
             <Route path="*" component={NotFound} />
           </Switch>
 

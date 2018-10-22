@@ -4,7 +4,7 @@ from rest_framework import serializers
 from rest_framework import status
 from allauth.account.views import ConfirmEmailView
 from rest_framework.response import Response
-
+from django.shortcuts import render_to_response
 
 class EmailConfirmView(APIView, ConfirmEmailView):
     def get_serializer(self, *args, **kwargs):
@@ -16,7 +16,8 @@ class EmailConfirmView(APIView, ConfirmEmailView):
         self.kwargs['key'] = serializer.validated_data['key']
         confirmation = self.get_object()
         confirmation.confirm(self.request)
-        return Response({'detail': ('ok')}, status=status.HTTP_200_OK)
+
+        return render_to_response('index.html')
 
 
 class NameRegistrationSerializer(RegisterSerializer):

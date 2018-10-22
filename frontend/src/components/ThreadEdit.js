@@ -108,7 +108,11 @@ class ThreadEdit extends Component {
           thread_title: json.title,
           description: json.description,
           display_flag: json.display_flag,
+          showEditThread : false
         })
+        toast.info('Edit success', {
+          position: toast.POSITION.TOP_CENTER
+        });
       });
   }
 
