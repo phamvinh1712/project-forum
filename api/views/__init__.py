@@ -1,5 +1,5 @@
 from .hashtag import HashtagListView,HashtagNameView
-from .user import UserDetailView, UserSetActiveView, UserSetAdminView
+from .user import UserDetailView, UserSetActiveView, UserSetAdminView,UpdateUser
 from .report import ReportListView, CreateReportView, DeleteReport
 from .registration_view import NameRegistrationView, EmailConfirmView
 from .sub_thread import SubThreadDetailView, SubThreadUpdateOrderView, SubThreadEditView, SubThreadCreateView

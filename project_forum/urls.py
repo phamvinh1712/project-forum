@@ -20,7 +20,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('reset/<uidb64>/<token>/', TemplateView.as_view(template_name='index.html')),
     re_path(r'^', include('django.contrib.auth.urls')),
-    re_path('^admin/', admin.site.urls),
+    re_path('^superuser/', admin.site.urls),
     path('api/', include('api.urls')),
     re_path('^.*$', TemplateView.as_view(template_name='index.html')),
 
