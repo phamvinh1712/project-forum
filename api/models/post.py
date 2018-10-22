@@ -9,11 +9,6 @@ class Post(models.Model):
     content = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    sub_thread = models.ForeignKey(SubThread, on_delete=models.CASCADE)
-    view_count = models.IntegerField()
-    create_time = models.DateTimeField()
-    hashtags = models.ManyToManyField(Hashtag)
-
     sub_thread = models.ForeignKey(SubThread, on_delete=models.CASCADE,related_name="post")
     view_count = models.IntegerField(default=0)
     create_time = models.DateTimeField(default=datetime.now)
