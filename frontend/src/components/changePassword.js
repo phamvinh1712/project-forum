@@ -19,7 +19,7 @@ export default class changePassword extends Component {
 
 // check if the user input correct form
   validateForm() {
-    return this.state.oldpassword.length > 0 && this.state.password1.length > 0 && this.state.password1===this.state.password2;
+    return this.state.oldpassword.length > 0 && this.state.password1.length > 0 && this.state.password1 === this.state.password2;
   }
 
 // function to handle value change in field
@@ -38,21 +38,28 @@ export default class changePassword extends Component {
         'Content-Type': 'application/json',
         'Authorization': 'Token ' + localStorage.getItem('token').toString(),
       },
-      body: JSON.stringify({"new_password1": this.state.password1, "new_password2": this.state.password2, "old_password":this.state.oldpassword})
+      body: JSON.stringify({
+        "new_password1": this.state.password1,
+        "new_password2": this.state.password2,
+        "old_password": this.state.oldpassword
+      })
     })
       .then(function (res) {
-        if (res.ok)
-          toast.info("Your password has been changed", {
+        return res.json()
+      })
+      .then(json => {
+        console.log(json);
+        for (let [key, value] of Object.entries(json)) {
+          if(Array.isArray(value)) value = value[0];
+          toast.info(value, {
             position: toast.POSITION.TOP_CENTER
           });
-        else {
-          throw new Error('Something went wrong,please try again');
         }
       })
       .catch((error) => {
-        toast.warn("Your old password doesn't match", {
-            position: toast.POSITION.TOP_CENTER
-          });
+        toast.warn("Error", {
+          position: toast.POSITION.TOP_CENTER
+        });
       });
     ;
   }
@@ -66,6 +73,15 @@ export default class changePassword extends Component {
     return (
       <div className="Login">
         <form onSubmit={this.handleSubmit}>
+          <FormGroup controlId="oldpassword" bsSize="large">
+            <ControlLabel>Old Password</ControlLabel>
+            <FormControl
+              value={this.state.oldpassword}
+              onChange={this.handleChange}
+              type="password"
+            />
+
+          </FormGroup>
           <FormGroup controlId="password1" bsSize="large">
             <ControlLabel>New Password</ControlLabel>
             <FormControl
@@ -83,22 +99,13 @@ export default class changePassword extends Component {
               type="password"
             />
           </FormGroup>
-          <FormGroup controlId="oldpassword" bsSize="large">
-            <ControlLabel>Old Password</ControlLabel>
-            <FormControl
-              value={this.state.oldpassword}
-              onChange={this.handleChange}
-              type="password"
-            />
-            
-          </FormGroup>
           <Button
             block
             bsSize="large"
             disabled={!this.validateForm()}
             type="submit"
           >
-            Login
+            Change
           </Button>
         </form>
         <Modal
