@@ -18,8 +18,33 @@ class EditProfile extends React.Component{
           user: [],
           profile: [],
           open:false,
+          first_name: '',
+          last_name: '' ,
+          email:'',
+          birthday:'',
+          bio:'',
+          phone:'',
     };
   }
+  handleEmail = (e) => {
+    this.setState({email: e.target.value});
+  }
+  handleBirthday = (e) => {
+    this.setState({birthday: e.target.value});
+  }
+  handleBio = (e) => {
+    this.setState({bio: e.target.value});
+  }
+  handlePhone = (e) => {
+    this.setState({phone: e.target.value});
+  }
+  handleFirstNameChange = (e) => {
+    this.setState({first_name : e.target.value});
+  }
+  handleLastNameChange = (e) => {
+    this.setState({last_name: e.target.value});
+  }
+
   handleChangeOpen = () => {
       this.setState({open: true});
   }
@@ -44,13 +69,13 @@ class EditProfile extends React.Component{
 CreateProfile = () =>{  
   this.state.open = true;
   let form = new FormData();
-  form.append('email',document.getElementById('email').value)
-  form.append('birthday',document.getElementById("birthday").value)
-  form.append('bio', document.getElementById("bio").value)
-  form.append('phone_number', document.getElementById("phone").value)
+  form.append('email',this.state.email)
+  form.append('birthday',this.state.birthday)
+  form.append('bio', this.state.bio)
+  form.append('phone_number', this.state.phone_number)
   form.append('avatar', document.getElementById("avatar").files[0])
-  form.append('first_name', document.getElementById("first_name").value)
-  form.append('last_name', document.getElementById("last_name").value)
+  form.append('first_name', this.state.first_name)
+  form.append('last_name', this.state.last_name)
   
   fetch('/api/users/' ,
   {
@@ -99,32 +124,32 @@ CreateProfile = () =>{
               <div className="form-group">
                 <div className="col-xs-6"> 
                   <label htmlFor="first_name"><h4>First name</h4></label>
-                  <input type="text" className="form-control" name="first_name" id="first_name" placeholder={this.state.user.first_name} title="enter your first name if any." />
+                  <input type="text" className="form-control" name="first_name" id="first_name" onChange={this.handleFirstNameChange} title="enter your first name if any." />
                 </div>
               </div>
               <div className="form-group">
                 <div className="col-xs-6">
                   <label htmlFor="last_name"><h4>Last name</h4></label>
-                  <input type="text" className="form-control" name="last_name" id="last_name" placeholder={this.state.user.last_name} title="enter your last name if any." />
+                  <input type="text" className="form-control" name="last_name" id="last_name" onChange={this.handleLastNameChange} title="enter your last name if any." />
                 </div>
               </div>
               <div className="form-group">
                 <div className="col-xs-6">
                   <label htmlFor="phone"><h4>Phone</h4></label>
-                  <input type="text" className="form-control" name="phone" id="phone" placeholder={this.state.profile.phone_number} title="enter your phone number if any." />
+                  <input type="text" className="form-control" name="phone" id="phone" onChange={this.handlePhone} title="enter your phone number if any." />
                 </div>
               </div>
     
               <div className="form-group">
                 <div className="col-xs-6">
                   <label htmlFor="email"><h4>Email</h4></label>
-                  <input  type="email" className="form-control" name="email" id="email" placeholder={this.state.user.email} title="enter your email." />
+                  <input  type="email" className="form-control" name="email" id="email" onChange={this.handleEmail} title="enter your email." />
                 </div>
               </div>
               <div className="form-group">
                 <div className="col-xs-6">
                   <label htmlFor="bio"><h4>Biography</h4></label>
-                  <input type="text" className="form-control" id="bio" placeholder={this.state.profile.bio}  title="enter your bio." />
+                  <input type="text" className="form-control" id="bio" onChange={this.handleBio}  title="enter your bio." />
                 </div>
               </div>
 
@@ -132,7 +157,7 @@ CreateProfile = () =>{
               <div className="form-group">
                 <div className="col-xs-6">
                   <label htmlFor="birthday"><h4>Birthday</h4></label>
-                  <input type="text" className="form-control" id="birthday" placeholder={this.state.profile.birthday}  title="enter your birthday." />
+                  <input type="text" className="form-control" id="birthday" onChange={this.handleBirthday}  title="enter your birthday." />
                 </div>
               </div>
             </form>
