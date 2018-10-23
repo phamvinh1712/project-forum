@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import avatar from './avatar.js';
 import Button from '@material-ui/core/Button';
 import {Link} from 'react-router-dom';
+import {toast} from "react-toastify";
 
 const UpdateProfile = '/api/users/';
 const GetProfile = '/api/user-detail/';
@@ -66,7 +67,7 @@ class Profile extends React.Component {
     form.append('avatar', document.getElementById("avatar").files[0])
     form.append('first_name', this.state.first_name)
     form.append('last_name', this.state.last_name)
-
+    console.log(form);
     fetch('/api/users/',
       {
         method: 'POST',
@@ -76,10 +77,12 @@ class Profile extends React.Component {
         body: form
       })
       .then(function (response) {
+        if(response.ok)
         return response.json()
+        else throw new Error('Something went wrong, please try again')
       })
       .then(function (data) {
-        console.log(data)
+
         this.setState({
           username: data.username,
           first_name: data.first_name,
@@ -90,7 +93,11 @@ class Profile extends React.Component {
           birthday: data.profile.birthday,
           avatar: data.profile.avatar,
         });
-      }.bind(this)).catch(err => console.log(err));
+      }.bind(this)).catch(err => {
+        toast.error(err.toString, {
+            position: toast.POSITION.TOP_CENTER
+          });
+    });
   };
 
   render() {

@@ -52,7 +52,7 @@ class UpdateUser(APIView):
         profile = user.profile
         profile.bio = request.data['bio']
         profile.birthday = request.data['birthday']
-        profile.phone_nunmber = request.data['phone_number']
+        profile.phone_number = request.data['phone_number']
         profile.avatar = request.FILES.get('avatar')
         profile.save()
 
