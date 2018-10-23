@@ -18,6 +18,7 @@ import PostList from "./components/PostList";
 import Hashtag from "./components/Hashtag";
 import Profile from "./components/Profile";
 import changePassword from "./components/changePassword";
+import EditProfile from "./components/EditProfile";
 class App extends Component {
   constructor(props) {
     super(props)
@@ -89,6 +90,7 @@ class App extends Component {
                    render={(props) => <Post {...props} authenticated={this.state.authenticated} user={this.state.user}/>} />
             <Route path="/search/:param" component={PostList}/>
             <Route path="/hashtag/:id" component={Hashtag}/>
+            <Route path="/editProfile/" component={EditProfile}/>
             <Route path="/search/" component={PostList}/>
             <Route path="/api/rest-auth/registration/account-confirm-email/:key/" component={Content}/>
             <Route path="*" component={NotFound} />

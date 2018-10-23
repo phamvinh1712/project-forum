@@ -3,7 +3,6 @@ import avatar from './avatar.js';
 import Button from '@material-ui/core/Button';
 import {Link} from 'react-router-dom';
 
-const UpdateProfile = '/api/users/';
 const GetProfile = '/api/user-detail/';
 class Profile extends React.Component{
   constructor(props) {
@@ -33,33 +32,6 @@ class Profile extends React.Component{
       this.setState({ user: data, profile:data.profile });
     }).catch(err => console.log(err));
 }
-
-CreateProfile = () =>{  
-  let form = new FormData();
-  form.append('email',document.getElementById('email').value)
-  form.append('birthday',document.getElementById("birthday").value)
-  form.append('bio', document.getElementById("bio").value)
-  form.append('phone_number', document.getElementById("phone").value)
-  form.append('avatar', document.getElementById("avatar").files[0])
-  form.append('first_name', document.getElementById("first_name").value)
-  form.append('last_name', document.getElementById("last_name").value)
-  
-  fetch('/api/users/' ,
-  {
-  method: 'POST' ,
-  headers: {
-    'Authorization': 'Token ' + localStorage.getItem('token').toString(),
-  },
-  body: form
-  })
-  .then(function(response){
-      return response.json()
-  })
-  .then(function(data){
-    console.log(data)
-      this.setState({ user: data, profile:data.profile });
-    }.bind(this)).catch(err => console.log(err));
-  };
     render() {
         return (
           <div>
@@ -78,8 +50,6 @@ CreateProfile = () =>{
       <div className="col-sm-3">{/* LEFT COL */}
         <div className="text-center">
           <img src={this.state.profile.avatar} className="avatar img-circle img-thumbnail" alt="avatar" />
-          <h6>Upload a different photo...</h6>
-          <input type="file" id="avatar" className="text-center center-block file-upload"/>
           {/* CHANGE AVATAR */}
         </div><br /> {/* END */}
         {/* ACTIVITY COL */}
@@ -138,16 +108,13 @@ CreateProfile = () =>{
             </form>
             <div className="form-group">
                 <div className="col-xs-12">
-                  <br />
-                  <div className="col-xs-6">
-                  <button onClick={this.CreateProfile} className="btn btn-lg btn-success"> <i className="glyphicon glyphicon-ok-sign" /> Save</button>
-                  <button className="btn btn-lg"><i className="glyphicon glyphicon-repeat" /> Reset</button>
-                  </div>
-                  <div className="col-xs-6" align="left">
-                  <Link to = "/changePassword"><Button variant="contained" color="primary" aria-label="Add" className="button-chg-pass">Change password</Button> </Link>
-                  </div>
+                <br/>
+                <div className="col-xs-6">
+                <Button><Link to="/editProfile/">Edit </Link> </Button>
                 </div>
-              </div>
+                </div>
+            </div>  
+            
             <hr />
           </div>{/* END */}    
         </div>
