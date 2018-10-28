@@ -9,4 +9,4 @@ Technology :
 - Backend : Django
 - Database : PostgreSQL
 
-The project use Heroku as the hosting option and Amazon S3 for storing images and files
+The project use Heroku for hosting and Amazon S3 for storing images and files
