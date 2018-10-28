@@ -35,6 +35,10 @@ class DeletePost(generics.DestroyAPIView):
     serializer_class = PostSerializer
     permission_classes = IsUser,
 
+    def delete_post(req, id):
+        instance = Post.objects.get(pk=id)
+        instance.delete()
+
 
 class EditPostView(generics.UpdateAPIView):
     queryset = Post.objects.all()
