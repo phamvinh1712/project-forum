@@ -2,7 +2,7 @@ Forum web app for the Project course at VGU
 
 Visit the link in the description to see the application
 
-Visit project-forum.herokuapp.com/superuser/ with username : vinh + password : 1 to login to the Django administration page
+Visit http://project-forum.herokuapp.com/superuser/ with username : vinh + password : 1 to login to the Django administration page
 Login with email : thobumbi@gmail.com password: wheelman to access admin functions of the forum
 
 Technology : 
